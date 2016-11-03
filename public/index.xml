@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>chrislaing.net</title>
+    <link>http://chrislaing.net/index.xml</link>
+    <description>Recent content on chrislaing.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 03 Nov 2016 23:04:26 +0100</lastBuildDate>
+    <atom:link href="http://chrislaing.net/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>A New Hope</title>
+      <link>http://chrislaing.net/blog/test-post/</link>
+      <pubDate>Thu, 03 Nov 2016 23:04:26 +0100</pubDate>
+      
+      <guid>http://chrislaing.net/blog/test-post/</guid>
+      <description>&lt;p&gt;Many years ago, I had a blog. Being perfectly honest, it wasn&amp;rsquo;t a very good blog; it consisted mainly of rants of one kind or another, inane musings, and the occasional photo from my holidays. On the modern web, social media is the default depository for said rants, musings, and photos, and so I had no need of a dedicated space on my website to share them.&lt;/p&gt;
+
+&lt;p&gt;However, it occurred to me recently that I now share quite a bit of material relating to my work and academic interests; blog posts, interesting new projects, snippets of code, or more general articles related to science and technology. I distribute these nuggets of enlightenment primarily through closed channels - slack, hangouts, messaging apps - with the sole exception of twitter, depriving my many adoring fans of interesting material, and me of feedback.&lt;/p&gt;
+
+&lt;p&gt;So today, my blog is now open again for business, this time with (hopefully) fewer boring political rants, and more interesting links. I hope that you will find it to be of some interest.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>About Me</title>
+      <link>http://chrislaing.net/about/</link>
+      <pubDate>Thu, 03 Nov 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://chrislaing.net/about/</guid>
+      <description>
+
+
+
+
+    
+    
+        
+        
+        
+        
+    
+
+    
+    
+    
+
+    
+    
+
+
+
+
+    
+    
+        
+    
+
+
+    
+
+    
+        &lt;span class=&#34;image right&#34;&gt;
+            &lt;img src=&#34;http://chrislaing.net/img/about-me/WADING.jpg&#34; alt=&#34;Matukituki Valley, South island, New Zealand&#34; /&gt;
+        &lt;/span&gt;
+    
+
+
+
+&lt;h2 id=&#34;about-me&#34;&gt;About me&lt;/h2&gt;
+
+&lt;p&gt;I’m a 30 year old data scientist, currently living and working in Bayern, Germany. Born in England, I was raised in New Zealand’s incomparable South Island.&lt;/p&gt;
+
+&lt;p&gt;In my spare time, I enjoy hiking, playing and refereeing ice hockey, drinking coffee, weightlifting, computer games, reading blogs, playing guitar, and sampling delicious single malt scotch whisky.&lt;/p&gt;
+
+&lt;h2 id=&#34;work&#34;&gt;Work&lt;/h2&gt;
+
+&lt;p&gt;I am currently working as a Senior Data Scientist in the Global Data &amp;amp; Analytics team of Allianz SE, a global insurance firm headquartered in Munich, and previously worked at Blue Yonder in Karlsruhe.
+
+
+
+    
+    
+        
+        
+        
+        
+    
+
+    
+    
+    
+
+    
+    
+
+
+
+
+    
+    
+        
+    
+
+
+    
+
+    
+        &lt;span class=&#34;image right&#34;&gt;
+            &lt;img src=&#34;http://chrislaing.net/img/about-me/lattice-with-surface.png&#34; alt=&#34;Salvinia-type lattice with fluid surface attached&#34; /&gt;
+        &lt;/span&gt;
+    
+
+
+I received my PhD in Applied Mathematics, as well as my undergraduate degrees in Law and Mathematics, from the University of Otago.&lt;/p&gt;
+
+&lt;p&gt;My doctoral thesis, entitled Numerical Construction of Static Fluid Interfaces with the Embedding Formalism, is an attempt to reformulate the Young-Laplace equation for static fluid interfaces in the language of differential geometry, and to devise a numerical implementation for the system by Finite Elements.&lt;/p&gt;
+
+&lt;p&gt;My thesis &lt;a href=&#34;http://hdl.handle.net/10523/4878&#34;&gt;is available for download&lt;/a&gt; from the University of Otago OUR Archive.&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>
