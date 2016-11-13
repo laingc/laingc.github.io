@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Blog-rsses on chrislaing.net</title>
-    <link>http://chrislaing.net/blog/index.xml</link>
-    <description>Recent content in Blog-rsses on chrislaing.net</description>
+    <title>chrislaing.net</title>
+    <link>http://chrislaing.net/categories/technology/index.xml</link>
+    <description>Recent content on chrislaing.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 08 Nov 2016 21:27:54 +0100</lastBuildDate>
-    <atom:link href="http://chrislaing.net/blog/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="http://chrislaing.net/categories/technology/index.xml" rel="self" type="application/rss+xml" />
     
     <item>
       <title>Docker for Data Science: not all it&#39;s cracked up to be</title>
@@ -21,20 +20,6 @@
 
 &lt;p&gt;Although containerisation has been around for quite some time, and in several forms, the technology that has really taken off recently is Docker. According to the Docker website,
 &amp;gt; Docker containers wrap a piece of software in a complete filesystem that contains everything needed to run: code, runtime, system tools, system libraries – anything that can be installed on a server. This guarantees that the software will always run the same, regardless of its environment.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>A New Hope</title>
-      <link>http://chrislaing.net/blog/test-post/</link>
-      <pubDate>Thu, 03 Nov 2016 23:04:26 +0100</pubDate>
-      
-      <guid>http://chrislaing.net/blog/test-post/</guid>
-      <description>&lt;p&gt;Many years ago, I had a blog. Being perfectly honest, it wasn&amp;rsquo;t a very good blog; it consisted mainly of rants of one kind or another, inane musings, and the occasional photo from my holidays. On the modern web, social media is the default depository for said rants, musings, and photos, and so I had no need of a dedicated space on my website to share them.&lt;/p&gt;
-
-&lt;p&gt;However, it occurred to me recently that I now share quite a bit of material relating to my work and academic interests; blog posts, interesting new projects, snippets of code, or more general articles related to science and technology. I distribute these nuggets of enlightenment primarily through closed channels - slack, hangouts, messaging apps - with the sole exception of twitter, depriving my many adoring fans of interesting material, and me of feedback.&lt;/p&gt;
-
-&lt;p&gt;So today, my blog is now open again for business, this time with (hopefully) fewer boring political rants, and more interesting links. I hope that you will find it to be of some interest.&lt;/p&gt;
 </description>
     </item>
     

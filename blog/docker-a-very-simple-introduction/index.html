@@ -1,19 +1,11 @@
-
-
-
-    
-        
-    
-
-
-
-
 <!DOCTYPE HTML>
 
 <html>
     <head>
         
-            <title>Categories - chrislaing.net</title>
+            
+                <title>Docker for Data Science: not all it&#39;s cracked up to be</title>
+            
         
 
         <meta charset="utf-8" />
@@ -23,6 +15,8 @@
 
 
         
+            <meta name="author" content="Christopher Laing">
+        
         
             
                 <meta name="description" content="chrislaing.net | Beware the Mathematician">
@@ -30,12 +24,23 @@
         
 
         
-        <meta property="og:title" content="Categories" />
-<meta property="og:description" content="chrislaing.net | Beware the Mathematician" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="http://chrislaing.net/categories/" />
+
+  <meta name="twitter:card" content="summary"/>
 
 
+
+<meta name="twitter:title" content="Docker for Data Science: not all it&#39;s cracked up to be"/>
+<meta name="twitter:description" content="If you pay any attention to the technology industry, you&rsquo;ll know that the last few years have seen production hardware become commodotised by public cloud architectures. One can easily rent highly scalable infrastructure from Amazon, Microsoft, Google, and a host of smaller providers. Although these providers have offered an infinite supply - for practical purposes - of virtual machines for some time, the past year has seen a move towards scalable infrastructure on an even more granular level."/>
+<meta name="twitter:site" content="@cjlaing"/>
+
+
+        <meta property="og:title" content="Docker for Data Science: not all it&#39;s cracked up to be" />
+<meta property="og:description" content="If you pay any attention to the technology industry, you&rsquo;ll know that the last few years have seen production hardware become commodotised by public cloud architectures. One can easily rent highly scalable infrastructure from Amazon, Microsoft, Google, and a host of smaller providers. Although these providers have offered an infinite supply - for practical purposes - of virtual machines for some time, the past year has seen a move towards scalable infrastructure on an even more granular level." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://chrislaing.net/blog/docker-a-very-simple-introduction/" />
+
+
+<meta property="og:updated_time" content="2016-11-08T21:27:54&#43;01:00"/>
 
 
 
@@ -47,9 +52,16 @@
 
 
         
-<meta itemprop="name" content="Categories">
-<meta itemprop="description" content="chrislaing.net | Beware the Mathematician">
+<meta itemprop="name" content="Docker for Data Science: not all it&#39;s cracked up to be">
+<meta itemprop="description" content="If you pay any attention to the technology industry, you&rsquo;ll know that the last few years have seen production hardware become commodotised by public cloud architectures. One can easily rent highly scalable infrastructure from Amazon, Microsoft, Google, and a host of smaller providers. Although these providers have offered an infinite supply - for practical purposes - of virtual machines for some time, the past year has seen a move towards scalable infrastructure on an even more granular level.">
 
+
+<meta itemprop="dateModified" content="2016-11-08T21:27:54&#43;01:00" />
+<meta itemprop="wordCount" content="220">
+
+
+
+<meta itemprop="keywords" content="containers,technology," />
 
         
 
@@ -82,6 +94,7 @@
         
         <div id="wrapper">
 
+    
     
 <header id="header">
     
@@ -116,6 +129,10 @@
     </nav>
     <nav class="main">
         <ul>
+            
+            <li id="share-nav" class="share-menu" style="display:none;">
+                <a class="fa-share-alt" href="#share-menu">Share</a>
+            </li>
             
             <li class="search">
                 <a class="fa-search" href="#search">Search</a>
@@ -208,40 +225,115 @@
         
 </section>
 
+    <section id="share-menu">
+    <section id="social-share-nav">
+        <ul class="links">
+            <header>
+                <h3>Share this post <i class="fa fa-smile-o"></i></h3>
+            </header>
+            
+
+        </ul>
+    </section>
+</section>
+
     
     <div id="main">
         
+        
+        <article class="post">
+    <header>
+    <div class="title">
+        
+            <h1><a href="http://chrislaing.net/blog/docker-a-very-simple-introduction/">Docker for Data Science: not all it&#39;s cracked up to be</a></h1>
+            
+        
+        
+    </div>
+    <div class="meta">
+        
             
         
 
-        <ul class="posts">
-            <header>
-                <h1>categories</h1>
-            </header>
+        <time class="published"
+            datetime='2016-11-08'>
+            November 8, 2016</time>
+        <span class="author">Christopher Laing</span>
+        
+            <p>2 minute read</p>
+        
+        
+    </div>
+</header>
+
+
+    <section id="social-share">
+        <ul class="icons">
             
-            
-                <li>
-                    <article>
-                        <header>
-                            <a href="/categories/containers">containers</a>
-                            <span style="float:right;">1</span>
-                        </header>
-                    </article>
-                </li>
-            
-                <li>
-                    <article>
-                        <header>
-                            <a href="/categories/technology">technology</a>
-                            <span style="float:right;">1</span>
-                        </header>
-                    </article>
-                </li>
-            
+
         </ul>
+    </section>
+    
+
+    <div id="content">
+        <p>If you pay any attention to the technology industry, you&rsquo;ll know that the last few years have seen production hardware become commodotised by public cloud architectures. One can easily rent highly scalable infrastructure from Amazon, Microsoft, Google, and a host of smaller providers. Although these providers have offered an infinite supply - for practical purposes - of virtual machines for some time, the past year has seen a move towards scalable infrastructure on an even more granular level. In particular, this has come in the form of containers and lambda functions.</p>
+
+<p>Lambda functions, probably best exemplified by Amazon&rsquo;s lambda offering, are bare, stateless functions that can be executed in response to events, or explicit calls. They offer amazing utility in certain circumstances, but their usefulness is limited to a subset of cases. In this post, I want to focus more on the former phenomenon: containerisation.</p>
+
+<p>Although containerisation has been around for quite some time, and in several forms, the technology that has really taken off recently is Docker. According to the Docker website,
+&gt; Docker containers wrap a piece of software in a complete filesystem that contains everything needed to run: code, runtime, system tools, system libraries – anything that can be installed on a server. This guarantees that the software will always run the same, regardless of its environment.</p>
+
     </div>
 
+    <footer>
+        <ul class="stats">
     
+        
+
+        
+        
+            <li>
+                
+                
+                    
+
+                    
+
+                    
+                        <i class="fa fa-folder-open">&nbsp;</i>
+                    
+
+                    
+                        Categories
+                    
+                
+            </li>
+        
+    
+
+    
+    
+        <li><a href='/categoriestechnology'>technology</a></li>
+    
+        <li><a href='/categoriescontainers'>containers</a></li>
+    
+</ul>
+
+    </footer>
+</article>
+<ul class="actions pagination">
+    
+        <li><a href="http://chrislaing.net/blog/test-post/"
+                class="button big previous">A New Hope</a></li>
+    
+
+    
+</ul>
+
+
+
+
+    </div>
     
 <section id="sidebar">
 
@@ -260,9 +352,6 @@
                 </header>
             
             <ul class="icons">
-                
-                    <li><a href="http://chrislaing.net/categories/index.xml" type="application/rss+xml"
-                        target="_blank" title="RSS" class="fa fa-rss"></a></li>
                 
                 
                     
@@ -388,6 +477,39 @@
     
     
     
+    
+        <section id="categories">
+            <ul class="posts">
+                <header>
+                    <h3><a href="/categories/">Categories</a></h3>
+                </header>
+
+                
+                    
+                
+
+                
+                    <li>
+                        <article>
+                            <header>
+                                <a href="/categories/containers/">containers</a>
+                                <span style="float:right;">1</span>
+                            </header>
+                        </article>
+                    </li>
+                
+                    <li>
+                        <article>
+                            <header>
+                                <a href="/categories/technology/">technology</a>
+                                <span style="float:right;">1</span>
+                            </header>
+                        </article>
+                    </li>
+                
+            </ul>
+        </section>
+    
 
     
         
@@ -395,9 +517,6 @@
     
         <section id="footer">
             <ul class="icons">
-                
-                    <li><a href="http://chrislaing.net/categories/index.xml" type="application/rss+xml"
-                        target="_blank" title="RSS" class="fa fa-rss"></a></li>
                 
                 
                     

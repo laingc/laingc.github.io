@@ -6,8 +6,23 @@
     <description>Recent content on chrislaing.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 03 Nov 2016 23:04:26 +0100</lastBuildDate>
+    <lastBuildDate>Tue, 08 Nov 2016 21:27:54 +0100</lastBuildDate>
     <atom:link href="http://chrislaing.net/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Docker for Data Science: not all it&#39;s cracked up to be</title>
+      <link>http://chrislaing.net/blog/docker-a-very-simple-introduction/</link>
+      <pubDate>Tue, 08 Nov 2016 21:27:54 +0100</pubDate>
+      
+      <guid>http://chrislaing.net/blog/docker-a-very-simple-introduction/</guid>
+      <description>&lt;p&gt;If you pay any attention to the technology industry, you&amp;rsquo;ll know that the last few years have seen production hardware become commodotised by public cloud architectures. One can easily rent highly scalable infrastructure from Amazon, Microsoft, Google, and a host of smaller providers. Although these providers have offered an infinite supply - for practical purposes - of virtual machines for some time, the past year has seen a move towards scalable infrastructure on an even more granular level. In particular, this has come in the form of containers and lambda functions.&lt;/p&gt;
+
+&lt;p&gt;Lambda functions, probably best exemplified by Amazon&amp;rsquo;s lambda offering, are bare, stateless functions that can be executed in response to events, or explicit calls. They offer amazing utility in certain circumstances, but their usefulness is limited to a subset of cases. In this post, I want to focus more on the former phenomenon: containerisation.&lt;/p&gt;
+
+&lt;p&gt;Although containerisation has been around for quite some time, and in several forms, the technology that has really taken off recently is Docker. According to the Docker website,
+&amp;gt; Docker containers wrap a piece of software in a complete filesystem that contains everything needed to run: code, runtime, system tools, system libraries – anything that can be installed on a server. This guarantees that the software will always run the same, regardless of its environment.&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>A New Hope</title>
