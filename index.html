@@ -28,7 +28,7 @@
 <meta property="og:url" content="http://chrislaing.net/" />
 
 
-<meta property="og:updated_time" content="2016-11-08T21:27:54&#43;01:00"/>
+<meta property="og:updated_time" content="2016-11-13T00:00:00&#43;00:00"/>
 
 
 
@@ -191,11 +191,11 @@
 
                 
                     <li>
-                        <a href="http://chrislaing.net/blog/docker-a-very-simple-introduction/"><p>Docker for Data Science: not all it&#39;s cracked up to be</p></a>
+                        <a href="http://chrislaing.net/blog/keybase-keys-for-everyone-part-i/"><p>Keybase: Keys for everyone! Part I</p></a>
                     </li>
                 
                     <li>
-                        <a href="http://chrislaing.net/blog/test-post/"><p>A New Hope</p></a>
+                        <a href="http://chrislaing.net/blog/a-new-hope/"><p>A New Hope</p></a>
                     </li>
                 
             </ul>
@@ -212,7 +212,7 @@
     <header>
     <div class="title">
         
-            <h2><a href="http://chrislaing.net/blog/docker-a-very-simple-introduction/">Docker for Data Science: not all it&#39;s cracked up to be</a></h2>
+            <h2><a href="http://chrislaing.net/blog/keybase-keys-for-everyone-part-i/">Keybase: Keys for everyone! Part I</a></h2>
         
         
     </div>
@@ -222,8 +222,8 @@
         
 
         <time class="published"
-            datetime='2016-11-08'>
-            November 8, 2016</time>
+            datetime='2016-11-13'>
+            November 13, 2016</time>
         <span class="author">Christopher Laing</span>
         
             <p>2 minute read</p>
@@ -242,12 +242,53 @@
     
 
     <div id="content">
-        <p>If you pay any attention to the technology industry, you&rsquo;ll know that the last few years have seen production hardware become commodotised by public cloud architectures. One can easily rent highly scalable infrastructure from Amazon, Microsoft, Google, and a host of smaller providers. Although these providers have offered an infinite supply - for practical purposes - of virtual machines for some time, the past year has seen a move towards scalable infrastructure on an even more granular level. In particular, this has come in the form of containers and lambda functions.</p>
+        <p>
 
-<p>Lambda functions, probably best exemplified by Amazon&rsquo;s lambda offering, are bare, stateless functions that can be executed in response to events, or explicit calls. They offer amazing utility in certain circumstances, but their usefulness is limited to a subset of cases. In this post, I want to focus more on the former phenomenon: containerisation.</p>
 
-<p>Although containerisation has been around for quite some time, and in several forms, the technology that has really taken off recently is Docker. According to the Docker website,
-&gt; Docker containers wrap a piece of software in a complete filesystem that contains everything needed to run: code, runtime, system tools, system libraries – anything that can be installed on a server. This guarantees that the software will always run the same, regardless of its environment.</p>
+    
+    
+        
+        
+        
+        
+    
+
+    
+    
+    
+
+    
+    
+
+
+
+
+    
+    
+        
+    
+
+
+    
+
+    
+        <span class="image right">
+            <img src="/img/2016/11/chrislaing_keybase_proof_graph.png" alt="Graph of Keybase proofs for Keybase user chrislaing" />
+        </span>
+    
+
+
+Encryption is a topic that has fascinated me for years, less because of its mathematical basis than its applications, both existing and potential. By far my favourite project in this realm is <a href="https://keybase.io">Keybase</a>.</p>
+
+<p>Keybase cleverly solves several major problems with PGP-based encryption technology by taking the attitude that online, your identity is functionally the sum of your online profiles. With Keybase, you can automatically verify that <a href="https://twitter.com/CJLaing">@cjlaing</a> on twitter has a particular key, and can encrypt messages or files for him without having to ascertain and validate his key through some other medium. The client software is open source, and works seamlessly with both PGP and NaCl keys.</p>
+
+<p>One of the truly excellent features of Keybase&rsquo;s design is its trust model; although their website and file hosting service offers a centralised interface, that interface is entirely orthogonal to the operation of the service. When you want to id someone and verify their key (<a href="https://keybase.io/chrislaing">me, for example</a>), the Keybase client goes to each of their listed web identities, finds the proof, and verifies it, without needing to trust the <a href="https://keybase.io">keybase.io</a> website at all. Every time a user verifies someone&rsquo;s identity by tracking them, this proof is written into the blockchain. The entire chain can then be independently verified, without requiring anyone to trust Keybase itself.</p>
+
+<p>The <a href="https://keybase.io/docs/kbfs">Keybase filesystem</a> is an extremely clever extension of the core Keybase concept. What I find most interesting is the idea that, in principle, data can be securely shared with someone who hasn&rsquo;t yet signed up for Keybase, whom you know purely through one of their online identities. When they join Keybase and prove their ownership of that identity, your client will verify the proof and encrypt the file for them.</p>
+
+<p>Keybase is still in an invitation-only testing phase, however they already have over 100,000 users as of the time of writing. The project is bringing a lot of great new ideas together with solid, tried, and tested cryptography, and I&rsquo;m excited to see where the project goes next.</p>
+
+<p>In Part II of this post, we&rsquo;ll take a look at how to verify Keybase proofs yourself, and traverse a user&rsquo;s cryptographic chain using Python.</p>
 
     </div>
 
@@ -279,9 +320,9 @@
 
     
     
-        <li><a href='/categoriestechnology'>technology</a></li>
+        <li><a href='/categoriescryptography'>cryptography</a></li>
     
-        <li><a href='/categoriescontainers'>containers</a></li>
+        <li><a href='/categoriestechnology'>technology</a></li>
     
 </ul>
 
@@ -289,7 +330,7 @@
 </article>
 <ul class="actions pagination">
     
-        <li><a href="http://chrislaing.net/blog/test-post/"
+        <li><a href="http://chrislaing.net/blog/a-new-hope/"
                 class="button big previous">A New Hope</a></li>
     
 
@@ -417,13 +458,13 @@
                     <li>
                         <article>
                             <header>
-                                <h3><a href="http://chrislaing.net/blog/docker-a-very-simple-introduction/">Docker for Data Science: not all it&#39;s cracked up to be</a></h3>
+                                <h3><a href="http://chrislaing.net/blog/keybase-keys-for-everyone-part-i/">Keybase: Keys for everyone! Part I</a></h3>
                                 
                                     
                                 
                                 <time class="published" datetime=
-                                    '2016-11-08'>
-                                    November 8, 2016</time>
+                                    '2016-11-13'>
+                                    November 13, 2016</time>
                             </header>
                         </article>
                     </li>
@@ -431,7 +472,7 @@
                     <li>
                         <article>
                             <header>
-                                <h3><a href="http://chrislaing.net/blog/test-post/">A New Hope</a></h3>
+                                <h3><a href="http://chrislaing.net/blog/a-new-hope/">A New Hope</a></h3>
                                 
                                     
                                 
@@ -475,7 +516,7 @@
                     <li>
                         <article>
                             <header>
-                                <a href="/categories/containers/">containers</a>
+                                <a href="/categories/cryptography/">cryptography</a>
                                 <span style="float:right;">1</span>
                             </header>
                         </article>
