@@ -16,7 +16,7 @@
       <guid>http://chrislaing.net/blog/keybase-keys-for-everyone-part-ii/</guid>
       <description>&lt;p&gt;In a &lt;a href=&#34;http://chrislaing.net/blog/keybase-keys-for-everyone-part-i/&#34;&gt;previous post&lt;/a&gt;, we discussed &lt;a href=&#34;https://keybase.io&#34;&gt;Keybase&lt;/a&gt;, a clever company that is solving a lot of the classic problems that users have had with PGP: managing keys, verifying identities, trusting third parties, and user experience.&lt;/p&gt;
 
-&lt;p&gt;I also mentioned that Keybase ensures iteself against an attack on its servers by writing the root of its Merkle tree into the blockchain. In this post, we&amp;rsquo;ll explore what this means, and go through the process of verifying this ourselves step-by-step.&lt;/p&gt;
+&lt;p&gt;I also mentioned that Keybase insures iteself against an attack on its servers by writing the root of its Merkle tree into the blockchain. In this post, we&amp;rsquo;ll explore what this means, and go through the process of verifying this ourselves step-by-step.&lt;/p&gt;
 
 &lt;p&gt;Before we rush ahead to the verification, let&amp;rsquo;s take a moment to understand what a Merkle root is, and why Keybase is using them.&lt;/p&gt;
 
