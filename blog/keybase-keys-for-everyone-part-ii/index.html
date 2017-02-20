@@ -60,7 +60,7 @@ I also mentioned that Keybase ensures iteself against an attack on its servers b
 
 
 <meta itemprop="dateModified" content="2017-02-20T00:00:00&#43;00:00" />
-<meta itemprop="wordCount" content="2280">
+<meta itemprop="wordCount" content="2275">
 
 
 
@@ -301,7 +301,7 @@ ga('send', 'pageview');
 
 <p>This is where the Merkle tree enters the equation. A Merkle tree takes each of the pieces of data we would like to verify, the &ldquo;leaves&rdquo; of the tree, and hashes them. Several of these hashes are then collected together according to a defined algorithm, and the concatenation of them is then itself hashed. These concatenations are then also grouped and hashed, and so on. This heirarchical grouping forms a tree, with each concatenated hash forming a node of the tree. Eventually, we end up with one final, concatenated hash. This hash is the root of the tree. Once in possession of the root hash and the algorithm used to group and concatenate the hashes, we can verify the state of every single leaf node at the point in time that they were hashed, giving us a picture of a consistent server state. All that is needed now is for us to be able to trust the root hash of the Merkle tree, which is achieved by signing the root hash with a private key.</p>
 
-<p>The utility of a Merkle tree for keybase now becomes obvious. This system is, however, potentially vulnerable to a sophisticated &ldquo;forking&rdquo; attack. An example of this might beOne example of such at attack might be that I revoke a compromised key, and publish this change to the comprimised Keybase server. The attacker chooses not to present an updated version of the Merkle tree to another user, and exploits his lack of knowledge of my published revokation.</p>
+<p>The utility of a Merkle tree for keybase now becomes obvious. This system is, however, potentially vulnerable to a sophisticated &ldquo;forking&rdquo; attack. One example of such an attack might be that I revoke a compromised key, and publish this change to the comprimised Keybase server. The attacker chooses not to present an updated version of the Merkle tree to another user, and exploits his lack of knowledge of my published revokation.</p>
 
 <p>Keybase solves this problem by writing the root of the Merkle tree to the Bitcoin blockchain by sending bitcoins from a known address to another. Instead of using the bitcoins, Keybase is using 160 bits of the receiving address to encode the root hash of the Merkle tree. To be a little more precise, Keybase generates a Merkle tree, then signs the root hash of the tree with its private key. It then generates a 160-bit hash of this signature, and sends Bitcoins from their address to the address represented by this hash. Once we know the address receiving the Bitcoins, we can compare the root hash of the Merkle tree presented to us by Keybase&rsquo;s servers to that stored in the blockchain, rendering the forking attack useless.</p>
 
