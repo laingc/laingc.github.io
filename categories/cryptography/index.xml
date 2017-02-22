@@ -78,7 +78,7 @@ from binascii import hexlify
 from hashlib import sha512, sha256
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Recall that what we need to find is the 160-bit hash of the signed root of the Keybase Merkle tree, which is stored in the blockchain as the receiving address for the latest transaction from the sending address &lt;code&gt;1HUCBSJeHnkhzrVKVjaVmWg2QtZS1mdfaz&lt;/code&gt;. Without downloading the multi-gigabyte Bitcoin blockchain in its entirity, the easiest way to find this address is to query &lt;a href=&#34;https://blockchain.info&#34;&gt;blockchain.info&lt;/a&gt; using the requests library. Requests is a beutifully written python library, that is often cited as the gold standard for clean, pythonic APIs. I recommend learning to use its basic functionality even for simple cases such as ours.&lt;/p&gt;
+&lt;p&gt;Recall that what we need to find is the 160-bit hash of the signed root of the Keybase Merkle tree, which is stored in the blockchain as the receiving address for the latest transaction from the sending address &lt;code&gt;1HUCBSJeHnkhzrVKVjaVmWg2QtZS1mdfaz&lt;/code&gt;. Without downloading the multi-gigabyte Bitcoin blockchain in its entirity, the easiest way to find this address is to query &lt;a href=&#34;https://blockchain.info&#34;&gt;blockchain.info&lt;/a&gt; using the requests library. Requests is a beautifully written python library, that is often cited as the gold standard for clean, pythonic APIs. I recommend learning to use its basic functionality even for simple cases such as ours.&lt;/p&gt;
 
 &lt;p&gt;We use a simple GET request to query the blockchain.info API.&lt;/p&gt;
 
@@ -97,7 +97,7 @@ print(to_addr_hash)
 
 &lt;p&gt;Given that our code varies from that presented on keybase.io, it would be reasonable to ask whether this encoding and decoding in some way invalidates the verification that we are undertaking. These processes merely alter the representation of the string, not its content. It is not the string object as it appears in computer memory that we are verifying, but the evaluated content of the string. Theoretically, we could even perform the verification process by hand, separating the content of the string entirely from its representation in computer memory. We are therefore on farily safe ground.&lt;/p&gt;
 
-&lt;p&gt;The variable to_addr_hash now contains a hexadecimal hash, which corresponds to a root block on the Keybase servers. We can query the Keyabse API to find that block.&lt;/p&gt;
+&lt;p&gt;The variable to_addr_hash now contains a hexadecimal hash, which corresponds to a root block on the Keybase servers. We can query the Keybase API to find that block.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;kb        = &amp;quot;https://keybase.io/_/api/1.0&amp;quot;
 uri       = &amp;quot;%s/merkle/root.json?hash160=%s&amp;quot; % (kb, to_addr_hash)
@@ -167,7 +167,7 @@ else:
 &lt;pre&gt;&lt;code class=&#34;language-text&#34;&gt;Root hash and computed hash match.
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;Let&amp;rsquo;s pause and think about what we&amp;rsquo;ve discovered. We know that Keybase created a Merkle tree, which encodes the exact status of every user&amp;rsquo;s signature chain at the time that the tree was written. The root hash of this tree was then signed by keybase, and then this sigtaure was hashed and written into the blockchain.&lt;/p&gt;
+&lt;p&gt;Let&amp;rsquo;s pause and think about what we&amp;rsquo;ve discovered. We know that Keybase created a Merkle tree, which encodes the exact status of every user&amp;rsquo;s signature chain at the time that the tree was written. The root hash of this tree was then signed by Keybase, and then this signature was hashed and written into the blockchain.&lt;/p&gt;
 
 &lt;p&gt;To verify this, we walked backwards through the process. We went to the blockchain and found the latest hash, and asked Keybase for the signed Merkle tree corresponding to this hash. We verified that the hash of this signature corresponded to the hash that we found in the blockchain, and then verified that the signature came from Keybase. Having done that, we checked that the hash we were given is correct by computing the hash ourselves, and comparing the two.&lt;/p&gt;
 

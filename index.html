@@ -316,7 +316,7 @@ from binascii import hexlify
 from hashlib import sha512, sha256
 </code></pre>
 
-<p>Recall that what we need to find is the 160-bit hash of the signed root of the Keybase Merkle tree, which is stored in the blockchain as the receiving address for the latest transaction from the sending address <code>1HUCBSJeHnkhzrVKVjaVmWg2QtZS1mdfaz</code>. Without downloading the multi-gigabyte Bitcoin blockchain in its entirity, the easiest way to find this address is to query <a href="https://blockchain.info">blockchain.info</a> using the requests library. Requests is a beutifully written python library, that is often cited as the gold standard for clean, pythonic APIs. I recommend learning to use its basic functionality even for simple cases such as ours.</p>
+<p>Recall that what we need to find is the 160-bit hash of the signed root of the Keybase Merkle tree, which is stored in the blockchain as the receiving address for the latest transaction from the sending address <code>1HUCBSJeHnkhzrVKVjaVmWg2QtZS1mdfaz</code>. Without downloading the multi-gigabyte Bitcoin blockchain in its entirity, the easiest way to find this address is to query <a href="https://blockchain.info">blockchain.info</a> using the requests library. Requests is a beautifully written python library, that is often cited as the gold standard for clean, pythonic APIs. I recommend learning to use its basic functionality even for simple cases such as ours.</p>
 
 <p>We use a simple GET request to query the blockchain.info API.</p>
 
@@ -335,7 +335,7 @@ print(to_addr_hash)
 
 <p>Given that our code varies from that presented on keybase.io, it would be reasonable to ask whether this encoding and decoding in some way invalidates the verification that we are undertaking. These processes merely alter the representation of the string, not its content. It is not the string object as it appears in computer memory that we are verifying, but the evaluated content of the string. Theoretically, we could even perform the verification process by hand, separating the content of the string entirely from its representation in computer memory. We are therefore on farily safe ground.</p>
 
-<p>The variable to_addr_hash now contains a hexadecimal hash, which corresponds to a root block on the Keybase servers. We can query the Keyabse API to find that block.</p>
+<p>The variable to_addr_hash now contains a hexadecimal hash, which corresponds to a root block on the Keybase servers. We can query the Keybase API to find that block.</p>
 
 <pre><code class="language-python">kb        = &quot;https://keybase.io/_/api/1.0&quot;
 uri       = &quot;%s/merkle/root.json?hash160=%s&quot; % (kb, to_addr_hash)
@@ -405,7 +405,7 @@ else:
 <pre><code class="language-text">Root hash and computed hash match.
 </code></pre>
 
-<p>Let&rsquo;s pause and think about what we&rsquo;ve discovered. We know that Keybase created a Merkle tree, which encodes the exact status of every user&rsquo;s signature chain at the time that the tree was written. The root hash of this tree was then signed by keybase, and then this sigtaure was hashed and written into the blockchain.</p>
+<p>Let&rsquo;s pause and think about what we&rsquo;ve discovered. We know that Keybase created a Merkle tree, which encodes the exact status of every user&rsquo;s signature chain at the time that the tree was written. The root hash of this tree was then signed by Keybase, and then this signature was hashed and written into the blockchain.</p>
 
 <p>To verify this, we walked backwards through the process. We went to the blockchain and found the latest hash, and asked Keybase for the signed Merkle tree corresponding to this hash. We verified that the hash of this signature corresponded to the hash that we found in the blockchain, and then verified that the signature came from Keybase. Having done that, we checked that the hash we were given is correct by computing the hash ourselves, and comparing the two.</p>
 
