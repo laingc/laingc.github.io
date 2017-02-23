@@ -335,7 +335,7 @@ print(to_addr_hash)
 
 <p>Given that our code varies from that presented on keybase.io, it would be reasonable to ask whether this encoding and decoding in some way invalidates the verification that we are undertaking. These processes merely alter the representation of the string, not its content. It is not the string object as it appears in computer memory that we are verifying, but the evaluated content of the string. Theoretically, we could even perform the verification process by hand, separating the content of the string entirely from its representation in computer memory. We are therefore on farily safe ground.</p>
 
-<p>The variable to_addr_hash now contains a hexadecimal hash, which corresponds to a root block on the Keybase servers. We can query the Keybase API to find that block.</p>
+<p>The variable <code>to_addr_hash</code> now contains a hexadecimal hash, which corresponds to a root block on the Keybase servers. We can query the Keybase API to find that block.</p>
 
 <pre><code class="language-python">kb        = &quot;https://keybase.io/_/api/1.0&quot;
 uri       = &quot;%s/merkle/root.json?hash160=%s&quot; % (kb, to_addr_hash)
@@ -343,7 +343,7 @@ r = requests.get(uri)
 root_desc = json.loads(r.text)
 </code></pre>
 
-<p>The root_desc variable now holds a JSON file full of information about the root block. What we need is the signature of the hash of the root block, which is contained in the &lsquo;sig&rsquo; field. Noting again the string encoding and decoding, we use a regular expression to extract the signature itself from the surrounding ASCII armouring, and verify with an assert statement that the hexadecimal hash of the signature matches the hexadecimal hash of the receiving bitcoin address that we found in the first step.</p>
+<p>The root_desc variable now holds a JSON file full of information about the root block. What we need is the signature of the hash of the root block, which is contained in the <code>sig</code> field. Noting again the string encoding and decoding, we use a regular expression to extract the signature itself from the surrounding ASCII armouring, and verify with an assert statement that the hexadecimal hash of the signature matches the hexadecimal hash of the receiving bitcoin address that we found in the first step.</p>
 
 <pre><code class="language-python">sig = b64decode(re.compile(r&quot;\n\n((\S|\n)*?)\n=&quot;).search(root_desc['sig']).group(1).encode('utf-8', 'ignore'))
 if to_addr_hash == hexlify(hash160(sig)).decode('utf-8', 'ignore'):
