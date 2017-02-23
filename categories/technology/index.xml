@@ -105,7 +105,7 @@ r = requests.get(uri)
 root_desc = json.loads(r.text)
 &lt;/code&gt;&lt;/pre&gt;
 
-&lt;p&gt;The root_desc variable now holds a JSON file full of information about the root block. What we need is the signature of the hash of the root block, which is contained in the &lt;code&gt;sig&lt;/code&gt; field. Noting again the string encoding and decoding, we use a regular expression to extract the signature itself from the surrounding ASCII armouring, and verify with an assert statement that the hexadecimal hash of the signature matches the hexadecimal hash of the receiving bitcoin address that we found in the first step.&lt;/p&gt;
+&lt;p&gt;The &lt;code&gt;root_desc&lt;/code&gt; variable now holds a JSON file full of information about the root block. What we need is the signature of the hash of the root block, which is contained in the &lt;code&gt;sig&lt;/code&gt; field. Noting again the string encoding and decoding, we use a regular expression to extract the signature itself from the surrounding ASCII armouring, and verify with an assert statement that the hexadecimal hash of the signature matches the hexadecimal hash of the receiving bitcoin address that we found in the first step.&lt;/p&gt;
 
 &lt;pre&gt;&lt;code class=&#34;language-python&#34;&gt;sig = b64decode(re.compile(r&amp;quot;\n\n((\S|\n)*?)\n=&amp;quot;).search(root_desc[&#39;sig&#39;]).group(1).encode(&#39;utf-8&#39;, &#39;ignore&#39;))
 if to_addr_hash == hexlify(hash160(sig)).decode(&#39;utf-8&#39;, &#39;ignore&#39;):
