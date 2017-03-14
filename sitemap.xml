@@ -33,12 +33,6 @@
   </url>
   
   <url>
-    <loc>http://chrislaing.net/</loc>
-    <lastmod>2017-02-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
-  </url>
-  
-  <url>
     <loc>http://chrislaing.net/categories/cryptography/</loc>
     <lastmod>2017-02-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
@@ -46,6 +40,12 @@
   
   <url>
     <loc>http://chrislaing.net/categories/technology/</loc>
+    <lastmod>2017-02-20T00:00:00+00:00</lastmod>
+    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://chrislaing.net/</loc>
     <lastmod>2017-02-20T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
