@@ -48,7 +48,8 @@ However, it occurred to me recently that I now share quite a bit of material rel
       
       <guid>http://chrislaing.net/about/</guid>
       <description>About me I&amp;rsquo;m Christopher. I live in Wellington, New Zealand, and work in the AI unit of a global software company.
-  I received my PhD in Applied Mathematics, as well as my undergraduate degrees in Law and Mathematics, from the University of Otago.
+
+ I received my PhD in Applied Mathematics, as well as my undergraduate degrees in Law and Mathematics, from the University of Otago.
 My doctoral thesis, entitled Numerical Construction of Static Fluid Interfaces with the Embedding Formalism, is an attempt to reformulate the Young-Laplace equation for static fluid interfaces in the language of differential geometry, and to devise a numerical implementation for the system by Finite Elements.</description>
     </item>
     
