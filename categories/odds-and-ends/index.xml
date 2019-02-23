@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>odds and ends on chrislaing.net</title>
+    <link>http://chrislaing.net/categories/odds-and-ends/</link>
+    <description>Recent content in odds and ends on chrislaing.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 23 Feb 2019 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="http://chrislaing.net/categories/odds-and-ends/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Odds and Ends #1</title>
+      <link>http://chrislaing.net/blog/odds-and-ends-1/</link>
+      <pubDate>Sat, 23 Feb 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://chrislaing.net/blog/odds-and-ends-1/</guid>
+      <description> Spektral is a framework for relational representation learning, built in Python and based on the Keras API. The field of Geometric Deep Learning is starting to get some traction. In particular, doing Deep Learning on graphs presents some interesting possibilities. RPC Frameworks: gRPC vs Thrift vs RPyC for python. The state of Python Packaging. Packing in Python is both improving dramatically and harder than it should be.  </description>
+    </item>
+    
+  </channel>
+</rss>
