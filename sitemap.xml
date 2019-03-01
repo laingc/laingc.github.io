@@ -3,6 +3,11 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>http://chrislaing.net/blog/odds-and-ends-2/</loc>
+    <lastmod>2019-03-01T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
     <loc>http://chrislaing.net/blog/odds-and-ends-1/</loc>
     <lastmod>2019-02-23T00:00:00+00:00</lastmod>
   </url>
@@ -29,7 +34,7 @@
   
   <url>
     <loc>http://chrislaing.net/blog/</loc>
-    <lastmod>2019-02-23T00:00:00+00:00</lastmod>
+    <lastmod>2019-03-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -45,7 +50,7 @@
   
   <url>
     <loc>http://chrislaing.net/</loc>
-    <lastmod>2019-02-23T00:00:00+00:00</lastmod>
+    <lastmod>2019-03-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
@@ -57,13 +62,13 @@
   
   <url>
     <loc>http://chrislaing.net/categories/odds-and-ends/</loc>
-    <lastmod>2019-02-23T00:00:00+00:00</lastmod>
+    <lastmod>2019-03-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
   <url>
     <loc>http://chrislaing.net/categories/technology/</loc>
-    <lastmod>2019-02-23T00:00:00+00:00</lastmod>
+    <lastmod>2019-03-01T00:00:00+00:00</lastmod>
     <priority>0</priority>
   </url>
   
