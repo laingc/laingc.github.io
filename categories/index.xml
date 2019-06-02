@@ -6,23 +6,15 @@
     <description>Recent content in Categories on chrislaing.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
+    <lastBuildDate>Sun, 02 Jun 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://chrislaing.net/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
-      <title>cryptography</title>
-      <link>http://chrislaing.net/categories/cryptography/</link>
-      <pubDate>Mon, 20 Feb 2017 00:00:00 +0000</pubDate>
-      
-      <guid>http://chrislaing.net/categories/cryptography/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>odds and ends</title>
       <link>http://chrislaing.net/categories/odds-and-ends/</link>
-      <pubDate>Fri, 01 Mar 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
       
       <guid>http://chrislaing.net/categories/odds-and-ends/</guid>
       <description></description>
@@ -31,9 +23,18 @@
     <item>
       <title>technology</title>
       <link>http://chrislaing.net/categories/technology/</link>
-      <pubDate>Fri, 01 Mar 2019 00:00:00 +0000</pubDate>
+      <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
       
       <guid>http://chrislaing.net/categories/technology/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>cryptography</title>
+      <link>http://chrislaing.net/categories/cryptography/</link>
+      <pubDate>Mon, 20 Feb 2017 00:00:00 +0000</pubDate>
+      
+      <guid>http://chrislaing.net/categories/cryptography/</guid>
       <description></description>
     </item>
     

@@ -6,10 +6,19 @@
     <description>Recent content on chrislaing.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 01 Mar 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sun, 02 Jun 2019 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://chrislaing.net/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Odds and Ends #3</title>
+      <link>http://chrislaing.net/blog/odds-and-ends-3/</link>
+      <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://chrislaing.net/blog/odds-and-ends-3/</guid>
+      <description>My former colleagues at Blue Yonder (now part of JDA) have introduced Kartothek, software for amanging tables stored ast parquet files. A great set of documentation on going zero to JupyterHub with Kubernetes. A related piece from Jim Crist on installing JupyterHub on an existing Hadoop cluster. An interesting paper interoducing PATE from a couple of years ago that had passed me by. PATE stands for Private Aggregation of Teacher Ensembles, and is a method for doing semi-supervised transfer learning from private data.</description>
+    </item>
     
     <item>
       <title>Odds and Ends #2</title>
