@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>technology on chrislaing.net</title>
@@ -17,6 +17,15 @@
       <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
       
       <guid>http://chrislaing.net/blog/odds-and-ends-3/</guid>
+      <description>I just discovered kops, apparently an excellent way to deploy and manage Kubernetes clusters on the cloud. Since managing a k8s cluster seems to be a full-time job at the best of times, I&#39;m interested to see if this really does make it much easier. I have a very mild case of podcast addiction, and am always looking for something great to add to my collection of subscriptions. Nikita Voloboev has published a very interesting list of podcasts.</description>
+    </item>
+    
+    <item>
+      <title>Odds and Ends #3</title>
+      <link>http://chrislaing.net/blog/odds-and-ends-4/</link>
+      <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
+      
+      <guid>http://chrislaing.net/blog/odds-and-ends-4/</guid>
       <description>My former colleagues at Blue Yonder (now part of JDA) have introduced Kartothek, software for managing tables stored as parquet files. A great set of documentation on going zero to JupyterHub with Kubernetes. A related piece from Jim Crist on installing JupyterHub on an existing Hadoop cluster. An interesting paper interoducing PATE from a couple of years ago that had passed me by. PATE stands for Private Aggregation of Teacher Ensembles, and is a method for doing semi-supervised transfer learning from private data.</description>
     </item>
     
@@ -26,7 +35,7 @@
       <pubDate>Fri, 01 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>http://chrislaing.net/blog/odds-and-ends-2/</guid>
-      <description>Naftali Tishby on the Information Theory of Deep Learning (embedded below). I&amp;rsquo;m very enthusiastic about this kind of work, and have resolved to find and read more of it. a16z&amp;rsquo;s AI Playbook may be a couple of years old now, but it&amp;rsquo;s still an important read. Traces is a Python library for unevenly-spaced time series analysis. I haven&amp;rsquo;t had a problem to really try this out on, but the website looks slick 👌🏻.</description>
+      <description>Naftali Tishby on the Information Theory of Deep Learning (embedded below). I&#39;m very enthusiastic about this kind of work, and have resolved to find and read more of it. a16z&#39;s AI Playbook may be a couple of years old now, but it&#39;s still an important read. Traces is a Python library for unevenly-spaced time series analysis. I haven&#39;t had a problem to really try this out on, but the website looks slick 👌🏻.</description>
     </item>
     
     <item>
@@ -45,7 +54,7 @@
       
       <guid>http://chrislaing.net/blog/keybase-keys-for-everyone-part-ii/</guid>
       <description>In a previous post, we discussed Keybase, a clever company that is solving a lot of the classic problems that users have had with PGP: managing keys, verifying identities, trusting third parties, and user experience.
-I also mentioned that Keybase insures iteself against an attack on its servers by writing the root of its Merkle tree into the blockchain. In this post, we&amp;rsquo;ll explore what this means, and go through the process of verifying this ourselves step-by-step.</description>
+I also mentioned that Keybase insures iteself against an attack on its servers by writing the root of its Merkle tree into the blockchain. In this post, we&#39;ll explore what this means, and go through the process of verifying this ourselves step-by-step.</description>
     </item>
     
     <item>

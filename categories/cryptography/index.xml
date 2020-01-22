@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>cryptography on chrislaing.net</title>
@@ -18,7 +18,7 @@
       
       <guid>http://chrislaing.net/blog/keybase-keys-for-everyone-part-ii/</guid>
       <description>In a previous post, we discussed Keybase, a clever company that is solving a lot of the classic problems that users have had with PGP: managing keys, verifying identities, trusting third parties, and user experience.
-I also mentioned that Keybase insures iteself against an attack on its servers by writing the root of its Merkle tree into the blockchain. In this post, we&amp;rsquo;ll explore what this means, and go through the process of verifying this ourselves step-by-step.</description>
+I also mentioned that Keybase insures iteself against an attack on its servers by writing the root of its Merkle tree into the blockchain. In this post, we&#39;ll explore what this means, and go through the process of verifying this ourselves step-by-step.</description>
     </item>
     
     <item>

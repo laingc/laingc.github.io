@@ -36,7 +36,7 @@
 
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="generator" content="Hugo 0.55.6" />
+        <meta name="generator" content="Hugo 0.60.1" />
         
 
 
@@ -60,19 +60,16 @@ Keybase cleverly solves several major problems with PGP-based encryption technol
 Keybase cleverly solves several major problems with PGP-based encryption technology by taking the attitude that online, your identity is functionally the sum of your online profiles. With Keybase, you can automatically verify that @cjlaing on twitter has a particular key, and can encrypt messages or files for him without having to ascertain and validate his key through some other medium." />
 <meta property="og:type" content="article" />
 <meta property="og:url" content="http://chrislaing.net/blog/keybase-keys-for-everyone-part-i/" />
-<meta property="article:published_time" content="2016-11-13T00:00:00&#43;00:00"/>
-<meta property="article:modified_time" content="2016-11-13T00:00:00&#43;00:00"/>
+<meta property="article:published_time" content="2016-11-13T00:00:00+00:00" />
+<meta property="article:modified_time" content="2016-11-13T00:00:00+00:00" />
 
         <meta property="og:image" content="http://chrislaing.net//images/logo.png">
         <meta property="og:image:type" content="image/png">
         <meta property="og:image:width" content="512">
         <meta property="og:image:height" content="512">
-        
-<meta itemprop="name" content="Keybase: Keys for everyone! Part I">
+        <meta itemprop="name" content="Keybase: Keys for everyone! Part I">
 <meta itemprop="description" content="Encryption is a topic that has fascinated me for years, less because of its mathematical basis than its applications, both existing and potential. By far my favourite project in this realm is Keybase.
 Keybase cleverly solves several major problems with PGP-based encryption technology by taking the attitude that online, your identity is functionally the sum of your online profiles. With Keybase, you can automatically verify that @cjlaing on twitter has a particular key, and can encrypt messages or files for him without having to ascertain and validate his key through some other medium.">
-
-
 <meta itemprop="datePublished" content="2016-11-13T00:00:00&#43;00:00" />
 <meta itemprop="dateModified" content="2016-11-13T00:00:00&#43;00:00" />
 <meta itemprop="wordCount" content="358">
@@ -80,7 +77,6 @@ Keybase cleverly solves several major problems with PGP-based encryption technol
 
 
 <meta itemprop="keywords" content="" />
-
         
 
         
@@ -243,11 +239,11 @@ if (!doNotTrack) {
                 
                         <article class="mini-post">
                             <header>
-                                <h3><a href="/blog/odds-and-ends-2/">Odds and Ends #2</a></h3>
+                                <h3><a href="/blog/odds-and-ends-4/">Odds and Ends #3</a></h3>
                                 
                                 <time class="published" datetime=
-                                    '2019-03-01'>
-                                    March 1, 2019</time>
+                                    '2019-06-02'>
+                                    June 2, 2019</time>
                             </header>
                             
 
@@ -434,16 +430,11 @@ if (!doNotTrack) {
 
 
 Encryption is a topic that has fascinated me for years, less because of its mathematical basis than its applications, both existing and potential. By far my favourite project in this realm is <a href="https://keybase.io">Keybase</a>.</p>
-
 <p>Keybase cleverly solves several major problems with PGP-based encryption technology by taking the attitude that online, your identity is functionally the sum of your online profiles. With Keybase, you can automatically verify that <a href="https://twitter.com/CJLaing">@cjlaing</a> on twitter has a particular key, and can encrypt messages or files for him without having to ascertain and validate his key through some other medium. The client software is open source, and works seamlessly with both PGP and NaCl keys.</p>
-
-<p>One of the truly excellent features of Keybase&rsquo;s design is its trust model; although their website and file hosting service offers a centralised interface, that interface is entirely orthogonal to the operation of the service. When you want to id someone and verify their key (<a href="https://keybase.io/chrislaing">me, for example</a>), the Keybase client goes to each of their listed web identities, finds the proof, and verifies it, without needing to trust the <a href="https://keybase.io">keybase.io</a> website at all. Every time a user verifies someone&rsquo;s identity by tracking them, this proof is written into the blockchain. The entire chain can then be independently verified, without requiring anyone to trust Keybase itself.</p>
-
-<p>The <a href="https://keybase.io/docs/kbfs">Keybase filesystem</a> is an extremely clever extension of the core Keybase concept. What I find most interesting is the idea that, in principle, data can be securely shared with someone who hasn&rsquo;t yet signed up for Keybase, whom you know purely through one of their online identities. When they join Keybase and prove their ownership of that identity, your client will verify the proof and encrypt the file for them.</p>
-
-<p>Keybase is still in an invitation-only testing phase, however they already have over 100,000 users as of the time of writing. The project is bringing a lot of great new ideas together with solid, tried, and tested cryptography, and I&rsquo;m excited to see where the project goes next.</p>
-
-<p>In Part II of this post, we&rsquo;ll take a look at how to verify Keybase proofs yourself, and traverse a user&rsquo;s cryptographic chain using Python.</p>
+<p>One of the truly excellent features of Keybase's design is its trust model; although their website and file hosting service offers a centralised interface, that interface is entirely orthogonal to the operation of the service. When you want to id someone and verify their key (<a href="https://keybase.io/chrislaing">me, for example</a>), the Keybase client goes to each of their listed web identities, finds the proof, and verifies it, without needing to trust the <a href="https://keybase.io">keybase.io</a> website at all. Every time a user verifies someone's identity by tracking them, this proof is written into the blockchain. The entire chain can then be independently verified, without requiring anyone to trust Keybase itself.</p>
+<p>The <a href="https://keybase.io/docs/kbfs">Keybase filesystem</a> is an extremely clever extension of the core Keybase concept. What I find most interesting is the idea that, in principle, data can be securely shared with someone who hasn't yet signed up for Keybase, whom you know purely through one of their online identities. When they join Keybase and prove their ownership of that identity, your client will verify the proof and encrypt the file for them.</p>
+<p>Keybase is still in an invitation-only testing phase, however they already have over 100,000 users as of the time of writing. The project is bringing a lot of great new ideas together with solid, tried, and tested cryptography, and I'm excited to see where the project goes next.</p>
+<p>In Part II of this post, we'll take a look at how to verify Keybase proofs yourself, and traverse a user's cryptographic chain using Python.</p>
 
   </div>
 
@@ -654,11 +645,11 @@ Encryption is a topic that has fascinated me for years, less because of its math
           <article class="mini-post">
             <header>
               <h3>
-                <a href="/blog/odds-and-ends-2/">Odds and Ends #2</a>
+                <a href="/blog/odds-and-ends-4/">Odds and Ends #3</a>
               </h3>
               
-              <time class="published" datetime='2019-03-01'>
-                March 1, 2019
+              <time class="published" datetime='2019-06-02'>
+                June 2, 2019
               </time>
             </header>
             

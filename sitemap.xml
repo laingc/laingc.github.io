@@ -1,17 +1,25 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
     <loc>http://chrislaing.net/blog/</loc>
     <lastmod>2019-06-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://chrislaing.net/categories/</loc>
     <lastmod>2019-06-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
+  </url>
+  
+  <url>
+    <loc>http://chrislaing.net/</loc>
+    <lastmod>2019-06-02T00:00:00+00:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>http://chrislaing.net/categories/odds-and-ends/</loc>
+    <lastmod>2019-06-02T00:00:00+00:00</lastmod>
   </url>
   
   <url>
@@ -20,21 +28,18 @@
   </url>
   
   <url>
-    <loc>http://chrislaing.net/</loc>
+    <loc>http://chrislaing.net/blog/odds-and-ends-4/</loc>
     <lastmod>2019-06-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://chrislaing.net/categories/odds-and-ends/</loc>
+    <loc>http://chrislaing.net/categories/podcasts/</loc>
     <lastmod>2019-06-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
     <loc>http://chrislaing.net/categories/technology/</loc>
     <lastmod>2019-06-02T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -48,14 +53,13 @@
   </url>
   
   <url>
-    <loc>http://chrislaing.net/blog/keybase-keys-for-everyone-part-ii/</loc>
+    <loc>http://chrislaing.net/categories/cryptography/</loc>
     <lastmod>2017-02-20T00:00:00+00:00</lastmod>
   </url>
   
   <url>
-    <loc>http://chrislaing.net/categories/cryptography/</loc>
+    <loc>http://chrislaing.net/blog/keybase-keys-for-everyone-part-ii/</loc>
     <lastmod>2017-02-20T00:00:00+00:00</lastmod>
-    <priority>0</priority>
   </url>
   
   <url>
@@ -75,7 +79,6 @@
   
   <url>
     <loc>http://chrislaing.net/tags/</loc>
-    <priority>0</priority>
   </url>
   
 </urlset>
