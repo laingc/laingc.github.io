@@ -6,10 +6,19 @@
     <description>Recent content in technology on chrislaing.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 02 Jun 2019 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Wed, 22 Jan 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="http://chrislaing.net/categories/technology/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Odds and Ends #4</title>
+      <link>http://chrislaing.net/blog/odds-and-ends-4/</link>
+      <pubDate>Wed, 22 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>http://chrislaing.net/blog/odds-and-ends-4/</guid>
+      <description>I just discovered kops, apparently an excellent way to deploy and manage Kubernetes clusters on the cloud. Since managing a k8s cluster seems to be a full-time job at the best of times, I&#39;m interested to see if this really does make it much easier. I have a very mild case of podcast addiction, and am always looking for something great to add to my collection of subscriptions. Nikita Voloboev has published a very interesting list of podcasts.</description>
+    </item>
     
     <item>
       <title>Odds and Ends #3</title>
@@ -17,15 +26,6 @@
       <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
       
       <guid>http://chrislaing.net/blog/odds-and-ends-3/</guid>
-      <description>I just discovered kops, apparently an excellent way to deploy and manage Kubernetes clusters on the cloud. Since managing a k8s cluster seems to be a full-time job at the best of times, I&#39;m interested to see if this really does make it much easier. I have a very mild case of podcast addiction, and am always looking for something great to add to my collection of subscriptions. Nikita Voloboev has published a very interesting list of podcasts.</description>
-    </item>
-    
-    <item>
-      <title>Odds and Ends #3</title>
-      <link>http://chrislaing.net/blog/odds-and-ends-4/</link>
-      <pubDate>Sun, 02 Jun 2019 00:00:00 +0000</pubDate>
-      
-      <guid>http://chrislaing.net/blog/odds-and-ends-4/</guid>
       <description>My former colleagues at Blue Yonder (now part of JDA) have introduced Kartothek, software for managing tables stored as parquet files. A great set of documentation on going zero to JupyterHub with Kubernetes. A related piece from Jim Crist on installing JupyterHub on an existing Hadoop cluster. An interesting paper interoducing PATE from a couple of years ago that had passed me by. PATE stands for Private Aggregation of Teacher Ensembles, and is a method for doing semi-supervised transfer learning from private data.</description>
     </item>
     
