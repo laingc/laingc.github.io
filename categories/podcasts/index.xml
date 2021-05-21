@@ -5,19 +5,15 @@
     <link>http://chrislaing.net/categories/podcasts/</link>
     <description>Recent content in podcasts on chrislaing.net</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Wed, 22 Jan 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="http://chrislaing.net/categories/podcasts/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-gb</language>
+    <lastBuildDate>Wed, 22 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="http://chrislaing.net/categories/podcasts/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Odds and Ends #4</title>
       <link>http://chrislaing.net/blog/odds-and-ends-4/</link>
       <pubDate>Wed, 22 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>http://chrislaing.net/blog/odds-and-ends-4/</guid>
-      <description>I just discovered kops, apparently an excellent way to deploy and manage Kubernetes clusters on the cloud. Since managing a k8s cluster seems to be a full-time job at the best of times, I&#39;m interested to see if this really does make it much easier. I have a very mild case of podcast addiction, and am always looking for something great to add to my collection of subscriptions. Nikita Voloboev has published a very interesting list of podcasts.</description>
+      <description>I just discovered kops, apparently an excellent way to deploy and manage Kubernetes clusters on the cloud. Since managing a k8s cluster seems to be a full-time job at the best of times, I&amp;rsquo;m interested to see if this really does make it much easier. I have a very mild case of podcast addiction, and am always looking for something great to add to my collection of subscriptions. Nikita Voloboev has published a very interesting list of podcasts.</description>
     </item>
     
   </channel>

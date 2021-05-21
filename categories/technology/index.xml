@@ -5,19 +5,15 @@
     <link>http://chrislaing.net/categories/technology/</link>
     <description>Recent content in technology on chrislaing.net</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language>
-    <lastBuildDate>Wed, 22 Jan 2020 00:00:00 +0000</lastBuildDate>
-    
-	<atom:link href="http://chrislaing.net/categories/technology/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>en-gb</language>
+    <lastBuildDate>Wed, 22 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="http://chrislaing.net/categories/technology/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Odds and Ends #4</title>
       <link>http://chrislaing.net/blog/odds-and-ends-4/</link>
       <pubDate>Wed, 22 Jan 2020 00:00:00 +0000</pubDate>
       
       <guid>http://chrislaing.net/blog/odds-and-ends-4/</guid>
-      <description>I just discovered kops, apparently an excellent way to deploy and manage Kubernetes clusters on the cloud. Since managing a k8s cluster seems to be a full-time job at the best of times, I&#39;m interested to see if this really does make it much easier. I have a very mild case of podcast addiction, and am always looking for something great to add to my collection of subscriptions. Nikita Voloboev has published a very interesting list of podcasts.</description>
+      <description>I just discovered kops, apparently an excellent way to deploy and manage Kubernetes clusters on the cloud. Since managing a k8s cluster seems to be a full-time job at the best of times, I&amp;rsquo;m interested to see if this really does make it much easier. I have a very mild case of podcast addiction, and am always looking for something great to add to my collection of subscriptions. Nikita Voloboev has published a very interesting list of podcasts.</description>
     </item>
     
     <item>
@@ -35,7 +31,7 @@
       <pubDate>Fri, 01 Mar 2019 00:00:00 +0000</pubDate>
       
       <guid>http://chrislaing.net/blog/odds-and-ends-2/</guid>
-      <description>Naftali Tishby on the Information Theory of Deep Learning (embedded below). I&#39;m very enthusiastic about this kind of work, and have resolved to find and read more of it. a16z&#39;s AI Playbook may be a couple of years old now, but it&#39;s still an important read. Traces is a Python library for unevenly-spaced time series analysis. I haven&#39;t had a problem to really try this out on, but the website looks slick 👌🏻.</description>
+      <description>Naftali Tishby on the Information Theory of Deep Learning (embedded below). I&amp;rsquo;m very enthusiastic about this kind of work, and have resolved to find and read more of it. a16z&amp;rsquo;s AI Playbook may be a couple of years old now, but it&amp;rsquo;s still an important read. Traces is a Python library for unevenly-spaced time series analysis. I haven&amp;rsquo;t had a problem to really try this out on, but the website looks slick 👌🏻.</description>
     </item>
     
     <item>
@@ -53,8 +49,7 @@
       <pubDate>Mon, 20 Feb 2017 00:00:00 +0000</pubDate>
       
       <guid>http://chrislaing.net/blog/keybase-keys-for-everyone-part-ii/</guid>
-      <description>In a previous post, we discussed Keybase, a clever company that is solving a lot of the classic problems that users have had with PGP: managing keys, verifying identities, trusting third parties, and user experience.
-I also mentioned that Keybase insures iteself against an attack on its servers by writing the root of its Merkle tree into the blockchain. In this post, we&#39;ll explore what this means, and go through the process of verifying this ourselves step-by-step.</description>
+      <description>&lt;p&gt;In a &lt;a href=&#34;http://chrislaing.net/blog/keybase-keys-for-everyone-part-i/&#34;&gt;previous post&lt;/a&gt;, we discussed &lt;a href=&#34;https://keybase.io&#34;&gt;Keybase&lt;/a&gt;, a clever company that is solving a lot of the classic problems that users have had with PGP: managing keys, verifying identities, trusting third parties, and user experience.&lt;/p&gt;</description>
     </item>
     
     <item>
@@ -63,8 +58,11 @@ I also mentioned that Keybase insures iteself against an attack on its servers b
       <pubDate>Sun, 13 Nov 2016 00:00:00 +0000</pubDate>
       
       <guid>http://chrislaing.net/blog/keybase-keys-for-everyone-part-i/</guid>
-      <description>Encryption is a topic that has fascinated me for years, less because of its mathematical basis than its applications, both existing and potential. By far my favourite project in this realm is Keybase.
-Keybase cleverly solves several major problems with PGP-based encryption technology by taking the attitude that online, your identity is functionally the sum of your online profiles. With Keybase, you can automatically verify that @cjlaing on twitter has a particular key, and can encrypt messages or files for him without having to ascertain and validate his key through some other medium.</description>
+      <description>&lt;p&gt;&lt;figure&gt;&lt;img src=&#34;http://chrislaing.net/img/2016/11/chrislaing_keybase_proof_graph.png&#34;
+         alt=&#34;Graph of Keybase proofs for Keybase user chrislaing&#34;/&gt;
+&lt;/figure&gt;
+
+Encryption is a topic that has fascinated me for years, less because of its mathematical basis than its applications, both existing and potential. By far my favourite project in this realm is &lt;a href=&#34;https://keybase.io&#34;&gt;Keybase&lt;/a&gt;.&lt;/p&gt;</description>
     </item>
     
   </channel>

@@ -1,84 +1,52 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
   <url>
     <loc>http://chrislaing.net/blog/</loc>
     <lastmod>2020-01-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://chrislaing.net/categories/</loc>
     <lastmod>2020-01-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://chrislaing.net/</loc>
     <lastmod>2020-01-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://chrislaing.net/categories/odds-and-ends/</loc>
     <lastmod>2020-01-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://chrislaing.net/blog/odds-and-ends-4/</loc>
     <lastmod>2020-01-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://chrislaing.net/categories/podcasts/</loc>
     <lastmod>2020-01-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://chrislaing.net/categories/technology/</loc>
     <lastmod>2020-01-22T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://chrislaing.net/blog/odds-and-ends-3/</loc>
     <lastmod>2019-06-02T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://chrislaing.net/blog/odds-and-ends-2/</loc>
     <lastmod>2019-03-01T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://chrislaing.net/blog/odds-and-ends-1/</loc>
     <lastmod>2019-02-23T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://chrislaing.net/categories/cryptography/</loc>
     <lastmod>2017-02-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://chrislaing.net/blog/keybase-keys-for-everyone-part-ii/</loc>
     <lastmod>2017-02-20T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://chrislaing.net/blog/keybase-keys-for-everyone-part-i/</loc>
     <lastmod>2016-11-13T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://chrislaing.net/blog/a-new-hope/</loc>
     <lastmod>2016-11-03T23:04:26+01:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://chrislaing.net/about/</loc>
     <lastmod>2016-11-03T00:00:00+00:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>http://chrislaing.net/tags/</loc>
   </url>
-  
 </urlset>
