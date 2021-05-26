@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Deep Learning on chrislaing.net</title>
+    <link>http://chrislaing.net/tags/deep-learning/</link>
+    <description>Recent content in Deep Learning on chrislaing.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Thu, 27 May 2021 11:30:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/tags/deep-learning/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Bitter Lesson Conditions</title>
+      <link>http://chrislaing.net/blog/the-bitter-lesson-conditions/</link>
+      <pubDate>Thu, 27 May 2021 11:30:00 +1300</pubDate>
+      
+      <guid>http://chrislaing.net/blog/the-bitter-lesson-conditions/</guid>
+      <description>The hard truth of AI is that methods that exploit deep, hard-won human knowledge about a particular domain are outperformed by methods that cleverly exploit the increasing power of computation.
+I have a modest proposal to distill this fundamental truth into a set of conditions which, when met, will revolutionise a given field.
+Lineage I do not claim this insight about the fundamental mechanism of progress in AI as original; I have been heavily influenced by Richard Sutton&amp;rsquo;s powerful essay The Bitter Lesson.</description>
+    </item>
+    
+  </channel>
+</rss>

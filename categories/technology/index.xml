@@ -6,7 +6,18 @@
     <description>Recent content in technology on chrislaing.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Wed, 22 Jan 2020 00:00:00 +0000</lastBuildDate><atom:link href="http://chrislaing.net/categories/technology/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 27 May 2021 11:30:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/categories/technology/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Bitter Lesson Conditions</title>
+      <link>http://chrislaing.net/blog/the-bitter-lesson-conditions/</link>
+      <pubDate>Thu, 27 May 2021 11:30:00 +1300</pubDate>
+      
+      <guid>http://chrislaing.net/blog/the-bitter-lesson-conditions/</guid>
+      <description>The hard truth of AI is that methods that exploit deep, hard-won human knowledge about a particular domain are outperformed by methods that cleverly exploit the increasing power of computation.
+I have a modest proposal to distill this fundamental truth into a set of conditions which, when met, will revolutionise a given field.
+Lineage I do not claim this insight about the fundamental mechanism of progress in AI as original; I have been heavily influenced by Richard Sutton&amp;rsquo;s powerful essay The Bitter Lesson.</description>
+    </item>
+    
     <item>
       <title>Odds and Ends #4</title>
       <link>http://chrislaing.net/blog/odds-and-ends-4/</link>
