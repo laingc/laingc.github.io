@@ -1,12 +1,21 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>technology on chrislaing.net</title>
+    <title>Technology on chrislaing.net</title>
     <link>http://chrislaing.net/categories/technology/</link>
-    <description>Recent content in technology on chrislaing.net</description>
+    <description>Recent content in Technology on chrislaing.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Thu, 27 May 2021 11:30:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/categories/technology/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 31 May 2021 19:30:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/categories/technology/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Business Implications of Combinatorial Optimisation by Deep Learning</title>
+      <link>http://chrislaing.net/blog/business-implications-of-combinatorial-optimisation/</link>
+      <pubDate>Mon, 31 May 2021 19:30:00 +1300</pubDate>
+      
+      <guid>http://chrislaing.net/blog/business-implications-of-combinatorial-optimisation/</guid>
+      <description>&lt;p&gt;Recently, Deep Learning has revolutionised a multitude of technical fields, most notably Computer Vision and Natural Language Processing. The implications for business are enormous, with the ramifications of these change still filtering through the mostly technology-shy world of business. There are signs that Combinatorial Optimisation might be the next technical field to undergo Revolution-By-Neural-Network. If this comes to fruition, then the impact on business will be seismic.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>The Bitter Lesson Conditions</title>
       <link>http://chrislaing.net/blog/the-bitter-lesson-conditions/</link>

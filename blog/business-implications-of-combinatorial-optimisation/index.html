@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>The Business Implications of Combinatorial Optimisation by Deep Learning - chrislaing.net</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.83.1" /><meta property="og:site_name" content="chrislaing.net">
+  <meta property="og:title" content="The Business Implications of Combinatorial Optimisation by Deep Learning">
+  <meta property="og:description" content="chrislaing.net">
+  <meta property="description" content="chrislaing.net">
+  <meta property="og:url" content="http://chrislaing.net/blog/business-implications-of-combinatorial-optimisation/">
+  <meta property="og:type" content="article">
+  
+    
+      <meta property="og:image" content="http://chrislaing.net/img/2021/05/combinatorial.png">
+      <meta property="og:image:alt" content="Combinatorial Optimisation">
+    
+  
+  <link rel="stylesheet" href="/css/bundle.min.6ad9eb85bff384c75937a02036b01425a2ca63f19a96535b8ba5b181db62a4b3.css" integrity="sha256-atnrhb/zhMdZN6AgNrAUJaLKY/GallNbi6WxgdtipLM="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          Blog
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fa fa-home'></i> Home</a>
+        
+      
+        
+          
+          <a href="/about" class="nav link"><i class='far fa-id-card'></i> About</a>
+        
+      
+        
+          
+          <a href="/blog" class="nav link"><i class='far fa-newspaper'></i> Blog</a>
+        
+      
+        
+          
+          <a href="/categories" class="nav link"><i class='fas fa-sitemap'></i> Categories</a>
+        
+      
+      <a href="#share-menu" class="nav link share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    <a href="#share-menu" class="nav share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    <a href="#lang-menu" class="nav lang-toggle" lang="en">en</a>
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  <menu id="lang-menu" class="flyout-menu menu">
+  <a href="#" lang="en" class="nav link active"> (en)</a>
+  
+    
+      
+    
+  
+</menu>
+
+  
+    <menu id="share-menu" class="flyout-menu menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=The%20Business%20Implications%20of%20Combinatorial%20Optimisation%20by%20Deep%20Learning&amp;url=http%3a%2f%2fchrislaing.net%2fblog%2fbusiness-implications-of-combinatorial-optimisation%2f" target="_blank" rel="noopener" class="nav share-btn twitter">
+        <p>Twitter</p>
+      </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=http%3a%2f%2fchrislaing.net%2fblog%2fbusiness-implications-of-combinatorial-optimisation%2f&amp;title=The%20Business%20Implications%20of%20Combinatorial%20Optimisation%20by%20Deep%20Learning" target="_blank" rel="noopener" class="nav share-btn reddit">
+          <p>Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=http%3a%2f%2fchrislaing.net%2fblog%2fbusiness-implications-of-combinatorial-optimisation%2f&amp;title=The%20Business%20Implications%20of%20Combinatorial%20Optimisation%20by%20Deep%20Learning" target="_blank" rel="noopener" class="nav share-btn linkedin">
+            <p>LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by Christopher%20Laing&amp;body=http%3a%2f%2fchrislaing.net%2fblog%2fbusiness-implications-of-combinatorial-optimisation%2f" target="_blank" class="nav share-btn email" data-proofer-ignore>
+          <p>Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="http://chrislaing.net/img/main/wading_small.png" class="circle" width="100" alt="chrislaing.net" /></a>
+  <header>
+    <h1>chrislaing.net</h1>
+  </header>
+  <main>
+    <p>Beware the Mathematician</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//www.linkedin.com/in/christopherlaing" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/cjlaing" target="_blank" rel="noopener" title="Twitter" class="fab fa-twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="//mastodon.sdf.org/@laingc" target="_blank" rel="noopener" title="mastodon" class="fab fa-mastodon"></a></li>
+
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article>
+    <div class="post">
+      <header>
+  <div class="title">
+    
+      <h2><a href="/blog/business-implications-of-combinatorial-optimisation/">The Business Implications of Combinatorial Optimisation by Deep Learning</a></h2>
+    
+    
+  </div>
+  <div class="meta">
+    <time datetime="2021-05-31 19:30:00 &#43;1300 &#43;1300">May 31, 2021</time>
+    <p>Christopher Laing</p>
+    <p>5-Minute Read</p>
+  </div>
+</header>
+
+      <div id="socnet-share">
+        
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=The%20Business%20Implications%20of%20Combinatorial%20Optimisation%20by%20Deep%20Learning&amp;url=http%3a%2f%2fchrislaing.net%2fblog%2fbusiness-implications-of-combinatorial-optimisation%2f" target="_blank" rel="noopener" class="nav share-btn twitter">
+        <p>Twitter</p>
+      </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=http%3a%2f%2fchrislaing.net%2fblog%2fbusiness-implications-of-combinatorial-optimisation%2f&amp;title=The%20Business%20Implications%20of%20Combinatorial%20Optimisation%20by%20Deep%20Learning" target="_blank" rel="noopener" class="nav share-btn reddit">
+          <p>Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=http%3a%2f%2fchrislaing.net%2fblog%2fbusiness-implications-of-combinatorial-optimisation%2f&amp;title=The%20Business%20Implications%20of%20Combinatorial%20Optimisation%20by%20Deep%20Learning" target="_blank" rel="noopener" class="nav share-btn linkedin">
+            <p>LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by Christopher%20Laing&amp;body=http%3a%2f%2fchrislaing.net%2fblog%2fbusiness-implications-of-combinatorial-optimisation%2f" target="_blank" class="nav share-btn email" data-proofer-ignore>
+          <p>Email</p>
+        </a>
+  
+
+
+      </div>
+      <div class="content">
+        <a href="/blog/business-implications-of-combinatorial-optimisation/" class="image" style="--bg-image: url('http://chrislaing.net/img/2021/05/combinatorial.png');">
+    <img class="stretchV" src="http://chrislaing.net/img/2021/05/combinatorial.png" alt="Combinatorial Optimisation">
+  </a>
+        <p>Recently, Deep Learning has revolutionised a multitude of technical fields, most notably Computer Vision and Natural Language Processing. The implications for business are enormous, with the ramifications of these change still filtering through the mostly technology-shy world of business. There are signs that Combinatorial Optimisation might be the next technical field to undergo Revolution-By-Neural-Network. If this comes to fruition, then the impact on business will be seismic.</p>
+<h3 id="combinatorial-optimisation">Combinatorial Optimisation</h3>
+<p>Combinatorial Optimisation (CO) sounds very dry and technical when defined; It is the process of finding an optimal object from a set of objects. The Travelling Salesman Problem, a classic and well-studied problem in Computer Science, falls into this category, as do problems as diverse as vehicle routing and workforce scheduling.</p>
+<p>CO problems are so ubiquitous in industry that it&rsquo;s fair to say that every business of at least a medium size is impacted by them (whether they are aware of it or not), as well as a good many smaller ones. For some problems, such as those found in supply chain management, entire industries exist merely to assist with small parts of that overall challenge.</p>
+<p>There are, of course, many methods currently employed to deal with problems arising in CO. Any number of software companies and consultants offer solutions in supply chain management, for example. So why is it that solving these issues with Deep Learning would be such a revolutionary event?</p>
+<h3 id="alexnet-moments">AlexNet Moments</h3>
+<p>To understand this, we need to look at the recent history of Computer Vision (CV) and Natural Language Processing (NLP). As recently as a few years ago, solutions to both CV and NLP problems possessed the following characteristics:</p>
+<ol>
+<li>Highly specialised algorithms.</li>
+<li>A &ldquo;big bag of tricks&rdquo; approach.</li>
+<li>Scale is a problem.</li>
+<li>A great deal of subject-matter expertise.</li>
+<li>A general lack of success in solving real-world problems.</li>
+</ol>
+<p>Today, both NLP and CV problems are addressed with Deep Learning, with the following set of characteristics:</p>
+<ol>
+<li>Very general algorithms.</li>
+<li>Consistent approach.</li>
+<li>Scale is an advantage.</li>
+<li>A great deal of Deep Learning expertise.</li>
+<li>Huge success in solving real-world problems.</li>
+</ol>
+<p>Former specialists with years of inherited wisdom about how to approach CV and NLP were not particularly happy with this sea change, but the results speak for themselves: High quality, scalable NLP and CV are available to any company that wants them.</p>
+<p>The turning point for CV was the 2012 release of AlexNet - a Convolutional Neural Network (CNN) that won the ImageNet Large Scale Visual Recognition Challenge. After AlexNet, the only methods to win image recognition contests were based primarily or solely on CNNs. Similarly, in 2017, the publication of the Transformer architecture for NLP problems in a paper entitled &ldquo;Attention Is All You Need&rdquo; created a paradigm shift in NLP model performance. The events that unlock a new, Deep-Learning-based approach to a field are called &ldquo;AlexNet moments&rdquo;.</p>
+<h3 id="the-bitter-lesson">The Bitter Lesson</h3>
+<p>The particular Neural Network architectures of CNNs and Transformers <em>per se</em> are not very important. <a href="http://chrislaing.net/blog/the-bitter-lesson-conditions/">As I have previously written</a>, what is important is that both derive their power from three critical characteristics:</p>
+<ol>
+<li>The method is general.</li>
+<li>The model architecture allows for scalable computation.</li>
+<li>The quality of the model scales well with compute.</li>
+</ol>
+<p>These &ldquo;Bitter Lesson Conditions&rdquo; derive their name from Richard Sutton&rsquo;s seminal essay <a href="http://www.incompleteideas.net/IncIdeas/BitterLesson.html">The Bitter Lesson</a>, which begins:</p>
+<blockquote>
+<p>The biggest lesson that can be read from 70 years of AI research is that general methods that leverage computation are ultimately the most effective, and by a large margin.</p>
+</blockquote>
+<p>The observation is simple, but the implications are profound; when we find a method that satisfies these three conditions, we revolutionise a field. At the time of writing, Automatic Speech Recognition (ASR) is going through an AlexNet moment because we have discovered methods that satisfy the <a href="http://chrislaing.net/blog/the-bitter-lesson-conditions/">Bitter Lesson Conditions</a>.</p>
+<h3 id="the-next-frontier">The Next Frontier</h3>
+<p>Returning to the realm of Combinatorial Optimisation, we can see that solutions to CO problems presently have the following characteristics:</p>
+<ol>
+<li>Highly specialised algorithms.</li>
+<li>A &ldquo;big bag of tricks&rdquo; approach.</li>
+<li>Scale is a problem.</li>
+<li>A great deal of subject-matter expertise.</li>
+<li>A general lack of success in solving real-world problems.</li>
+</ol>
+<p>These are the exact conditions that pertained in CV and NLP problems prior to their respective AlexNet moments. What CO currently lacks is an algorithm that satisfies the Bitter Lesson Conditions.</p>
+<p>Excitingly - or worryingly, depending on your perspective - there are <a href="https://www.sciencedirect.com/science/article/abs/pii/S0377221720306895">signs</a> that this may be changing. Researchers are actively working towards scalable Deep Learning approaches to CO problems. For now, the problems are toy problems and classical algorithms are still the go-to solution for difficult cases, but it is hard to believe that the same forces that have rapidly transformed stubborn domains such as CV, NLP, and ASR will not eventually crack the CO nut.</p>
+<h3 id="back-to-business">Back to Business</h3>
+<p>The upshot for business is that while CV and NLP may be critical technologies, they are small beer compared to the world of CO. Combinatorial Optimisation problems are so core to the operations of so many businesses, that the explosion of solutions and software unleashed by an AlexNet moment would be Cambrian in scale, and the impact on the business landscape incalculable.</p>
+<p>Given how fundamental such processes are to many businesses, and given also the scale of the commercial advantage that early adopters will obtain, I hold out some mild hope that this may be the technology that finally breaks the &ldquo;IT is overhead&rdquo; attitude of many large enterprises. With enough determination from management, recent advances in CV and NLP can be kept at arm&rsquo;s length from the core operations of the business, and it is apprently still possible for an executive in 2021 to truly believe that technology is best bought and stuck in the corner, far away from where the action truly happens. The business-critical nature of CO problems will, with any luck, force executives to confront the reality that ongoing effective use of technology is now a real strategic imperative, not a cost to be born.</p>
+<h3 id="neural-networks-in-the-boardroom">Neural Networks in the Boardroom</h3>
+<p>It&rsquo;s a long bow to draw from experimental methods that may be just over the horizon to my personal vendetta against the exclusion of technologists from key strategic positions in traditional companies, but the ingredients for an AlexNet moment are all there - not just for Combinatorial Optimisation, but for business itself.</p>
+      </div>
+      <footer>
+        <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/business/">Business</a></li>
+        
+          <li><a class="article-terms-link" href="/categories/technology/">Technology</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/combinatorial-optimisation/">Combinatorial Optimisation</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/business/">Business</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/machine-learning/">Machine Learning</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+      </footer>
+    </div>
+    
+  </article>
+  <div class="pagination">
+    
+    
+      <a href="/blog/the-bitter-lesson-conditions/" class="button right"><span>The Bitter Lesson Conditions</span></a>
+    
+  </div>
+
+      </main>
+      <section id="site-sidebar">
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent Posts</h1>
+      </header>
+      
+      <article class="mini-post">
+          <a href="/blog/business-implications-of-combinatorial-optimisation/" class="image" style="--bg-image: url('http://chrislaing.net/img/2021/05/combinatorial.png');">
+    <img class="stretchV" src="http://chrislaing.net/img/2021/05/combinatorial.png" alt="Combinatorial Optimisation">
+  </a>
+        <header>
+          <h2><a href="/blog/business-implications-of-combinatorial-optimisation/">The Business Implications of Combinatorial Optimisation by Deep Learning</a></h2>
+          <time class="published" datetime="2021-05-31 19:30:00 &#43;1300 &#43;1300">May 31, 2021</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+          <a href="/blog/the-bitter-lesson-conditions/" class="image" style="--bg-image: url('http://chrislaing.net/img/2021/05/network.jpg');">
+    <img class="stretchV" src="http://chrislaing.net/img/2021/05/network.jpg" alt="Neural Network">
+  </a>
+        <header>
+          <h2><a href="/blog/the-bitter-lesson-conditions/">The Bitter Lesson Conditions</a></h2>
+          <time class="published" datetime="2021-05-27 11:30:00 &#43;1300 &#43;1300">May 27, 2021</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+          <a href="/blog/odds-and-ends-4/" class="image" style="--bg-image: url('http://chrislaing.net/img/2020/01/podcasts.png');">
+    <img class="stretchV" src="http://chrislaing.net/img/2020/01/podcasts.png" alt="Podcasts">
+  </a>
+        <header>
+          <h2><a href="/blog/odds-and-ends-4/">Odds and Ends #4</a></h2>
+          <time class="published" datetime="2020-01-22 00:00:00 &#43;0000 UTC">January 22, 2020</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+          <a href="/blog/odds-and-ends-3/" class="image" style="--bg-image: url('http://chrislaing.net/img/2019/06/jupyterhub.png');">
+    <img class="stretchH" src="http://chrislaing.net/img/2019/06/jupyterhub.png" alt="JupyterHub Logo">
+  </a>
+        <header>
+          <h2><a href="/blog/odds-and-ends-3/">Odds and Ends #3</a></h2>
+          <time class="published" datetime="2019-06-02 00:00:00 &#43;0000 UTC">June 2, 2019</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+          <a href="/blog/odds-and-ends-2/" class="image" style="--bg-image: url('http://chrislaing.net/img/2019/03/infotheory.jpg');">
+    <img class="stretchV" src="http://chrislaing.net/img/2019/03/infotheory.jpg" alt="Information Theory">
+  </a>
+        <header>
+          <h2><a href="/blog/odds-and-ends-2/">Odds and Ends #2</a></h2>
+          <time class="published" datetime="2019-03-01 00:00:00 &#43;0000 UTC">March 1, 2019</time>
+        </header>
+      </article>
+      
+      
+        <footer>
+          <a href="/blog" class="button">See More</a>
+        </footer>
+      
+    </section>
+  
+
+  
+    
+
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+          
+          <li>
+              <a href="/categories/technology/">technology<span class="count">8</span></a>
+          
+          <li>
+              <a href="/categories/odds-and-ends/">odds-and-ends<span class="count">4</span></a>
+          
+          <li>
+              <a href="/categories/cryptography/">cryptography<span class="count">2</span></a>
+          
+          <li>
+              <a href="/categories/business/">business<span class="count">1</span></a>
+          
+          <li>
+              <a href="/categories/podcasts/">podcasts<span class="count">1</span></a>
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+  
+    <section id="mini-bio">
+      <header>
+        <h1>About</h1>
+      </header>
+      <p>The personal website of Christopher Laing.</p>
+      <footer>
+        <a href="/about" class="button">Learn More</a>
+      </footer>
+    </section>
+  
+</section>
+
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//www.linkedin.com/in/christopherlaing" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/cjlaing" target="_blank" rel="noopener" title="Twitter" class="fab fa-twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="//mastodon.sdf.org/@laingc" target="_blank" rel="noopener" title="mastodon" class="fab fa-mastodon"></a></li>
+
+
+      </ul>
+  
+  <p class="copyright">
+    © 2021 chrislaing.net
+      <br>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.83.1' target='_blank' rel='noopener'>Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.highlightAll();</script><script src="/js/bundle.min.3b04b9e5619fbc5d3dbad6e85b47e3c5d7a7e65796155ca041ccf6684314b3d5.js" integrity="sha256-OwS55WGfvF09utboW0fjxden5leWFVygQcz2aEMUs9U="></script>
+    <script src="/js/add-on.js"></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-91338724-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    </div>
+  </body>
+</html>

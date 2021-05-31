@@ -3,24 +3,36 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://chrislaing.net/blog/</loc>
-    <lastmod>2021-05-27T11:30:00+13:00</lastmod>
+    <lastmod>2021-05-31T19:30:00+13:00</lastmod>
+  </url><url>
+    <loc>http://chrislaing.net/tags/business/</loc>
+    <lastmod>2021-05-31T19:30:00+13:00</lastmod>
+  </url><url>
+    <loc>http://chrislaing.net/categories/business/</loc>
+    <lastmod>2021-05-31T19:30:00+13:00</lastmod>
   </url><url>
     <loc>http://chrislaing.net/categories/</loc>
-    <lastmod>2021-05-27T11:30:00+13:00</lastmod>
+    <lastmod>2021-05-31T19:30:00+13:00</lastmod>
   </url><url>
     <loc>http://chrislaing.net/</loc>
-    <lastmod>2021-05-27T11:30:00+13:00</lastmod>
+    <lastmod>2021-05-31T19:30:00+13:00</lastmod>
   </url><url>
-    <loc>http://chrislaing.net/tags/deep-learning/</loc>
-    <lastmod>2021-05-27T11:30:00+13:00</lastmod>
+    <loc>http://chrislaing.net/tags/combinatorial-optimisation/</loc>
+    <lastmod>2021-05-31T19:30:00+13:00</lastmod>
   </url><url>
     <loc>http://chrislaing.net/tags/machine-learning/</loc>
-    <lastmod>2021-05-27T11:30:00+13:00</lastmod>
+    <lastmod>2021-05-31T19:30:00+13:00</lastmod>
   </url><url>
     <loc>http://chrislaing.net/tags/</loc>
-    <lastmod>2021-05-27T11:30:00+13:00</lastmod>
+    <lastmod>2021-05-31T19:30:00+13:00</lastmod>
   </url><url>
     <loc>http://chrislaing.net/categories/technology/</loc>
+    <lastmod>2021-05-31T19:30:00+13:00</lastmod>
+  </url><url>
+    <loc>http://chrislaing.net/blog/business-implications-of-combinatorial-optimisation/</loc>
+    <lastmod>2021-05-31T19:30:00+13:00</lastmod>
+  </url><url>
+    <loc>http://chrislaing.net/tags/deep-learning/</loc>
     <lastmod>2021-05-27T11:30:00+13:00</lastmod>
   </url><url>
     <loc>http://chrislaing.net/blog/the-bitter-lesson-conditions/</loc>
