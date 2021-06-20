@@ -6,7 +6,17 @@
     <description>Recent content in Blog on chrislaing.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Mon, 31 May 2021 19:30:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sun, 20 Jun 2021 14:00:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Memo</title>
+      <link>http://chrislaing.net/blog/the-memo/</link>
+      <pubDate>Sun, 20 Jun 2021 14:00:00 +1300</pubDate>
+      
+      <guid>http://chrislaing.net/blog/the-memo/</guid>
+      <description>&lt;p&gt;In 2002, Amazon&amp;rsquo;s Jeff Bezos issued a memo that has entered tech industry canon. The memo, known as the &amp;ldquo;API Mandate&amp;rdquo;, is generally perceived as being a statement about technology at Amazon, and is therefore widely admired by technologists and wholly ignored by executives. This is unfortunate, because it&amp;rsquo;s no exaggeration to say that the API Mandate completely transformed Amazon as a business and laid the foundation for its success. Better still, unlike many things that global technology titans do, it is something that can be replicated and put to use by almost any business.&lt;/p&gt;
+&lt;p&gt;In this post, we&amp;rsquo;ll talk about the memo, and how it created the systems and incentives for radical organisational transformation.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>The Business Implications of Combinatorial Optimisation by Deep Learning</title>
       <link>http://chrislaing.net/blog/business-implications-of-combinatorial-optimisation/</link>
