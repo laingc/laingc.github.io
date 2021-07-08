@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Opinion on chrislaing.net</title>
+    <link>http://chrislaing.net/tags/opinion/</link>
+    <description>Recent content in Opinion on chrislaing.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Thu, 08 Jul 2021 17:30:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/tags/opinion/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>If it&#39;s not mysterious, it&#39;s not AI</title>
+      <link>http://chrislaing.net/blog/its-not-ai/</link>
+      <pubDate>Thu, 08 Jul 2021 17:30:00 +1300</pubDate>
+      
+      <guid>http://chrislaing.net/blog/its-not-ai/</guid>
+      <description>&lt;p&gt;Businesses are deeply confused about what AI is, and they have every right to be. Differences in terminology have plagued the Data-AI-Software landscape for many years, as anyone who has every looked for a job as a &amp;ldquo;Data Scientist&amp;rdquo; will attest. Attempts to demystify the topic either conjure a series of analogies that are then strained to breaking point, or try to delve into the actual technology behind the hype, leaving everyone more confused than they were before.&lt;/p&gt;
+&lt;p&gt;I will attempt something different: removing the mystery by embracing the mystery.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>
