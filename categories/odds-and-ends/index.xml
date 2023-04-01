@@ -40,7 +40,7 @@
       <pubDate>Sat, 23 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>http://chrislaing.net/blog/odds-and-ends-1/</guid>
-      <description> Spektral is a framework for relational representation learning, built in Python and based on the Keras API. The field of Geometric Deep Learning is starting to get some traction. In particular, doing Deep Learning on graphs presents some interesting possibilities. RPC Frameworks: gRPC vs Thrift vs RPyC for python. The state of Python Packaging. Packing in Python is both improving dramatically and harder than it should be.  </description>
+      <description> Spektral is a framework for relational representation learning, built in Python and based on the Keras API. The field of Geometric Deep Learning is starting to get some traction. In particular, doing Deep Learning on graphs presents some interesting possibilities. RPC Frameworks: gRPC vs Thrift vs RPyC for python. The state of Python Packaging. Packing in Python is both improving dramatically and harder than it should be. </description>
     </item>
     
   </channel>

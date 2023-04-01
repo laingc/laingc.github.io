@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>AI on chrislaing.net</title>
+    <link>http://chrislaing.net/tags/ai/</link>
+    <description>Recent content in AI on chrislaing.net</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-gb</language>
+    <lastBuildDate>Sat, 01 Apr 2023 13:30:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Large Language Model Iceberg</title>
+      <link>http://chrislaing.net/blog/the-large-language-model-iceberg/</link>
+      <pubDate>Sat, 01 Apr 2023 13:30:00 +1300</pubDate>
+      
+      <guid>http://chrislaing.net/blog/the-large-language-model-iceberg/</guid>
+      <description>&lt;p&gt;As the capabilities of Artificial Intelligence (AI) continue to evolve, the term &amp;ldquo;chatbot&amp;rdquo; has become synonymous with a new era of digital interactions. What was once a seemingly futuristic concept is now an integral part of our everyday lives. However, it is the Machine Learning models underlying them - Large Language Models (LLMs) - that are the true powers in these waters.&lt;/p&gt;</description>
+    </item>
+    
+  </channel>
+</rss>

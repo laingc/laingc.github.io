@@ -6,7 +6,16 @@
     <description>Recent content on chrislaing.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sun, 25 Jul 2021 19:00:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 01 Apr 2023 13:30:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Large Language Model Iceberg</title>
+      <link>http://chrislaing.net/blog/the-large-language-model-iceberg/</link>
+      <pubDate>Sat, 01 Apr 2023 13:30:00 +1300</pubDate>
+      
+      <guid>http://chrislaing.net/blog/the-large-language-model-iceberg/</guid>
+      <description>&lt;p&gt;As the capabilities of Artificial Intelligence (AI) continue to evolve, the term &amp;ldquo;chatbot&amp;rdquo; has become synonymous with a new era of digital interactions. What was once a seemingly futuristic concept is now an integral part of our everyday lives. However, it is the Machine Learning models underlying them - Large Language Models (LLMs) - that are the true powers in these waters.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Three Categories of AI</title>
       <link>http://chrislaing.net/blog/three-categories-of-ai/</link>
@@ -89,7 +98,7 @@ Lineage I do not claim this insight about the fundamental mechanism of progress 
       <pubDate>Sat, 23 Feb 2019 00:00:00 +0000</pubDate>
       
       <guid>http://chrislaing.net/blog/odds-and-ends-1/</guid>
-      <description> Spektral is a framework for relational representation learning, built in Python and based on the Keras API. The field of Geometric Deep Learning is starting to get some traction. In particular, doing Deep Learning on graphs presents some interesting possibilities. RPC Frameworks: gRPC vs Thrift vs RPyC for python. The state of Python Packaging. Packing in Python is both improving dramatically and harder than it should be.  </description>
+      <description> Spektral is a framework for relational representation learning, built in Python and based on the Keras API. The field of Geometric Deep Learning is starting to get some traction. In particular, doing Deep Learning on graphs presents some interesting possibilities. RPC Frameworks: gRPC vs Thrift vs RPyC for python. The state of Python Packaging. Packing in Python is both improving dramatically and harder than it should be. </description>
     </item>
     
     <item>
@@ -130,7 +139,7 @@ Encryption is a topic that has fascinated me for years, less because of its math
       
       <guid>http://chrislaing.net/about/</guid>
       <description>About me I&amp;rsquo;m Christopher. I live in Wellington, New Zealand, and work at a specialist data firm where I am the Director of Artificial Intelligence and Data Science.
- I received my PhD in Applied Mathematics, as well as my undergraduate degrees in Law and Mathematics, from the University of Otago.
+I received my PhD in Applied Mathematics, as well as my undergraduate degrees in Law and Mathematics, from the University of Otago.
 My doctoral thesis, entitled Numerical Construction of Static Fluid Interfaces with the Embedding Formalism, is an attempt to reformulate the Young-Laplace equation for static fluid interfaces in the language of differential geometry, and to devise a numerical implementation for the system by Finite Elements.</description>
     </item>
     

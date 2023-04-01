@@ -6,7 +6,16 @@
     <description>Recent content in Business on chrislaing.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sun, 25 Jul 2021 19:00:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/categories/business/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Sat, 01 Apr 2023 13:30:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/categories/business/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Large Language Model Iceberg</title>
+      <link>http://chrislaing.net/blog/the-large-language-model-iceberg/</link>
+      <pubDate>Sat, 01 Apr 2023 13:30:00 +1300</pubDate>
+      
+      <guid>http://chrislaing.net/blog/the-large-language-model-iceberg/</guid>
+      <description>&lt;p&gt;As the capabilities of Artificial Intelligence (AI) continue to evolve, the term &amp;ldquo;chatbot&amp;rdquo; has become synonymous with a new era of digital interactions. What was once a seemingly futuristic concept is now an integral part of our everyday lives. However, it is the Machine Learning models underlying them - Large Language Models (LLMs) - that are the true powers in these waters.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>Three Categories of AI</title>
       <link>http://chrislaing.net/blog/three-categories-of-ai/</link>

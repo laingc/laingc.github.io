@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<meta name="generator" content="Hugo 0.83.1" /><meta property="og:site_name" content="chrislaing.net">
+<meta name="generator" content="Hugo 0.104.3" /><meta property="og:site_name" content="chrislaing.net">
   <meta property="og:title" content="Keybase: Keys for everyone! Part II">
   <meta property="og:description" content="chrislaing.net">
   <meta property="description" content="chrislaing.net">
@@ -236,157 +236,156 @@
 
 <p>Let&rsquo;s go through this process step by step, pausing where appropriate to make sure that we really understand what&rsquo;s going on. We&rsquo;ll use Python 3.5 to do this, partly because it is my language of choice for most tasks, but mostly because the <a href="https://keybase.io/docs/server_security/merkle_root_in_bitcoin_blockchain">original keybase security documentation</a> uses Python, albeit version 2.7. Let me be clear right from the outset that the code is taken almost entirely from the keybase security documentation, and credit for it should be attributed to the Keybase team. My contribution is limited to making the code work with Python 3.5, and a few cosmetic edits for legibility.</p>
 <p>We start by importing the packages that we&rsquo;ll need.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests<span style="color:#f92672">,</span> datetime<span style="color:#f92672">,</span> json<span style="color:#f92672">,</span> re<span style="color:#f92672">,</span> gnupg
-<span style="color:#f92672">from</span> base64 <span style="color:#f92672">import</span> b64decode
-<span style="color:#f92672">from</span> pycoin.encoding <span style="color:#f92672">import</span> bitcoin_address_to_hash160_sec, hash160
-<span style="color:#f92672">from</span> binascii <span style="color:#f92672">import</span> hexlify
-<span style="color:#f92672">from</span> hashlib <span style="color:#f92672">import</span> sha512, sha256
-</code></pre></div><p>Recall that what we need to find is the 160-bit hash of the signed root of the Keybase Merkle tree, which is stored in the blockchain as the receiving address for the latest transaction from the sending address <code>1HUCBSJeHnkhzrVKVjaVmWg2QtZS1mdfaz</code>. Without downloading the multi-gigabyte Bitcoin blockchain in its entirity, the easiest way to find this address is to query <a href="https://blockchain.info">blockchain.info</a> using the requests library. Requests is a beautifully written python library, that is often cited as the gold standard for clean, pythonic APIs. I recommend learning to use its basic functionality even for simple cases such as ours.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests<span style="color:#f92672">,</span> datetime<span style="color:#f92672">,</span> json<span style="color:#f92672">,</span> re<span style="color:#f92672">,</span> gnupg
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> base64 <span style="color:#f92672">import</span> b64decode
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> pycoin.encoding <span style="color:#f92672">import</span> bitcoin_address_to_hash160_sec, hash160
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> binascii <span style="color:#f92672">import</span> hexlify
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> hashlib <span style="color:#f92672">import</span> sha512, sha256
+</span></span></code></pre></div><p>Recall that what we need to find is the 160-bit hash of the signed root of the Keybase Merkle tree, which is stored in the blockchain as the receiving address for the latest transaction from the sending address <code>1HUCBSJeHnkhzrVKVjaVmWg2QtZS1mdfaz</code>. Without downloading the multi-gigabyte Bitcoin blockchain in its entirity, the easiest way to find this address is to query <a href="https://blockchain.info">blockchain.info</a> using the requests library. Requests is a beautifully written python library, that is often cited as the gold standard for clean, pythonic APIs. I recommend learning to use its basic functionality even for simple cases such as ours.</p>
 <p>We use a simple GET request to query the blockchain.info API.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">from_addr <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1HUCBSJeHnkhzrVKVjaVmWg2QtZS1mdfaz&#34;</span>
-uri       <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://blockchain.info/address/</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">?format=json&#34;</span> <span style="color:#f92672">%</span> (from_addr)
-r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)
-to_addr   <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;txs&#39;</span>][<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#39;out&#39;</span>][<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#39;addr&#39;</span>]
-to_addr_hash <span style="color:#f92672">=</span> hexlify(bitcoin_address_to_hash160_sec(to_addr))<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
-<span style="color:#66d9ef">print</span>(to_addr_hash)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">1eeea91d88d3578e3e718fa97da8ec79d7227304
-</code></pre></div><p>Notice that we have decoded the string from UTF-8. We will see this decoding and encoding of strings to and from UTF-8 appears several times as we progress. The difference from the keybase.io example arises because of the different way that Python 3.5 handles strings, and the encoding expectations of the different libraries that we are using.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>from_addr <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;1HUCBSJeHnkhzrVKVjaVmWg2QtZS1mdfaz&#34;</span>
+</span></span><span style="display:flex;"><span>uri       <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://blockchain.info/address/</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">?format=json&#34;</span> <span style="color:#f92672">%</span> (from_addr)
+</span></span><span style="display:flex;"><span>r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)
+</span></span><span style="display:flex;"><span>to_addr   <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;txs&#39;</span>][<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#39;out&#39;</span>][<span style="color:#ae81ff">0</span>][<span style="color:#e6db74">&#39;addr&#39;</span>]
+</span></span><span style="display:flex;"><span>to_addr_hash <span style="color:#f92672">=</span> hexlify(bitcoin_address_to_hash160_sec(to_addr))<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>print(to_addr_hash)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>1eeea91d88d3578e3e718fa97da8ec79d7227304
+</span></span></code></pre></div><p>Notice that we have decoded the string from UTF-8. We will see this decoding and encoding of strings to and from UTF-8 appears several times as we progress. The difference from the keybase.io example arises because of the different way that Python 3.5 handles strings, and the encoding expectations of the different libraries that we are using.</p>
 <p>Given that our code varies from that presented on keybase.io, it would be reasonable to ask whether this encoding and decoding in some way invalidates the verification that we are undertaking. These processes merely alter the representation of the string, not its content. It is not the string object as it appears in computer memory that we are verifying, but the evaluated content of the string. Theoretically, we could even perform the verification process by hand, separating the content of the string entirely from its representation in computer memory. We are therefore on farily safe ground.</p>
 <p>The variable <code>to_addr_hash</code> now contains a hexadecimal hash, which corresponds to a root block on the Keybase servers. We can query the Keybase API to find that block.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">kb        <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://keybase.io/_/api/1.0&#34;</span>
-uri       <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/merkle/root.json?hash160=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (kb, to_addr_hash)
-r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)
-root_desc <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(r<span style="color:#f92672">.</span>text)
-</code></pre></div><p>The <code>root_desc</code> variable now holds a JSON file full of information about the root block. What we need is the signature of the hash of the root block, which is contained in the <code>sig</code> field. Noting again the string encoding and decoding, we use a regular expression to extract the signature itself from the surrounding ASCII armouring, and verify with an assert statement that the hexadecimal hash of the signature matches the hexadecimal hash of the receiving bitcoin address that we found in the first step.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">sig <span style="color:#f92672">=</span> b64decode(re<span style="color:#f92672">.</span>compile(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\n\n((\S|\n)*?)\n=&#34;</span>)<span style="color:#f92672">.</span>search(root_desc[<span style="color:#e6db74">&#39;sig&#39;</span>])<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#39;utf-8&#39;</span>, <span style="color:#e6db74">&#39;ignore&#39;</span>))
-<span style="color:#66d9ef">if</span> to_addr_hash <span style="color:#f92672">==</span> hexlify(hash160(sig))<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>, <span style="color:#e6db74">&#39;ignore&#39;</span>):
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;We have the correct block.&#34;</span>)
-<span style="color:#66d9ef">else</span>:
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#34;Oops, wrong block!&#34;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">We have the correct block.
-</code></pre></div><p>Recall that this hash is not the root hash itself. Rather, it is the 160-bit hash of the Keybase PGP signature of the root hash. This makes sense, as we would like to be sure not just that the Merkle tree is intact, but that Keybase has verified it as being correct.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>kb        <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://keybase.io/_/api/1.0&#34;</span>
+</span></span><span style="display:flex;"><span>uri       <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/merkle/root.json?hash160=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (kb, to_addr_hash)
+</span></span><span style="display:flex;"><span>r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)
+</span></span><span style="display:flex;"><span>root_desc <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(r<span style="color:#f92672">.</span>text)
+</span></span></code></pre></div><p>The <code>root_desc</code> variable now holds a JSON file full of information about the root block. What we need is the signature of the hash of the root block, which is contained in the <code>sig</code> field. Noting again the string encoding and decoding, we use a regular expression to extract the signature itself from the surrounding ASCII armouring, and verify with an assert statement that the hexadecimal hash of the signature matches the hexadecimal hash of the receiving bitcoin address that we found in the first step.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>sig <span style="color:#f92672">=</span> b64decode(re<span style="color:#f92672">.</span>compile(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;\n\n((\S|\n)*?)\n=&#34;</span>)<span style="color:#f92672">.</span>search(root_desc[<span style="color:#e6db74">&#39;sig&#39;</span>])<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">1</span>)<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#39;utf-8&#39;</span>, <span style="color:#e6db74">&#39;ignore&#39;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> to_addr_hash <span style="color:#f92672">==</span> hexlify(hash160(sig))<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>, <span style="color:#e6db74">&#39;ignore&#39;</span>):
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;We have the correct block.&#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#34;Oops, wrong block!&#34;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>We have the correct block.
+</span></span></code></pre></div><p>Recall that this hash is not the root hash itself. Rather, it is the 160-bit hash of the Keybase PGP signature of the root hash. This makes sense, as we would like to be sure not just that the Merkle tree is intact, but that Keybase has verified it as being correct.</p>
 <p>Keybase&rsquo;s Merkle key has the fingerprint <code>03E146CDAF8136680AD566912A32340CEC8C9492</code>, and is imported into my GPG keyring. The gnupg python package allows us to inspect this signature and verify it.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">gpg <span style="color:#f92672">=</span> gnupg<span style="color:#f92672">.</span>GPG()
-verified <span style="color:#f92672">=</span> gpg<span style="color:#f92672">.</span>verify(sig)
-
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Signed by {0},</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74"> with public key fingerprint {1},</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74"> on {2}.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(verified<span style="color:#f92672">.</span>username, 
-                                                                                  verified<span style="color:#f92672">.</span>pubkey_fingerprint,
-                                                                                 datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>utcfromtimestamp(
-                                                                                float(verified<span style="color:#f92672">.</span>sig_timestamp))
-                                                                                  <span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">/%m/%Y&#39;</span>)))
-
-<span style="color:#66d9ef">if</span> verified<span style="color:#f92672">.</span>valid:
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Signature is valid.&#39;</span>)
-<span style="color:#66d9ef">else</span>:
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Signature invalid!&#39;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Signed by Keybase.io Merkle Signing (v1) &lt;merkle@keybase.io&gt;,
- with public key fingerprint 03E146CDAF8136680AD566912A32340CEC8C9492,
- on 20/02/2017.
-    
-Signature is valid.
-</code></pre></div><p>Now we know that not only is the Merkle tree is intact, but that Keybase has verified it as being correct, and when they did so. The signature object contains the root hash of the root block of the Merkle tree. We can use another regular expression to find it.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">root_hash <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(re<span style="color:#f92672">.</span>compile(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;({[\x00-\x7f]*})&#34;</span>)<span style="color:#f92672">.</span>search(sig<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>, <span style="color:#e6db74">&#39;ignore&#39;</span>))<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">1</span>))[<span style="color:#e6db74">&#39;body&#39;</span>][<span style="color:#e6db74">&#39;root&#39;</span>]
-<span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Root block hash: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> root_hash)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Root block hash: 55a8731fdb7141f0e8441d01f0431624de9d275952e7dcb19bb35088a0e5cf90312c67cb0fc876a5a888b61fa545c1261bc2732ac2d759e6f9488b30ff902f28
-</code></pre></div><p>Now that we have the hash of the root block, let&rsquo;s check that the Keybase server wasn&rsquo;t lying to us about the contents of the block.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">uri <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/merkle/block.json?hash=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (kb, root_hash)
-value_string <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;value_string&#39;</span>]
-computed_hash <span style="color:#f92672">=</span> hexlify(sha512(value_string<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#39;utf-8&#39;</span>))<span style="color:#f92672">.</span>digest())<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
-<span style="color:#66d9ef">if</span> computed_hash <span style="color:#f92672">==</span> root_hash:
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Root hash and computed hash match.&#39;</span>)
-<span style="color:#66d9ef">else</span>:
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Root hash: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">%</span>root_hash, <span style="color:#e6db74">&#39;Computed hash: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">%</span>computed_hash)
-
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">Root hash and computed hash match.
-</code></pre></div><p>Let&rsquo;s pause and think about what we&rsquo;ve discovered. We know that Keybase created a Merkle tree, which encodes the exact status of every user&rsquo;s signature chain at the time that the tree was written. The root hash of this tree was then signed by Keybase, and then this signature was hashed and written into the blockchain.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>gpg <span style="color:#f92672">=</span> gnupg<span style="color:#f92672">.</span>GPG()
+</span></span><span style="display:flex;"><span>verified <span style="color:#f92672">=</span> gpg<span style="color:#f92672">.</span>verify(sig)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;Signed by </span><span style="color:#e6db74">{0}</span><span style="color:#e6db74">,</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74"> with public key fingerprint </span><span style="color:#e6db74">{1}</span><span style="color:#e6db74">,</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74"> on </span><span style="color:#e6db74">{2}</span><span style="color:#e6db74">.</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">.</span>format(verified<span style="color:#f92672">.</span>username, 
+</span></span><span style="display:flex;"><span>                                                                                  verified<span style="color:#f92672">.</span>pubkey_fingerprint,
+</span></span><span style="display:flex;"><span>                                                                                 datetime<span style="color:#f92672">.</span>datetime<span style="color:#f92672">.</span>utcfromtimestamp(
+</span></span><span style="display:flex;"><span>                                                                                float(verified<span style="color:#f92672">.</span>sig_timestamp))
+</span></span><span style="display:flex;"><span>                                                                                  <span style="color:#f92672">.</span>strftime(<span style="color:#e6db74">&#39;</span><span style="color:#e6db74">%d</span><span style="color:#e6db74">/%m/%Y&#39;</span>)))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> verified<span style="color:#f92672">.</span>valid:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;Signature is valid.&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;Signature invalid!&#39;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Signed by Keybase.io Merkle Signing (v1) &lt;merkle@keybase.io&gt;,
+</span></span><span style="display:flex;"><span> with public key fingerprint 03E146CDAF8136680AD566912A32340CEC8C9492,
+</span></span><span style="display:flex;"><span> on 20/02/2017.
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>Signature is valid.
+</span></span></code></pre></div><p>Now we know that not only is the Merkle tree is intact, but that Keybase has verified it as being correct, and when they did so. The signature object contains the root hash of the root block of the Merkle tree. We can use another regular expression to find it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>root_hash <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(re<span style="color:#f92672">.</span>compile(<span style="color:#e6db74">r</span><span style="color:#e6db74">&#34;({[\x00-\x7f]*})&#34;</span>)<span style="color:#f92672">.</span>search(sig<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>, <span style="color:#e6db74">&#39;ignore&#39;</span>))<span style="color:#f92672">.</span>group(<span style="color:#ae81ff">1</span>))[<span style="color:#e6db74">&#39;body&#39;</span>][<span style="color:#e6db74">&#39;root&#39;</span>]
+</span></span><span style="display:flex;"><span>print(<span style="color:#e6db74">&#39;Root block hash: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span> <span style="color:#f92672">%</span> root_hash)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Root block hash: 55a8731fdb7141f0e8441d01f0431624de9d275952e7dcb19bb35088a0e5cf90312c67cb0fc876a5a888b61fa545c1261bc2732ac2d759e6f9488b30ff902f28
+</span></span></code></pre></div><p>Now that we have the hash of the root block, let&rsquo;s check that the Keybase server wasn&rsquo;t lying to us about the contents of the block.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>uri <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/merkle/block.json?hash=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (kb, root_hash)
+</span></span><span style="display:flex;"><span>value_string <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;value_string&#39;</span>]
+</span></span><span style="display:flex;"><span>computed_hash <span style="color:#f92672">=</span> hexlify(sha512(value_string<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#39;utf-8&#39;</span>))<span style="color:#f92672">.</span>digest())<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> computed_hash <span style="color:#f92672">==</span> root_hash:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;Root hash and computed hash match.&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;Root hash: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">,</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">%</span>root_hash, <span style="color:#e6db74">&#39;Computed hash: </span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">%</span>computed_hash)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Root hash and computed hash match.
+</span></span></code></pre></div><p>Let&rsquo;s pause and think about what we&rsquo;ve discovered. We know that Keybase created a Merkle tree, which encodes the exact status of every user&rsquo;s signature chain at the time that the tree was written. The root hash of this tree was then signed by Keybase, and then this signature was hashed and written into the blockchain.</p>
 <p>To verify this, we walked backwards through the process. We went to the blockchain and found the latest hash, and asked Keybase for the signed Merkle tree corresponding to this hash. We verified that the hash of this signature corresponded to the hash that we found in the blockchain, and then verified that the signature came from Keybase. Having done that, we checked that the hash we were given is correct by computing the hash ourselves, and comparing the two.</p>
 <p>We can now descend the Merkle tree to find the last thing I signed into my sigchain. You can use any user, as this is public information (indeed, that&rsquo;s the point!), so try your own.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">username <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;chrislaing&#34;</span>
-uri      <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/user/lookup.json?username=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (kb, username)
-r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)
-uid <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;them&#39;</span>][<span style="color:#e6db74">&#39;id&#39;</span>]
-</code></pre></div><p>Let&rsquo;s define a couple of helper functions to make descending the tree easier. The trees are written in such a way that the JSON string returned by the API has as keys the first few characters of the hash. The method I use in <code>traverse_tree</code> is actually quite ugly, as it simply checks each potential key length until it finds a match. The data is so small, however, that I didn&rsquo;t see the need to write a prettier way of doing it - if you&rsquo;d like to do this, then please leave a comment, and I&rsquo;ll update the post.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">traverse_tree</span>(start_hash):
-    uri <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/merkle/block.json?hash=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (kb, start_hash)
-    value_string <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;value_string&#39;</span>]
-    computed_hash <span style="color:#f92672">=</span> hexlify(sha512(value_string<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#39;utf-8&#39;</span>))<span style="color:#f92672">.</span>digest())<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
-    <span style="color:#66d9ef">assert</span>(computed_hash <span style="color:#f92672">==</span> start_hash)
-    tab <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(value_string)[<span style="color:#e6db74">&#39;tab&#39;</span>]
-    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(uid)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
-        <span style="color:#66d9ef">if</span> uid[:i] <span style="color:#f92672">in</span> tab<span style="color:#f92672">.</span>keys():
-            <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;key length </span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> of </span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">%</span>(i, len(uid)))
-            nxt <span style="color:#f92672">=</span> tab[uid[:i]]
-            <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> len(uid):
-                <span style="color:#66d9ef">return</span> nxt[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">1</span>]
-            <span style="color:#66d9ef">else</span>:
-                <span style="color:#66d9ef">return</span> nxt
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">verify_link_hash</span>(link_hash):
-    uri <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/sig/get.json?uid=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (kb, uid)
-    payload <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;sigs&#39;</span>][<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#e6db74">&#39;payload_json&#39;</span>]
-    computed_hash <span style="color:#f92672">=</span> hexlify(sha256(payload<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#39;utf-8&#39;</span>))<span style="color:#f92672">.</span>digest())<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
-    <span style="color:#66d9ef">return</span> (computed_hash <span style="color:#f92672">==</span> link_hash<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#39;utf-8&#39;</span>))
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_computed_hash</span>(uid):
-    uri <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/sig/get.json?uid=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (kb, uid)
-    payload <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;sigs&#39;</span>][<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#e6db74">&#39;payload_json&#39;</span>]
-    computed_hash <span style="color:#f92672">=</span> hexlify(sha256(payload<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#39;utf-8&#39;</span>))<span style="color:#f92672">.</span>digest())<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
-    <span style="color:#66d9ef">return</span> computed_hash
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_payload</span>(uid):
-    uri <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/sig/get.json?uid=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (kb, uid)
-    payload <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;sigs&#39;</span>][<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#e6db74">&#39;payload_json&#39;</span>]
-    <span style="color:#66d9ef">return</span> payload        
-</code></pre></div><p>The idea is very simple. Using my user ID, we query the Keybase api for the last action that I signed into my sigchain. To verify that this exists in the version of the Merkle tree that we verified above, we walk down the Merkle tree, progressively querying the Keybase API for each new node, and then comparing the hash of what Keybase tells us to the hash we expect. In this way, we verify all the contents of the Merkle tree from the root, down the branches that lead to my leaf, until we arrive at my leaf block itself.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">link_hash <span style="color:#f92672">=</span> root_hash
-computed_hash <span style="color:#f92672">=</span> get_computed_hash(uid)
-<span style="color:#66d9ef">while</span> link_hash <span style="color:#f92672">!=</span> computed_hash:
-    link_hash <span style="color:#f92672">=</span> traverse_tree(link_hash)
-    
-<span style="color:#66d9ef">if</span> link_hash <span style="color:#f92672">==</span> computed_hash:
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Leaf node found in the Merkle tree.&#39;</span>)
-<span style="color:#66d9ef">else</span>:
-    <span style="color:#66d9ef">print</span>(<span style="color:#e6db74">&#39;Leaf node is not part of the Merkle tree!&#39;</span>)
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">key length 1 of 32
-key length 2 of 32
-key length 3 of 32
-key length 4 of 32
-key length 32 of 32
-Leaf node found in the Merkle tree.
-</code></pre></div><p>Now that we know that the server state that Keybase is reporting to us is correct, consistent, and signed by Keybase, we can inspect the payload we got from the API to see what I actually did.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">json<span style="color:#f92672">.</span>loads(get_payload(uid))
-</code></pre></div><div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-text" data-lang="text">{  
-   &#39;body&#39;:{  
-      &#39;key&#39;:{  
-         &#39;eldest_kid&#39;:&#39;0101c0eab8dc42e80f0a754adc7d5504249ca3dc2d6c848407e6e148729c800a25010a&#39;,
-         &#39;host&#39;:&#39;keybase.io&#39;,
-         &#39;kid&#39;:&#39;0120d945e916db5015ff9e8d5605e822e3808c90602a043fe08aa43b91449a5de6b40a&#39;,
-         &#39;uid&#39;:&#39;4ac28b770f9cd1199981621a42eac000&#39;,
-         &#39;username&#39;:&#39;chrislaing&#39;
-      },
-      &#39;service&#39;:{  
-         &#39;name&#39;:&#39;reddit&#39;,
-         &#39;username&#39;:&#39;laing_c&#39;
-      },
-      &#39;type&#39;:&#39;web_service_binding&#39;,
-      &#39;version&#39;:1
-   },
-   &#39;client&#39;:{  
-      &#39;name&#39;:&#39;keybase.io go client&#39;,
-      &#39;version&#39;:&#39;1.0.18&#39;
-   },
-   &#39;ctime&#39;:1487579548,
-   &#39;expire_in&#39;:504576000,
-   &#39;merkle_root&#39;:{  
-      &#39;ctime&#39;:1487579413,
-      &#39;hash&#39;:&#39;f37e1e249b16110bb5ad4fdaba7cc044ee86ce6aae1efb1c51eedf6ca9d955a6cd400e19dc9211e68ad9cf74a4b2082aa767c831ff625417a936e82b6d6857fd&#39;,
-      &#39;seqno&#39;:907120
-   },
-   &#39;prev&#39;:&#39;bf84e1e3dd41765dd105ee814bc4b81dcba6a3988f5c12896b56ab2d430ecb9b&#39;,
-   &#39;seqno&#39;:45,
-   &#39;tag&#39;:&#39;signature&#39;
-}
-</code></pre></div><p>In this case, I proved my reddit identity, <code>laing_c</code>. The JSON blob also contains lots of useful details about the proof, such as the time that I signed it, the details of the client used to sign the proof, and so on.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>username <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;chrislaing&#34;</span>
+</span></span><span style="display:flex;"><span>uri      <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/user/lookup.json?username=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (kb, username)
+</span></span><span style="display:flex;"><span>r <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)
+</span></span><span style="display:flex;"><span>uid <span style="color:#f92672">=</span> r<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;them&#39;</span>][<span style="color:#e6db74">&#39;id&#39;</span>]
+</span></span></code></pre></div><p>Let&rsquo;s define a couple of helper functions to make descending the tree easier. The trees are written in such a way that the JSON string returned by the API has as keys the first few characters of the hash. The method I use in <code>traverse_tree</code> is actually quite ugly, as it simply checks each potential key length until it finds a match. The data is so small, however, that I didn&rsquo;t see the need to write a prettier way of doing it - if you&rsquo;d like to do this, then please leave a comment, and I&rsquo;ll update the post.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">traverse_tree</span>(start_hash):
+</span></span><span style="display:flex;"><span>    uri <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/merkle/block.json?hash=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (kb, start_hash)
+</span></span><span style="display:flex;"><span>    value_string <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;value_string&#39;</span>]
+</span></span><span style="display:flex;"><span>    computed_hash <span style="color:#f92672">=</span> hexlify(sha512(value_string<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#39;utf-8&#39;</span>))<span style="color:#f92672">.</span>digest())<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">assert</span>(computed_hash <span style="color:#f92672">==</span> start_hash)
+</span></span><span style="display:flex;"><span>    tab <span style="color:#f92672">=</span> json<span style="color:#f92672">.</span>loads(value_string)[<span style="color:#e6db74">&#39;tab&#39;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(len(uid)<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>):
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> uid[:i] <span style="color:#f92672">in</span> tab<span style="color:#f92672">.</span>keys():
+</span></span><span style="display:flex;"><span>            print(<span style="color:#e6db74">&#39;key length </span><span style="color:#e6db74">%d</span><span style="color:#e6db74"> of </span><span style="color:#e6db74">%d</span><span style="color:#e6db74">&#39;</span><span style="color:#f92672">%</span>(i, len(uid)))
+</span></span><span style="display:flex;"><span>            nxt <span style="color:#f92672">=</span> tab[uid[:i]]
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> len(uid):
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> nxt[<span style="color:#ae81ff">1</span>][<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> nxt
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">verify_link_hash</span>(link_hash):
+</span></span><span style="display:flex;"><span>    uri <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/sig/get.json?uid=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (kb, uid)
+</span></span><span style="display:flex;"><span>    payload <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;sigs&#39;</span>][<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#e6db74">&#39;payload_json&#39;</span>]
+</span></span><span style="display:flex;"><span>    computed_hash <span style="color:#f92672">=</span> hexlify(sha256(payload<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#39;utf-8&#39;</span>))<span style="color:#f92672">.</span>digest())<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> (computed_hash <span style="color:#f92672">==</span> link_hash<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#39;utf-8&#39;</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_computed_hash</span>(uid):
+</span></span><span style="display:flex;"><span>    uri <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/sig/get.json?uid=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (kb, uid)
+</span></span><span style="display:flex;"><span>    payload <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;sigs&#39;</span>][<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#e6db74">&#39;payload_json&#39;</span>]
+</span></span><span style="display:flex;"><span>    computed_hash <span style="color:#f92672">=</span> hexlify(sha256(payload<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#39;utf-8&#39;</span>))<span style="color:#f92672">.</span>digest())<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#39;utf-8&#39;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> computed_hash
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_payload</span>(uid):
+</span></span><span style="display:flex;"><span>    uri <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">/sig/get.json?uid=</span><span style="color:#e6db74">%s</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">%</span> (kb, uid)
+</span></span><span style="display:flex;"><span>    payload <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(uri)<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;sigs&#39;</span>][<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>][<span style="color:#e6db74">&#39;payload_json&#39;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> payload        
+</span></span></code></pre></div><p>The idea is very simple. Using my user ID, we query the Keybase api for the last action that I signed into my sigchain. To verify that this exists in the version of the Merkle tree that we verified above, we walk down the Merkle tree, progressively querying the Keybase API for each new node, and then comparing the hash of what Keybase tells us to the hash we expect. In this way, we verify all the contents of the Merkle tree from the root, down the branches that lead to my leaf, until we arrive at my leaf block itself.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>link_hash <span style="color:#f92672">=</span> root_hash
+</span></span><span style="display:flex;"><span>computed_hash <span style="color:#f92672">=</span> get_computed_hash(uid)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">while</span> link_hash <span style="color:#f92672">!=</span> computed_hash:
+</span></span><span style="display:flex;"><span>    link_hash <span style="color:#f92672">=</span> traverse_tree(link_hash)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> link_hash <span style="color:#f92672">==</span> computed_hash:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;Leaf node found in the Merkle tree.&#39;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">&#39;Leaf node is not part of the Merkle tree!&#39;</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>key length 1 of 32
+</span></span><span style="display:flex;"><span>key length 2 of 32
+</span></span><span style="display:flex;"><span>key length 3 of 32
+</span></span><span style="display:flex;"><span>key length 4 of 32
+</span></span><span style="display:flex;"><span>key length 32 of 32
+</span></span><span style="display:flex;"><span>Leaf node found in the Merkle tree.
+</span></span></code></pre></div><p>Now that we know that the server state that Keybase is reporting to us is correct, consistent, and signed by Keybase, we can inspect the payload we got from the API to see what I actually did.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>json<span style="color:#f92672">.</span>loads(get_payload(uid))
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>{  
+</span></span><span style="display:flex;"><span>   &#39;body&#39;:{  
+</span></span><span style="display:flex;"><span>      &#39;key&#39;:{  
+</span></span><span style="display:flex;"><span>         &#39;eldest_kid&#39;:&#39;0101c0eab8dc42e80f0a754adc7d5504249ca3dc2d6c848407e6e148729c800a25010a&#39;,
+</span></span><span style="display:flex;"><span>         &#39;host&#39;:&#39;keybase.io&#39;,
+</span></span><span style="display:flex;"><span>         &#39;kid&#39;:&#39;0120d945e916db5015ff9e8d5605e822e3808c90602a043fe08aa43b91449a5de6b40a&#39;,
+</span></span><span style="display:flex;"><span>         &#39;uid&#39;:&#39;4ac28b770f9cd1199981621a42eac000&#39;,
+</span></span><span style="display:flex;"><span>         &#39;username&#39;:&#39;chrislaing&#39;
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      &#39;service&#39;:{  
+</span></span><span style="display:flex;"><span>         &#39;name&#39;:&#39;reddit&#39;,
+</span></span><span style="display:flex;"><span>         &#39;username&#39;:&#39;laing_c&#39;
+</span></span><span style="display:flex;"><span>      },
+</span></span><span style="display:flex;"><span>      &#39;type&#39;:&#39;web_service_binding&#39;,
+</span></span><span style="display:flex;"><span>      &#39;version&#39;:1
+</span></span><span style="display:flex;"><span>   },
+</span></span><span style="display:flex;"><span>   &#39;client&#39;:{  
+</span></span><span style="display:flex;"><span>      &#39;name&#39;:&#39;keybase.io go client&#39;,
+</span></span><span style="display:flex;"><span>      &#39;version&#39;:&#39;1.0.18&#39;
+</span></span><span style="display:flex;"><span>   },
+</span></span><span style="display:flex;"><span>   &#39;ctime&#39;:1487579548,
+</span></span><span style="display:flex;"><span>   &#39;expire_in&#39;:504576000,
+</span></span><span style="display:flex;"><span>   &#39;merkle_root&#39;:{  
+</span></span><span style="display:flex;"><span>      &#39;ctime&#39;:1487579413,
+</span></span><span style="display:flex;"><span>      &#39;hash&#39;:&#39;f37e1e249b16110bb5ad4fdaba7cc044ee86ce6aae1efb1c51eedf6ca9d955a6cd400e19dc9211e68ad9cf74a4b2082aa767c831ff625417a936e82b6d6857fd&#39;,
+</span></span><span style="display:flex;"><span>      &#39;seqno&#39;:907120
+</span></span><span style="display:flex;"><span>   },
+</span></span><span style="display:flex;"><span>   &#39;prev&#39;:&#39;bf84e1e3dd41765dd105ee814bc4b81dcba6a3988f5c12896b56ab2d430ecb9b&#39;,
+</span></span><span style="display:flex;"><span>   &#39;seqno&#39;:45,
+</span></span><span style="display:flex;"><span>   &#39;tag&#39;:&#39;signature&#39;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In this case, I proved my reddit identity, <code>laing_c</code>. The JSON blob also contains lots of useful details about the proof, such as the time that I signed it, the details of the client used to sign the proof, and so on.</p>
 <p>In case you&rsquo;re curious, <a href="https://www.reddit.com/r/KeybaseProofs/comments/5v3hy8/my_keybase_proof_redditlaing_c_keybasechrislaing/">here&rsquo;s the proof.</a></p>
 <figure><img src="/img/2016/11/reddit_keybase_proof.png"
          alt="My Keybase proof on Reddit"/>
@@ -441,6 +440,16 @@ Leaf node found in the Merkle tree.
       </header>
       
       <article class="mini-post">
+          <a href="/blog/the-large-language-model-iceberg/" class="image" style="--bg-image: url('http://chrislaing.net/img/2023/04/iceberg.jpg');">
+    <img class="stretchV" src="http://chrislaing.net/img/2023/04/iceberg.jpg" alt="The Large Language Model Iceberg">
+  </a>
+        <header>
+          <h2><a href="/blog/the-large-language-model-iceberg/">The Large Language Model Iceberg</a></h2>
+          <time class="published" datetime="2023-04-01 13:30:00 &#43;1300 NZDT">April 1, 2023</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
           <a href="/blog/three-categories-of-ai/" class="image" style="--bg-image: url('http://chrislaing.net/img/2021/07/three-types-of-ai.jpg');">
     <img class="stretchV" src="http://chrislaing.net/img/2021/07/three-types-of-ai.jpg" alt="">
   </a>
@@ -480,16 +489,6 @@ Leaf node found in the Merkle tree.
         </header>
       </article>
       
-      <article class="mini-post">
-          <a href="/blog/the-bitter-lesson-conditions/" class="image" style="--bg-image: url('http://chrislaing.net/img/2021/05/network.jpg');">
-    <img class="stretchV" src="http://chrislaing.net/img/2021/05/network.jpg" alt="Neural Network">
-  </a>
-        <header>
-          <h2><a href="/blog/the-bitter-lesson-conditions/">The Bitter Lesson Conditions</a></h2>
-          <time class="published" datetime="2021-05-27 11:30:00 &#43;1300 &#43;1300">May 27, 2021</time>
-        </header>
-      </article>
-      
       
         <footer>
           <a href="/blog" class="button">See More</a>
@@ -509,10 +508,10 @@ Leaf node found in the Merkle tree.
           
           
           <li>
-              <a href="/categories/technology/">technology<span class="count">11</span></a>
+              <a href="/categories/technology/">technology<span class="count">12</span></a>
           
           <li>
-              <a href="/categories/business/">business<span class="count">4</span></a>
+              <a href="/categories/business/">business<span class="count">5</span></a>
           
           <li>
               <a href="/categories/odds-and-ends/">odds-and-ends<span class="count">4</span></a>
@@ -592,16 +591,16 @@ Leaf node found in the Merkle tree.
       </ul>
   
   <p class="copyright">
-    © 2021 chrislaing.net
+    © 2023 chrislaing.net
       <br>
-    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.83.1' target='_blank' rel='noopener'>Hugo</a>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.104.3' target='_blank' rel='noopener'>Hugo</a>
   </p>
 </footer>
 <a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
 
       <script src="/js/highlight.js"></script>
     
-    <script>hljs.highlightAll();</script><script src="/js/bundle.min.3b04b9e5619fbc5d3dbad6e85b47e3c5d7a7e65796155ca041ccf6684314b3d5.js" integrity="sha256-OwS55WGfvF09utboW0fjxden5leWFVygQcz2aEMUs9U="></script>
+    <script>hljs.highlightAll();</script><script src="/js/bundle.min.3218a068078eaf46a0e8e42e7a0b314fcb8aefe1e8d8bbe27937cc351c562c1b.js" integrity="sha256-MhigaAeOr0ag6OQuegsxT8uK7&#43;Ho2LvieTfMNRxWLBs="></script>
     <script src="/js/add-on.js"></script>
 <script type="application/javascript">
 var doNotTrack = false;
