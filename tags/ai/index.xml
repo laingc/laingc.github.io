@@ -6,7 +6,16 @@
     <description>Recent content in AI on chrislaing.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Sat, 01 Apr 2023 13:30:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 30 May 2023 09:00:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>The Decomposition of Large Language Models</title>
+      <link>http://chrislaing.net/blog/decomposition-of-llms/</link>
+      <pubDate>Tue, 30 May 2023 09:00:00 +1300</pubDate>
+      
+      <guid>http://chrislaing.net/blog/decomposition-of-llms/</guid>
+      <description>&lt;p&gt;While many AI systems can be very complex, Large Language Models (LLMs) seem to be refreshingly simple to understand. With their ability to generate human-like text, applications like ChatGPT have captured the popular imagination. However, as compelling an experience as chatbots are, the tradeoffs that they make can lead us to misunderstand LLMs as a whole. In this post, we will explore the idea that the functions of LLMs can be thought of as discrete capabilities, and how different composition of these functions leads to a much wider variety of user experiences.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>The Large Language Model Iceberg</title>
       <link>http://chrislaing.net/blog/the-large-language-model-iceberg/</link>
