@@ -6,7 +6,16 @@
     <description>Recent content in Blog on chrislaing.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Tue, 30 May 2023 09:00:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/blog/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 16 Jul 2024 10:00:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>On the Economics and Ergonomics of LLMs</title>
+      <link>http://chrislaing.net/blog/the-economics-and-ergonomics-of-ai/</link>
+      <pubDate>Tue, 16 Jul 2024 10:00:00 +1300</pubDate>
+      
+      <guid>http://chrislaing.net/blog/the-economics-and-ergonomics-of-ai/</guid>
+      <description>&lt;p&gt;For all the millions of words that have been devoted to the capabilities of LLMs, the economics and ergonomiocs of these systems seems to me to be under-discussed. In much the same way that technology changes - from records to cds to streaming - have been a dominant factor in the evolution of popular music, prosaic matters such as cost structures will have a substantial influence on the development and impact of AI. While it is still early days for LLMs, there are already signs that economics factors are impacting everything from product design and technology choice to adoption and even regulation.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>The Decomposition of Large Language Models</title>
       <link>http://chrislaing.net/blog/decomposition-of-llms/</link>

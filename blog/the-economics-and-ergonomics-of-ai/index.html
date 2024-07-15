@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+<title>On the Economics and Ergonomics of LLMs - chrislaing.net</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<meta name="generator" content="Hugo 0.101.0" /><meta property="og:site_name" content="chrislaing.net">
+  <meta property="og:title" content="On the Economics and Ergonomics of LLMs">
+  <meta property="og:description" content="An exploration of the economic realities and user experiences of LLM-based AI systems.">
+  <meta property="description" content="An exploration of the economic realities and user experiences of LLM-based AI systems.">
+  <meta property="og:url" content="http://chrislaing.net/blog/the-economics-and-ergonomics-of-ai/">
+  <meta property="og:type" content="article">
+  
+    
+      <meta property="og:image" content="http://chrislaing.net/img/2024/07/llm-economics.webp">
+      <meta property="og:image:alt" content="Large Language Model Economics">
+    
+  
+  <link rel="stylesheet" href="/css/bundle.min.6ad9eb85bff384c75937a02036b01425a2ca63f19a96535b8ba5b181db62a4b3.css" integrity="sha256-atnrhb/zhMdZN6AgNrAUJaLKY/GallNbi6WxgdtipLM="><link rel="stylesheet" href="/css/add-on.css">
+</head>
+
+  <body>
+    
+
+<header id="site-header">
+  <nav id="site-nav">
+    <h1 class="nav-title">
+      <a href="/" class="nav">
+        
+          Blog
+        
+      </a>
+    </h1>
+    <menu id="site-nav-menu" class="flyout-menu menu">
+      
+        
+          
+          <a href="/" class="nav link"><i class='fa fa-home'></i> Home</a>
+        
+      
+        
+          
+          <a href="/about" class="nav link"><i class='far fa-id-card'></i> About</a>
+        
+      
+        
+          
+          <a href="/blog" class="nav link"><i class='far fa-newspaper'></i> Blog</a>
+        
+      
+        
+          
+          <a href="/categories" class="nav link"><i class='fas fa-sitemap'></i> Categories</a>
+        
+      
+      <a href="#share-menu" class="nav link share-toggle"><i class="fas fa-share-alt">&nbsp;</i>Share</a>
+      <a href="#search-input" class="nav link search-toggle"><i class="fas fa-search">&nbsp;</i>Search</a>
+    </menu>
+    <a href="#search-input" class="nav search-toggle"><i class="fas fa-search fa-2x">&nbsp;</i></a>
+    <a href="#share-menu" class="nav share-toggle"><i class="fas fa-share-alt fa-2x">&nbsp;</i></a>
+    <a href="#lang-menu" class="nav lang-toggle" lang="en">en</a>
+    <a href="#site-nav" class="nav nav-toggle"><i class="fas fa-bars fa-2x"></i></a>
+  </nav>
+  <menu id="search" class="menu"><input id="search-input" class="search-input menu"></input><div id="search-results" class="search-results menu"></div></menu>
+  <menu id="lang-menu" class="flyout-menu menu">
+  <a href="#" lang="en" class="nav link active"> (en)</a>
+  
+    
+      
+    
+  
+</menu>
+
+  
+    <menu id="share-menu" class="flyout-menu menu">
+      <h1>Share Post</h1>
+      
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=On%20the%20Economics%20and%20Ergonomics%20of%20LLMs&amp;url=http%3a%2f%2fchrislaing.net%2fblog%2fthe-economics-and-ergonomics-of-ai%2f" target="_blank" rel="noopener" class="nav share-btn twitter">
+        <p>Twitter</p>
+      </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=http%3a%2f%2fchrislaing.net%2fblog%2fthe-economics-and-ergonomics-of-ai%2f&amp;title=On%20the%20Economics%20and%20Ergonomics%20of%20LLMs" target="_blank" rel="noopener" class="nav share-btn reddit">
+          <p>Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=http%3a%2f%2fchrislaing.net%2fblog%2fthe-economics-and-ergonomics-of-ai%2f&amp;title=On%20the%20Economics%20and%20Ergonomics%20of%20LLMs" target="_blank" rel="noopener" class="nav share-btn linkedin">
+            <p>LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by Christopher%20Laing&amp;body=http%3a%2f%2fchrislaing.net%2fblog%2fthe-economics-and-ergonomics-of-ai%2f" target="_blank" class="nav share-btn email" data-proofer-ignore>
+          <p>Email</p>
+        </a>
+  
+
+
+    </menu>
+  
+</header>
+
+    <div id="wrapper">
+      <section id="site-intro" >
+  <a href="/"><img src="http://chrislaing.net/img/main/wading_small.png" class="circle" width="100" alt="chrislaing.net" /></a>
+  <header>
+    <h1>chrislaing.net</h1>
+  </header>
+  <main>
+    <p>Beware the Mathematician</p>
+  </main>
+  
+    <footer>
+      <ul class="socnet-icons">
+        
+
+        
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//www.linkedin.com/in/christopherlaing" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/cjlaing" target="_blank" rel="noopener" title="Twitter" class="fab fa-twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="//mastodon.sdf.org/@laingc" target="_blank" rel="noopener" title="mastodon" class="fab fa-mastodon"></a></li>
+
+
+      </ul>
+    </footer>
+  
+</section>
+
+      <main id="site-main">
+        
+  <article>
+    <div class="post">
+      <header>
+  <div class="title">
+    
+      <h2><a href="/blog/the-economics-and-ergonomics-of-ai/">On the Economics and Ergonomics of LLMs</a></h2>
+    
+    
+      <p>An exploration of the economic realities and user experiences of LLM-based AI systems.</p>
+    
+  </div>
+  <div class="meta">
+    <time datetime="2024-07-16 10:00:00 &#43;1300 &#43;1300">July 16, 2024</time>
+    <p>Christopher Laing</p>
+    <p>7-Minute Read</p>
+  </div>
+</header>
+
+      <div id="socnet-share">
+        
+
+
+
+
+  
+    
+    <a href="//twitter.com/share?text=On%20the%20Economics%20and%20Ergonomics%20of%20LLMs&amp;url=http%3a%2f%2fchrislaing.net%2fblog%2fthe-economics-and-ergonomics-of-ai%2f" target="_blank" rel="noopener" class="nav share-btn twitter">
+        <p>Twitter</p>
+      </a>
+  
+
+  
+    <a href="//www.reddit.com/submit?url=http%3a%2f%2fchrislaing.net%2fblog%2fthe-economics-and-ergonomics-of-ai%2f&amp;title=On%20the%20Economics%20and%20Ergonomics%20of%20LLMs" target="_blank" rel="noopener" class="nav share-btn reddit">
+          <p>Reddit</p>
+        </a>
+  
+
+  
+        <a href="//www.linkedin.com/shareArticle?url=http%3a%2f%2fchrislaing.net%2fblog%2fthe-economics-and-ergonomics-of-ai%2f&amp;title=On%20the%20Economics%20and%20Ergonomics%20of%20LLMs" target="_blank" rel="noopener" class="nav share-btn linkedin">
+            <p>LinkedIn</p>
+          </a>
+  
+
+  
+        <a href="mailto:?subject=Check%20out%20this%20post%20by Christopher%20Laing&amp;body=http%3a%2f%2fchrislaing.net%2fblog%2fthe-economics-and-ergonomics-of-ai%2f" target="_blank" class="nav share-btn email" data-proofer-ignore>
+          <p>Email</p>
+        </a>
+  
+
+
+      </div>
+      <div class="content">
+        <a href="/blog/the-economics-and-ergonomics-of-ai/" class="image" style="--bg-image: url('http://chrislaing.net/img/2024/07/llm-economics.webp');">
+    <img class="stretchV" src="http://chrislaing.net/img/2024/07/llm-economics.webp" alt="Large Language Model Economics">
+  </a>
+        <p>For all the millions of words that have been devoted to the capabilities of LLMs, the economics and ergonomiocs of these systems seems to me to be under-discussed. In much the same way that technology changes - from records to cds to streaming - have been a dominant factor in the evolution of popular music, prosaic matters such as cost structures will have a substantial influence on the development and impact of AI. While it is still early days for LLMs, there are already signs that economics factors are impacting everything from product design and technology choice to adoption and even regulation.</p>
+<h3 id="llm-economics-101">LLM Economics 101</h3>
+<p>Let&rsquo;s start with a very high-level view of the fundamental economics of LLM-based AI systems. These systems are extremely large, and run on hardware that is very expensive to buy and run. This means that there are significant CAPEX and OPEX associated with providing a first-class LLM offering, such as OpenAI or Anthropic. Importantly, there is a quantifiable per-unit cost incurred by LLM invocations; more precisely, a per-token cost. This cost structure creates an incentive structure unfamiliar to the modern software world. For many applications, the software is not valuable enough to any one company to justify all the cost of its creation and maintenance. Software companies solve this by building once and selling to a massive global market. The fixed cost of software is high, but the marginal cost is zero (or close to it). With LLMs, the fixed cost is high, and the marginal cost is also high. This means that companies need to attract large numbers of consumers, but also need to either limit their consumption or charge for it.</p>
+<h3 id="conversational-embedded-and-agentic-ai">Conversational, Embedded, and Agentic AI</h3>
+<p>Currently, users consume LLMs through three principal mechanisms: conversational AI, embedded AI, and agentic AI. Conversational AI is the familiar ChatGPT experience - the user experiences a discussion with an LLM that has access to your discussion history, any documents you upload, and often basic tools such as web browsing and function execution. The economics of this interaction are simple: the user pays a fixed monthly fee, and they consume the service as much as they like, usually up to some rate limit of messages per hour. The provider manages the cost The ergonomics of this interaction are a mixed bag; while well-suited to simple questions and answers, actually getting this AI to do anything for you usually involves some form of copying and pasting between the chat application and the application where you want to do work. This is unergonomic and very limiting in terms of capability.</p>
+<p>Embedded AI is the AI that you experience as part of another application that has integrated LLM functionality. An example might be Notion’s built-in AI writer, or Microsoft’s copilot inside Word or Excel. For providers of this software, the LLM is an enhancement to an existing value proposition. Just like any feature, by integrating it into their software, the developer is hoping to either gain an advantage in the market or - as is increasingly the case with AI - maintain feature parity with competitors (“table stakes”). The ergonomics of embedded AI is very good for the application you are engaging with, but nonexistent for all other applications. This means that the value of the AI to the customer is a strict subset of the value provided by the application itself. The economics of embedded AI come in one of two flavours - either the functionality is charged for in a modular way like GitHub CoPilot, or it is provided to the user as straight consumer surplus like Notion AI. In either form, the economics of the AI system rest on the role of the functionality securing revenue for the primary product.</p>
+<p>Agentic AI is an emerging type of AI that strings multiple LLM invocations together, with both hardcoded and LLM-supervised logic to coordinate their activity. These AI agents work together to achieve higher-level, more abstract, or more wide-ranging goals, using many LLMs in narrow and specific ways to achieve specific outcomes within the system. These AI systems are usually capable of using a wide variety of tools, and are granted significant agency by the user to pursue end goals by whatever means they have available. Agentic AI is a nascent and currently niche use of LLM technology, but it comes the closest to achieving the classical conception of an AI assistant. The ergonomics of Agentic AI are fantastic when the systems work as intended. At their current stage of development, the systems are quite “hit and miss”, but they can achieve impressive results. The economics of these systems are proportionally expensive. Each task the agents perform potentially involves multiple LLM invocations, with each invocation creating a marginal cost. Coupled with the probability that getting the desired result from an agentic system may require a trial-and-error approach, the costs of achieving an outcome can become unexpectedly large.</p>
+<h3 id="having-your-cake">Having Your Cake&hellip;</h3>
+<p>One way to avoid the per-token economic costs of using a third party LLM provider such as OpenAI is to host your own LLM. Thanks to open-source efforts from companies such as Meta, there are world-class LLMs freely available for commercial use. Hosting your own first-class LLM is a daunting task for many companies, not to mention an expensive one. While the per-use cost of the system can be quite low, there needs to be a high level of confidence in the business that LLM usage will be high for a sustained period of time. While this is not dissimilar from the familiar Total Cost of Ownership (TCO) calculation that enterprise IT departments do as a matter of course, few enterprise technologies have seen as much rapid growth and rapid change as LLMs, making a standard TCO calculation extremely difficult.</p>
+<h3 id="-and-eating-it-too">&hellip; and Eating it Too</h3>
+<p>Enter LLM routers. A router is a system that sits between a client application and an LLM, and routes requests to the appropriate LLM. This allows a single client application to use multiple LLMs, either to achieve better performance, or to achieve better economics. Routers can be used to route requests to different LLMs based on the type of request, the size of the request, the performance characteristics of the service, latency, or any other factor that the router’s administrator can think of. Importantly from our perspective, routers can also be used to route requests to different LLMs based on the cost of the request, allowing companies to prioritise their spend according to their own needs.</p>
+<p>The approach of using an LLM router which routes between a smaller, easier-to-self-host LLM and a first-class, third-party service allows companies to have their cake and eat it too. Requests that require top performance can be routed to the third-party service, while requests that are less performance-critical can be routed to the self-hosted LLM. In particular, the multitude of requests initiated by agentic AI systems can be initially handled by the self-hosted LLM with its fixed cost structure, only resorting to third-party services when the smaller LLM is not up to the task, or once the task has been fully refined through trial and error. This is a highly ergonomic approach for users, with predictable and manageable economic characteristics.</p>
+<h3 id="conclusions-and-caveats">Conclusions and Caveats</h3>
+<p>The economics and ergonomics of LLM-based AI systems is an important and under-discussed element of the current technological revolution. The expensive nature of first-class LLMs makes enterprise adoption at scale - particularly of agentic AI - a somewhat risky business. Fortunately, as we have seen time and time again, where technology creates a problem, the solution is usually more technology. LLM routers, open source, self-hosting, and other software-centric approaches to managing these systems are emerging rapidly. As usual, those companies that lean into these trends will reap the greatest benefits.</p>
+      </div>
+      <footer>
+        <div class="stats">
+  
+    <ul class="categories">
+      
+        
+          <li><a class="article-terms-link" href="/categories/business/">Business</a></li>
+        
+          <li><a class="article-terms-link" href="/categories/technology/">Technology</a></li>
+        
+      
+    </ul>
+  
+  
+    <ul class="tags">
+      
+        
+          <li><a class="article-terms-link" href="/tags/llms/">LLMs</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/business/">Business</a></li>
+        
+          <li><a class="article-terms-link" href="/tags/ai/">AI</a></li>
+        
+      
+    </ul>
+  
+</div>
+
+      </footer>
+    </div>
+    
+  </article>
+  <div class="pagination">
+    
+    
+      <a href="/blog/decomposition-of-llms/" class="button right"><span>The Decomposition of Large Language Models</span></a>
+    
+  </div>
+
+      </main>
+      <section id="site-sidebar">
+  
+    <section id="recent-posts">
+      <header>
+        <h1>Recent Posts</h1>
+      </header>
+      
+      <article class="mini-post">
+          <a href="/blog/the-economics-and-ergonomics-of-ai/" class="image" style="--bg-image: url('http://chrislaing.net/img/2024/07/llm-economics.webp');">
+    <img class="stretchV" src="http://chrislaing.net/img/2024/07/llm-economics.webp" alt="Large Language Model Economics">
+  </a>
+        <header>
+          <h2><a href="/blog/the-economics-and-ergonomics-of-ai/">On the Economics and Ergonomics of LLMs</a></h2>
+          <time class="published" datetime="2024-07-16 10:00:00 &#43;1300 &#43;1300">July 16, 2024</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+          <a href="/blog/decomposition-of-llms/" class="image" style="--bg-image: url('http://chrislaing.net/img/2023/05/circuit.jpeg');">
+    <img class="stretchV" src="http://chrislaing.net/img/2023/05/circuit.jpeg" alt="a circuitboard">
+  </a>
+        <header>
+          <h2><a href="/blog/decomposition-of-llms/">The Decomposition of Large Language Models</a></h2>
+          <time class="published" datetime="2023-05-30 09:00:00 &#43;1300 &#43;1300">May 30, 2023</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+          <a href="/blog/the-large-language-model-iceberg/" class="image" style="--bg-image: url('http://chrislaing.net/img/2023/04/iceberg.jpg');">
+    <img class="stretchV" src="http://chrislaing.net/img/2023/04/iceberg.jpg" alt="The Large Language Model Iceberg">
+  </a>
+        <header>
+          <h2><a href="/blog/the-large-language-model-iceberg/">The Large Language Model Iceberg</a></h2>
+          <time class="published" datetime="2023-04-01 13:30:00 &#43;1300 &#43;1300">April 1, 2023</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+          <a href="/blog/three-categories-of-ai/" class="image" style="--bg-image: url('http://chrislaing.net/img/2021/07/three-types-of-ai.jpg');">
+    <img class="stretchV" src="http://chrislaing.net/img/2021/07/three-types-of-ai.jpg" alt="">
+  </a>
+        <header>
+          <h2><a href="/blog/three-categories-of-ai/">Three Categories of AI</a></h2>
+          <time class="published" datetime="2021-07-25 19:00:00 &#43;1300 &#43;1300">July 25, 2021</time>
+        </header>
+      </article>
+      
+      <article class="mini-post">
+          <a href="/blog/its-not-ai/" class="image" style="--bg-image: url('http://chrislaing.net/img/2021/07/its-not-ai.jpg');">
+    <img class="stretchV" src="http://chrislaing.net/img/2021/07/its-not-ai.jpg" alt="">
+  </a>
+        <header>
+          <h2><a href="/blog/its-not-ai/">If it&#39;s not mysterious, it&#39;s not AI</a></h2>
+          <time class="published" datetime="2021-07-08 17:30:00 &#43;1300 &#43;1300">July 8, 2021</time>
+        </header>
+      </article>
+      
+      
+        <footer>
+          <a href="/blog" class="button">See More</a>
+        </footer>
+      
+    </section>
+  
+
+  
+    
+
+      <section id="categories">
+        <header>
+          <h1><a href="/categories">Categories</a></h1>
+        </header>
+        <ul>
+          
+          
+          <li>
+              <a href="/categories/technology/">technology<span class="count">14</span></a>
+          
+          <li>
+              <a href="/categories/business/">business<span class="count">6</span></a>
+          
+          <li>
+              <a href="/categories/odds-and-ends/">odds-and-ends<span class="count">4</span></a>
+          
+          <li>
+              <a href="/categories/cryptography/">cryptography<span class="count">2</span></a>
+          
+          <li>
+              <a href="/categories/podcasts/">podcasts<span class="count">1</span></a>
+          
+          </li>
+        </ul>
+      </section>
+    
+  
+
+  
+    <section id="mini-bio">
+      <header>
+        <h1>About</h1>
+      </header>
+      <p>The personal website of Christopher Laing.</p>
+      <footer>
+        <a href="/about" class="button">Learn More</a>
+      </footer>
+    </section>
+  
+</section>
+
+      <footer id="site-footer">
+  
+      <ul class="socnet-icons">
+        
+
+        
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//www.linkedin.com/in/christopherlaing" target="_blank" rel="noopener" title="LinkedIn" class="fab fa-linkedin"></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li><a href="//twitter.com/cjlaing" target="_blank" rel="noopener" title="Twitter" class="fab fa-twitter"></a></li>
+
+
+
+
+
+
+
+
+
+
+<li><a href="//mastodon.sdf.org/@laingc" target="_blank" rel="noopener" title="mastodon" class="fab fa-mastodon"></a></li>
+
+
+      </ul>
+  
+  <p class="copyright">
+    © 2024 chrislaing.net
+      <br>
+    Theme: <a href='https://github.com/pacollins/hugo-future-imperfect-slim' target='_blank' rel='noopener'>Hugo Future Imperfect Slim</a><br>A <a href='https://html5up.net/future-imperfect' target='_blank' rel='noopener'>HTML5 UP port</a> | Powered by <a href='https://gohugo.io/' title='0.101.0' target='_blank' rel='noopener'>Hugo</a>
+  </p>
+</footer>
+<a id="back-to-top" href="#" class="fas fa-arrow-up fa-2x"></a>
+
+      <script src="/js/highlight.js"></script>
+    
+    <script>hljs.highlightAll();</script><script src="/js/bundle.min.9c9aa1e70420ece57e60b30ee9e8965e296a6eedb9646aea30f1bc470b660902.js" integrity="sha256-nJqh5wQg7OV&#43;YLMO6eiWXilqbu25ZGrqMPG8RwtmCQI="></script>
+    <script src="/js/add-on.js"></script>
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-91338724-1', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
+
+    </div>
+  </body>
+</html>
