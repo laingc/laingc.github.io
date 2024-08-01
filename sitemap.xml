@@ -3,10 +3,28 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>http://chrislaing.net/tags/ai/</loc>
-    <lastmod>2024-07-16T10:00:00+13:00</lastmod>
+    <lastmod>2024-08-01T15:00:00+13:00</lastmod>
   </url><url>
     <loc>http://chrislaing.net/blog/</loc>
-    <lastmod>2024-07-16T10:00:00+13:00</lastmod>
+    <lastmod>2024-08-01T15:00:00+13:00</lastmod>
+  </url><url>
+    <loc>http://chrislaing.net/categories/</loc>
+    <lastmod>2024-08-01T15:00:00+13:00</lastmod>
+  </url><url>
+    <loc>http://chrislaing.net/</loc>
+    <lastmod>2024-08-01T15:00:00+13:00</lastmod>
+  </url><url>
+    <loc>http://chrislaing.net/blog/high-code/</loc>
+    <lastmod>2024-08-01T15:00:00+13:00</lastmod>
+  </url><url>
+    <loc>http://chrislaing.net/tags/llms/</loc>
+    <lastmod>2024-08-01T15:00:00+13:00</lastmod>
+  </url><url>
+    <loc>http://chrislaing.net/tags/</loc>
+    <lastmod>2024-08-01T15:00:00+13:00</lastmod>
+  </url><url>
+    <loc>http://chrislaing.net/categories/technology/</loc>
+    <lastmod>2024-08-01T15:00:00+13:00</lastmod>
   </url><url>
     <loc>http://chrislaing.net/tags/business/</loc>
     <lastmod>2024-07-16T10:00:00+13:00</lastmod>
@@ -14,22 +32,7 @@
     <loc>http://chrislaing.net/categories/business/</loc>
     <lastmod>2024-07-16T10:00:00+13:00</lastmod>
   </url><url>
-    <loc>http://chrislaing.net/categories/</loc>
-    <lastmod>2024-07-16T10:00:00+13:00</lastmod>
-  </url><url>
-    <loc>http://chrislaing.net/</loc>
-    <lastmod>2024-07-16T10:00:00+13:00</lastmod>
-  </url><url>
-    <loc>http://chrislaing.net/tags/llms/</loc>
-    <lastmod>2024-07-16T10:00:00+13:00</lastmod>
-  </url><url>
     <loc>http://chrislaing.net/blog/the-economics-and-ergonomics-of-ai/</loc>
-    <lastmod>2024-07-16T10:00:00+13:00</lastmod>
-  </url><url>
-    <loc>http://chrislaing.net/tags/</loc>
-    <lastmod>2024-07-16T10:00:00+13:00</lastmod>
-  </url><url>
-    <loc>http://chrislaing.net/categories/technology/</loc>
     <lastmod>2024-07-16T10:00:00+13:00</lastmod>
   </url><url>
     <loc>http://chrislaing.net/blog/decomposition-of-llms/</loc>

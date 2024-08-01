@@ -6,7 +6,16 @@
     <description>Recent content in AI on chrislaing.net</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-gb</language>
-    <lastBuildDate>Tue, 16 Jul 2024 10:00:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 01 Aug 2024 15:00:00 +1300</lastBuildDate><atom:link href="http://chrislaing.net/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>High-Code: The Unexpected Path to AI Democratisation</title>
+      <link>http://chrislaing.net/blog/high-code/</link>
+      <pubDate>Thu, 01 Aug 2024 15:00:00 +1300</pubDate>
+      
+      <guid>http://chrislaing.net/blog/high-code/</guid>
+      <description>&lt;p&gt;Years ago, I read a blog post called &lt;a href=&#34;https://graydon2.dreamwidth.org/193447.html&#34;&gt;Always Bet on Text&lt;/a&gt; that left a lasting impression on me. Not only did it accord with my own experience, but it gave me a good, compact reference frame to think about technology. No recent technology is more suited to this reference frame than Generative AI, for the simple reason that, at its core, modern GenAI is all about text completion.&lt;/p&gt;</description>
+    </item>
+    
     <item>
       <title>On the Economics and Ergonomics of LLMs</title>
       <link>http://chrislaing.net/blog/the-economics-and-ergonomics-of-ai/</link>
