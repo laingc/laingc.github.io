@@ -2,7 +2,7 @@
 
 ## Repository configuration
 
-The source repository is `laingc/laingc.github.io`. Its default branch is `main`.
+The source repository is `laingc/laingc.github.io`. Its default branch is `master`.
 GitHub Pages uses GitHub Actions, not a branch of generated files.
 The custom domain is `chrislaing.net`. `static/CNAME` preserves this domain in each artefact.
 
@@ -15,7 +15,7 @@ Deployment uses GitHub's temporary workflow token. No personal access token or S
 2. Run `make browser-check`.
 3. Review the source diff for private material and unrelated files.
 4. Commit the approved change.
-5. Push the commit to `main`.
+5. Push the commit to `master`.
 6. Verify the **Check and deploy** workflow in GitHub Actions.
 7. Verify the changed pages at <https://chrislaing.net/>.
 

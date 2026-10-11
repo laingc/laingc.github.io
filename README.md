@@ -46,7 +46,7 @@ Historical dates remain unchanged. A draft remains visible in this public source
 
 ## Deploy
 
-Run the checks before a commit. Push approved source changes to `main`.
+Run the checks before a commit. Push approved source changes to `master`.
 The workflow runs source checks and desktop and mobile browser checks before deployment.
 Pull requests never deploy. Generated output never enters Git history.
 

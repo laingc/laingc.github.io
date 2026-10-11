@@ -8,4 +8,4 @@ if [ "$#" -ne 0 ]; then
 fi
 
 make check
-echo "Checks passed. Commit and push approved changes to main to deploy through GitHub Actions."
+echo "Checks passed. Commit and push approved changes to master to deploy through GitHub Actions."
