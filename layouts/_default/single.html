@@ -1,0 +1,16 @@
+{{ define "main" }}
+  <article class="post single-post">
+    {{ if eq .Section "blog" }}{{ partial "post-header.html" . }}{{ else }}<header class="post-header"><h1>{{ .Title }}</h1></header>{{ end }}
+    <div class="post-body">
+      {{ partial "post-image.html" . }}
+      {{ .Content }}
+    </div>
+    {{ if eq .Section "blog" }}{{ partial "post-footer.html" . }}{{ end }}
+  </article>
+  {{ if eq .Section "blog" }}
+    <nav class="pagination" aria-label="Adjacent posts">
+      {{ with .PrevInSection }}<a class="button" href="{{ .RelPermalink }}">Previous: {{ .Title }}</a>{{ end }}
+      {{ with .NextInSection }}<a class="button" href="{{ .RelPermalink }}">Next: {{ .Title }}</a>{{ end }}
+    </nav>
+  {{ end }}
+{{ end }}

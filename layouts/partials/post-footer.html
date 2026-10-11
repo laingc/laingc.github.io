@@ -1,0 +1,9 @@
+<footer class="post-footer">
+  <ul class="post-terms" aria-label="Categories and tags">
+    {{ range .GetTerms "categories" }}<li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>{{ end }}
+    {{ range .GetTerms "tags" }}<li><a href="{{ .RelPermalink }}">#{{ .LinkTitle }}</a></li>{{ end }}
+  </ul>
+  {{ if .IsPage }}
+    <a class="share-link" href="https://www.linkedin.com/sharing/share-offsite/?url={{ .Permalink | urlquery }}" rel="noopener">Share on LinkedIn</a>
+  {{ end }}
+</footer>

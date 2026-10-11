@@ -1,0 +1,52 @@
+baseURL = "https://chrislaing.net/"
+locale = "en-GB"
+title = "chrislaing.net"
+timeZone = "Pacific/Auckland"
+enableRobotsTXT = true
+pluralizeListTitles = false
+
+[pagination]
+  pagerSize = 3
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
+[markup.goldmark.renderer]
+  unsafe = false
+
+[markup.highlight]
+  noClasses = false
+
+[params]
+  author = "Christopher Laing"
+  description = "The personal website of Christopher Laing."
+  tagline = "Beware the Mathematician"
+  profileImage = "/img/main/wading_small.png"
+
+  [params.social]
+    linkedin = "https://www.linkedin.com/in/christopherlaing/"
+    twitter = "https://twitter.com/cjlaing"
+    mastodon = "https://mastodon.sdf.org/@laingc"
+
+[module]
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+    files = ["! .DS_Store", "! **/.DS_Store", "! backup/**", "! **/*.gpg", "! **/*.key", "! **/*.pem"]
+
+[[menus.main]]
+  name = "Home"
+  url = "/"
+  weight = 1
+[[menus.main]]
+  name = "About"
+  url = "/about/"
+  weight = 2
+[[menus.main]]
+  name = "Blog"
+  url = "/blog/"
+  weight = 3
+[[menus.main]]
+  name = "Categories"
+  url = "/categories/"
+  weight = 4

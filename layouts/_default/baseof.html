@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="{{ site.Language.Locale }}">
+  {{ partial "head.html" . }}
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <header class="site-header">
+      <a class="site-title" href="{{ "/" | relURL }}">{{ site.Title }}</a>
+      <nav aria-label="Main navigation">
+        {{ range site.Menus.main }}<a href="{{ .URL | relURL }}">{{ .Name }}</a>{{ end }}
+        <a href="#search">Search</a>
+      </nav>
+    </header>
+    <div class="wrapper">
+      {{ partial "sidebar.html" . }}
+      <main id="content" tabindex="-1">{{ block "main" . }}{{ end }}</main>
+    </div>
+    <footer class="site-footer">
+      <p>© {{ now.Format "2006" }} {{ site.Title }} · <a href="{{ "/index.xml" | relURL }}">RSS</a></p>
+      <p>Design adapted from <a href="https://html5up.net/future-imperfect">Future Imperfect</a> by HTML5 UP,
+        <a href="https://github.com/jpescador/hugo-future-imperfect">Julio Pescador</a>, and
+        <a href="https://github.com/pacollins/hugo-future-imperfect-slim">Patrick Collins</a>.
+        <a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>. Powered by Hugo.</p>
+    </footer>
+    {{ $script := resources.Get "js/site.js" | minify | fingerprint }}
+    <script src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" defer></script>
+  </body>
+</html>

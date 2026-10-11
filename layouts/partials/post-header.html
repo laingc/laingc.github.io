@@ -1,0 +1,4 @@
+<header class="post-header">
+  <div class="post-title"><h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>{{ with .Description }}<p>{{ . }}</p>{{ end }}</div>
+  <div class="post-meta"><time datetime="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">{{ .Date.Format "2 January 2006" }}</time><p>{{ .Params.author | default site.Params.author }}</p><p>{{ .ReadingTime }}-minute read</p>{{ if .Draft }}<p class="draft-label">Draft preview</p>{{ end }}</div>
+</header>

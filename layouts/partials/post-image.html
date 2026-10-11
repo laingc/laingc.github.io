@@ -1,0 +1,7 @@
+{{ with .Params.images }}
+  {{ with index . 0 }}
+    {{ if fileExists (printf "static/%s" (strings.TrimPrefix "/" .src)) }}
+      <img class="featured-image" src="{{ .src | relURL }}" alt="{{ .alt | default "" }}" loading="lazy">
+    {{ end }}
+  {{ end }}
+{{ end }}

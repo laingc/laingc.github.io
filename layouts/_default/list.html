@@ -1,0 +1,18 @@
+{{ define "main" }}
+  {{ if not .IsHome }}<h1 class="section-title">{{ .Title }}</h1>{{ end }}
+  {{ $pages := .RegularPages }}
+  {{ if .IsHome }}{{ $pages = where site.RegularPages "Section" "blog" }}{{ end }}
+  {{ $paginator := .Paginate $pages.ByDate.Reverse }}
+  {{ range $paginator.Pages }}
+    <article class="post">
+      {{ partial "post-header.html" . }}
+      <div class="post-body">
+        <a href="{{ .RelPermalink }}" tabindex="-1" aria-hidden="true">{{ partial "post-image.html" . }}</a>
+        <div class="summary">{{ .Summary }}</div>
+        <a class="button" href="{{ .RelPermalink }}">Read more<span class="sr-only">: {{ .Title }}</span></a>
+      </div>
+      {{ partial "post-footer.html" . }}
+    </article>
+  {{ end }}
+  {{ partial "pagination.html" $paginator }}
+{{ end }}

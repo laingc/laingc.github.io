@@ -1,0 +1,15 @@
+{
+  "name": "chrislaing.net",
+  "private": true,
+  "version": "1.0.0",
+  "engines": { "node": ">=24 <27" },
+  "scripts": {
+    "check": "node --test tests/unit/*.test.mjs && node scripts/check.mjs",
+    "test:browser": "playwright test"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.0",
+    "linkedom": "0.18.13",
+    "smol-toml": "1.9.1"
+  }
+}

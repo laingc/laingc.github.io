@@ -1,0 +1,4 @@
+<nav class="pagination" aria-label="Pagination">
+  {{ with .Prev }}<a class="button" href="{{ .URL }}">Previous page</a>{{ end }}
+  {{ with .Next }}<a class="button" href="{{ .URL }}">Next page</a>{{ end }}
+</nav>
