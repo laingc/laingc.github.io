@@ -10,9 +10,9 @@ Fontsource supplies the unmodified WOFF2 files in `assets/fonts/`.
 | DM Sans | `@fontsource-variable/dm-sans` | `licenses/dm-sans.txt` |
 | IBM Plex Mono | `@fontsource/ibm-plex-mono` | `licenses/ibm-plex-mono.txt` |
 
-These fonts use the SIL Open Font Licence 1.1. Source Serif 4 and DM Sans include Latin and extended Latin subsets.
+These fonts use the SIL Open Font Licence 1.1. Each includes Latin and extended Latin subsets, so macrons such as ā and ō use the same typeface.
 
-IBM Plex Mono includes the Latin subset. Other scripts use the browser's available fallback fonts.
+Other scripts use the browser's available fallback fonts.
 
 Source: [Fontsource](https://fontsource.org/).
 
