@@ -692,10 +692,10 @@
   }
 
   /* Link decoder. When a mouse pointer arrives on a link, its text runs through random
-     letters and digits for a moment, then settles. The text nodes change in place, so the
-     link and its click target stay the same, and screen readers keep the real text through
-     a temporary aria-label. A link in a proportional face holds its width while it
-     scrambles, so nearby text does not move. */
+     letters and digits for a moment, then settles. The link's own text never changes. Its
+     letters turn transparent, and the scrambled letters appear on a layer laid over each
+     line of the link, in the same font and clipped to that line. Nothing reflows, wrapped
+     links scramble line by line, and screen readers only ever meet the real text. */
   function setupLinkDecoder() {
     const busy = new WeakSet();
     const pick = set => set[Math.floor(Math.random() * set.length)];
@@ -704,55 +704,94 @@
     const scramble = char => (/\d/.test(char) ? pick('0123456789') : /[a-z]/.test(char) ? pick(LOWER) : /[A-Z]/.test(char) ? pick(UPPER) : char);
     const visibleText = node => node.data.trim() && !node.parentElement.closest('[aria-hidden="true"], svg, .sr-only');
 
+    // Every rendered character of the link, grouped into the lines it occupies on screen.
+    function measureLines(link) {
+      const walker = document.createTreeWalker(link, NodeFilter.SHOW_TEXT, { acceptNode: node => (visibleText(node) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT) });
+      const range = document.createRange();
+      const lines = [];
+      while (walker.nextNode()) {
+        const node = walker.currentNode;
+        for (let i = 0; i < node.data.length; i++) {
+          range.setStart(node, i);
+          range.setEnd(node, i + 1);
+          const box = range.getBoundingClientRect();
+          if (!box.width && !box.height) continue;
+          const current = lines.at(-1);
+          if (!current || box.top >= current.bottom - box.height / 2 || box.left < current.right - 1) {
+            lines.push({ chars: [], left: box.left, right: box.right, top: box.top, bottom: box.bottom });
+          }
+          const line = lines.at(-1);
+          line.chars.push(node.data[i]);
+          line.right = Math.max(line.right, box.right);
+          line.top = Math.min(line.top, box.top);
+          line.bottom = Math.max(line.bottom, box.bottom);
+        }
+      }
+      return lines.filter(line => line.chars.some(char => !/\s/.test(char)));
+    }
+
     document.addEventListener('pointerover', event => {
       if (event.pointerType !== 'mouse' || reducedMotion.matches) return;
       const link = event.target.closest?.('a[href]');
       if (!link || busy.has(link) || (event.relatedTarget && link.contains(event.relatedTarget))) return;
-      const walker = document.createTreeWalker(link, NodeFilter.SHOW_TEXT, { acceptNode: node => (visibleText(node) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT) });
-      const nodes = [];
-      while (walker.nextNode()) nodes.push(walker.currentNode);
-      if (!nodes.length) return;
-      const style = getComputedStyle(link);
-      const mono = /plex mono|monospace/i.test(style.fontFamily);
-      // A wrapped link in a proportional face would reflow its paragraph, so it stays still.
-      if (!mono && link.getClientRects().length > 1) return;
-
+      const lines = measureLines(link);
+      if (!lines.length) return;
       busy.add(link);
-      const originals = nodes.map(node => node.data);
-      const hadLabel = link.hasAttribute('aria-label');
-      if (!hadLabel) link.setAttribute('aria-label', link.textContent.replace(/\s+/g, ' ').trim());
-      const saved = { display: link.style.display, width: link.style.width, whiteSpace: link.style.whiteSpace };
-      if (!mono) {
-        const width = link.getBoundingClientRect().width;
-        if (style.display === 'inline') link.style.display = 'inline-block';
-        link.style.width = `${width}px`;
-        link.style.whiteSpace = 'nowrap';
-      }
 
-      const total = originals.reduce((sum, text) => sum + text.length, 0);
+      const total = lines.reduce((sum, line) => sum + line.chars.length, 0);
       const duration = Math.min(Math.max(220 + total * 12, 300), 600);
       let position = 0;
-      const resolveAt = originals.map(text => Array.from(text, () => (position++ / total) * duration * 0.7 + Math.random() * duration * 0.3));
+      const resolveAt = lines.map(line => line.chars.map(() => (position++ / total) * duration * 0.7 + Math.random() * duration * 0.3));
+      const paint = elapsed => rows.forEach((row, i) => {
+        row.textContent = lines[i].chars.map((char, j) => (elapsed >= resolveAt[i][j] ? char : scramble(char))).join('');
+      });
+
+      const style = getComputedStyle(link);
+      const layer = document.createElement('div');
+      layer.className = 'fx-scramble';
+      layer.setAttribute('aria-hidden', 'true');
+      const rows = lines.map(line => {
+        const row = document.createElement('span');
+        row.className = 'fx-scramble-line';
+        const height = line.bottom - line.top;
+        Object.assign(row.style, {
+          left: `${line.left + scrollX}px`,
+          top: `${line.top + scrollY}px`,
+          width: `${Math.ceil(line.right - line.left) + 1}px`,
+          height: `${height}px`,
+          lineHeight: `${height}px`,
+          fontFamily: style.fontFamily,
+          fontSize: style.fontSize,
+          fontWeight: style.fontWeight,
+          fontStyle: style.fontStyle,
+          fontVariationSettings: style.fontVariationSettings,
+          letterSpacing: style.letterSpacing,
+          textTransform: style.textTransform,
+          color: style.color,
+        });
+        layer.append(row);
+        return row;
+      });
+      paint(0);
+      document.body.append(layer);
+      // Hide the real letters only. The underline keeps its colour, which Chromium would
+      // otherwise take from the hidden text, and icons keep their own colours.
+      const inline = link.getAttribute('style');
+      link.style.textDecorationColor = style.textDecorationColor;
+      link.style.setProperty('-webkit-text-fill-color', 'transparent');
+
       let start = 0;
       let last = 0;
-
       function finish() {
-        nodes.forEach((node, i) => { node.data = originals[i]; });
-        if (!hadLabel) link.removeAttribute('aria-label');
-        Object.assign(link.style, saved);
-        if (!link.getAttribute('style')) link.removeAttribute('style');
+        layer.remove();
+        if (inline === null) link.removeAttribute('style'); else link.setAttribute('style', inline);
         busy.delete(link);
       }
       function step(now) {
         if (!start) start = now;
         const elapsed = now - start;
         if (elapsed >= duration || reducedMotion.matches) { finish(); return; }
-        if (now - last > 40) {
-          last = now;
-          nodes.forEach((node, i) => {
-            node.data = Array.from(originals[i], (char, j) => (elapsed >= resolveAt[i][j] ? char : scramble(char))).join('');
-          });
-        }
+        if (now - last > 40) { last = now; paint(elapsed); }
         requestAnimationFrame(step);
       }
       requestAnimationFrame(step);

@@ -163,25 +163,48 @@ test('the writing page shows every article as the reader scrolls', async ({ page
   expect(errors).toEqual([]);
 });
 
-test('links decode briefly under a mouse pointer and settle unchanged', async ({ page }, testInfo) => {
+test('links decode briefly under a mouse pointer and leave the page unchanged', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop', 'The effect needs a mouse pointer.');
-  await page.goto('/blog/');
-  const link = page.locator('.site-nav a').first();
-  const text = await link.textContent();
-  const before = await link.boundingBox();
-  // Record every change to the link's text while the pointer arrives.
-  await link.evaluate(element => {
-    window.fxChanges = [];
-    new MutationObserver(records => records.forEach(record => window.fxChanges.push(record.target.data)))
-      .observe(element, { characterData: true, subtree: true });
-  });
-  await link.hover();
-  await expect.poll(() => page.evaluate(() => window.fxChanges.length)).toBeGreaterThan(1);
-  await expect(link).toHaveText(text);
-  await expect.poll(() => link.evaluate(element => [element.getAttribute('aria-label'), element.getAttribute('style')])).toEqual([null, null]);
-  expect(await link.boundingBox()).toEqual(before);
-  // Screen readers kept the real text throughout.
-  await expect(page.getByRole('link', { name: text.trim(), exact: true }).first()).toBeVisible();
+  // A short menu link, and a long link in the body face that wraps onto a second line.
+  const cases = [
+    ['/blog/', links => links.findIndex(link => link.closest('.site-nav'))],
+    ['/blog/high-code/', links => links.findIndex(link => link.closest('main') && link.getClientRects().length > 1 && link.textContent.trim())],
+  ];
+  for (const [route, choose] of cases) {
+    await page.goto(route);
+    const all = page.locator('a[href]');
+    const index = await all.evaluateAll(choose);
+    expect(index, `test link on ${route}`).toBeGreaterThanOrEqual(0);
+    const link = all.nth(index);
+    await link.scrollIntoViewIfNeeded();
+    const text = await link.textContent();
+    const lines = await link.evaluate(element => element.getClientRects().length);
+    const before = await link.boundingBox();
+    // Record changes to the link's own text, the layers drawn over it, and its block's height.
+    await link.evaluate(element => {
+      const block = element.closest('p, li, h3, nav, div');
+      window.fx = { linkChanges: 0, frames: [], layers: 0, blockHeight: block.getBoundingClientRect().height, blockShift: 0 };
+      new MutationObserver(() => window.fx.linkChanges++).observe(element, { characterData: true, childList: true, subtree: true });
+      new MutationObserver(() => {
+        const rows = [...document.querySelectorAll('.fx-scramble-line')];
+        if (rows.length) window.fx.frames.push(rows.map(row => row.textContent).join(' '));
+        window.fx.layers = Math.max(window.fx.layers, rows.length);
+        window.fx.blockShift = Math.max(window.fx.blockShift, Math.abs(block.getBoundingClientRect().height - window.fx.blockHeight));
+      }).observe(document.body, { characterData: true, childList: true, subtree: true });
+    });
+    await link.hover();
+    await expect.poll(() => page.evaluate(() => window.fx.frames.length), { message: `${route} scrambles` }).toBeGreaterThan(1);
+    await expect(page.locator('.fx-scramble')).toHaveCount(0);
+    const fx = await page.evaluate(() => window.fx);
+    const plain = value => value.replace(/\s+/g, ' ').trim();
+    expect(fx.frames.some(frame => plain(frame) !== plain(text)), `${route} shows scrambled letters`).toBe(true);
+    expect(fx.layers, `${route} covers every line`).toBe(lines);
+    expect(fx.linkChanges, `${route} leaves the link text alone`).toBe(0);
+    expect(fx.blockShift, `${route} moves nothing`).toBe(0);
+    await expect(link).toHaveText(text);
+    expect(await link.getAttribute('style')).toBeNull();
+    expect(await link.boundingBox()).toEqual(before);
+  }
 });
 
 test('the writing page keeps its page links without JavaScript', async ({ browser }) => {

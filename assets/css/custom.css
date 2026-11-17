@@ -138,6 +138,11 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-mono); font-weight: 400; letter
 /* Unresolved decoder glyphs. */
 .fx-glyph { color: var(--accent-text); }
 
+/* Link decoder layer (motion.js). Each line sits exactly over one line of a link's text and
+   is clipped to it, so wider random letters never spill past the link. */
+.fx-scramble { position: absolute; inset-block-start: 0; inset-inline-start: 0; pointer-events: none; }
+.fx-scramble-line { position: absolute; z-index: 40; display: block; overflow: hidden; white-space: pre; pointer-events: none; }
+
 /* Cadence strip above article lists (motion.js). Each Copper tick is an article on a time
    axis. The square marks the article the reader is on, and the line above names it. */
 .fx-cadence-probe { height: 1px; margin-block-end: -1px; }
@@ -253,7 +258,7 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-mono); font-weight: 400; letter
 }
 
 @media print {
-  .fx-roc, .fx-cadence, .fx-cadence-probe { display: none !important; }
+  .fx-roc, .fx-cadence, .fx-cadence-probe, .fx-scramble { display: none !important; }
   .hero { border-image: none; color: #222; --ink: #222; --muted: #444; }
   .fx-reveal, .fx-wipe { opacity: 1 !important; translate: none !important; clip-path: none !important; }
 }
