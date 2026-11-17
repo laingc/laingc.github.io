@@ -22,6 +22,7 @@ Headings, the name, and the introduction line use IBM Plex Mono, the face of the
 The masthead has an entrance sequence, decoder text on the mono labels, and a faint Copper ROC plot on a 2D canvas.
 The plot draws the logo's curve, with capability against complexity. Its operating point starts at the logo's position and follows a fine pointer along the curve.
 The plot ends just past the name, and the name sits in the shaded area under the curve. The introduction sits on the open grid beyond the plot.
+The grid and the operating point's dashed guide fade to half strength where they pass behind the name (`NAME_GRID_FADE` in `motion.js`).
 Link text briefly decodes when a mouse pointer arrives on it. Screen readers keep the real text throughout.
 Article lists, such as `/blog/` and each category, continue as the reader scrolls. `extend-footer.html` puts every card for the list in an inert template, and `motion.js` adds them near the end of the list.
 The paginated pages remain for readers without JavaScript and for existing links. The back button returns to the same depth.

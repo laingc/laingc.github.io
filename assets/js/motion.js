@@ -355,6 +355,9 @@
   const AXES = { across: 'COMPLEXITY', up: 'CAPABILITY' };
   // Variant under review: end the plot just past the name, with the introduction on the grid.
   const PLOT_ENDS_AT_NAME = true;
+  // Variant under review: how much of the grid's strength fades where it passes behind the
+  // name, from 0 (none) to 1 (gone).
+  const NAME_GRID_FADE = 0.5;
   const bezier = (t, a, b) => 3 * (1 - t) * (1 - t) * t * a + 3 * (1 - t) * t * t * b + t * t * t;
   const curveAt = t => [bezier(t, P1[0], P2[0]), bezier(t, P1[1], P2[1])];
   function curveAtRate(fpr) {
@@ -479,6 +482,7 @@
         plot.lift = clamp(lift, 0, 0.85);
       }
       plot.row = (plot.y0 - plot.y1) / 10;
+      plot.nameBoxes = lines.map(box => ({ x: box.left, y: box.top - rect.top, w: box.width, h: box.height }));
       measureText();
       draw(performance.now());
     }
@@ -578,6 +582,28 @@
       }
     }
 
+    // The grid quietens where it passes behind the name. A soft-edged area around the name's
+    // lines erases part of what is drawn so far: the grid and the chance line. The shading
+    // and the curve come later, so they keep their full strength. The area is drawn as the
+    // blurred shadow of a shape placed far off the canvas, because a canvas shadow blurs the
+    // same way in every browser.
+    function fadeBehindName() {
+      if (!NAME_GRID_FADE || !plot.nameBoxes?.length) return;
+      const ratio = canvas.width / width;
+      const pad = 12;
+      const away = 100000;
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-out';
+      ctx.shadowColor = `rgba(0, 0, 0, ${NAME_GRID_FADE})`;
+      ctx.shadowBlur = 20 * ratio;
+      ctx.shadowOffsetX = away * ratio;
+      ctx.fillStyle = '#000';
+      ctx.beginPath();
+      for (const box of plot.nameBoxes) ctx.rect(box.x - pad - away, box.y - pad, box.w + pad * 2, box.h + pad * 2);
+      ctx.fill();
+      ctx.restore();
+    }
+
     function draw(now) {
       if (!plot) return;
       const still = reducedMotion.matches;
@@ -586,10 +612,36 @@
       ctx.clearRect(0, 0, width, height);
       drawFrame(a);
       canvas.classList.add('is-ready');
+      const raise = value => plot.lift + (1 - plot.lift) * value;
+
+      // The operating point appears when the curve is complete. Its dashed guides belong with
+      // the grid, so they are drawn before the fade and quieten behind the name with it.
+      const appear = still ? 1 : clamp((t - 2.3) / 0.5);
+      let across = 0;
+      let up = 0;
+      let x = 0;
+      let y = 0;
+      if (appear > 0) {
+        const target = pointer.active && !still
+          ? clamp((pointer.x - plot.x0) / (plot.x1 - plot.x0), 0.01, 0.99)
+          : LOGO_FPR + (still ? 0 : 0.12 * Math.sin((t - 2.3) * 0.3));
+        fpr += (target - fpr) * (still ? 1 : 0.08);
+        const [rate, rise] = curveAtRate(fpr);
+        across = rate;
+        up = raise(rise);
+        x = X(across);
+        y = Y(up);
+        ctx.strokeStyle = rgba(colours.copper, a.guide * appear);
+        ctx.lineWidth = 1;
+        ctx.setLineDash([2, 4]);
+        line(crisp(x), y, crisp(x), plot.y0);
+        line(plot.x0, crisp(y), x, crisp(y));
+        ctx.setLineDash([]);
+      }
+      fadeBehindName();
 
       // The curve draws itself once, after the masthead entrance. A lifted curve starts part
       // of the way up its axis and keeps its shape over the remaining height.
-      const raise = value => plot.lift + (1 - plot.lift) * value;
       const progress = still ? 1 : easeInOut(clamp((t - 0.4) / 1.8));
       const count = Math.round(progress * (CURVE.length - 1));
       const trace = () => {
@@ -612,23 +664,7 @@
       ctx.lineWidth = 1.5;
       ctx.stroke();
 
-      // The operating point appears when the curve is complete.
-      const appear = still ? 1 : clamp((t - 2.3) / 0.5);
       if (appear <= 0) return;
-      const target = pointer.active && !still
-        ? clamp((pointer.x - plot.x0) / (plot.x1 - plot.x0), 0.01, 0.99)
-        : LOGO_FPR + (still ? 0 : 0.12 * Math.sin((t - 2.3) * 0.3));
-      fpr += (target - fpr) * (still ? 1 : 0.08);
-      const [across, rise] = curveAtRate(fpr);
-      const up = raise(rise);
-      const x = X(across);
-      const y = Y(up);
-      ctx.strokeStyle = rgba(colours.copper, a.guide * appear);
-      ctx.lineWidth = 1;
-      ctx.setLineDash([2, 4]);
-      line(crisp(x), y, crisp(x), plot.y0);
-      line(plot.x0, crisp(y), x, crisp(y));
-      ctx.setLineDash([]);
       ctx.fillStyle = rgba(colours.copper, 0.92 * appear);
       ctx.fillRect(Math.round(x - 5), Math.round(y - 5), 10, 10);
 
