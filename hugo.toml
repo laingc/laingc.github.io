@@ -34,11 +34,11 @@ pluralizeListTitles = false
 
   [params.brand]
     name = "Christopher Laing"
-    light = "brand/ic-lockup-compact-light.svg"
-    dark = "brand/ic-lockup-compact-dark.svg"
-    smallLight = "brand/ic-symbol-small-light.svg"
-    smallDark = "brand/ic-symbol-small-dark.svg"
-    width = 320
+    light = "brand/ic-mark-cl-light.svg"
+    dark = "brand/ic-mark-cl-dark.svg"
+    smallLight = "brand/ic-mark-cl-light.svg"
+    smallDark = "brand/ic-mark-cl-dark.svg"
+    width = 74
     height = 74
 
   [[params.social]]

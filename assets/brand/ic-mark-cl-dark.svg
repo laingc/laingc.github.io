@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16 132 132" width="132" height="132" role="img" aria-label="Christopher Laing - CL mark (dark)">
+<title>Christopher Laing - CL mark (dark)</title>
+<desc>Square axes, the Integrated cadence ROC curve from corner to corner, the Copper operating point, and the initials CL in IBM Plex Mono Light, converted to outlines, under the curve.</desc>
+<g data-part="symbol">
+  <path data-part="axes" d="M0,0 V100 H100" fill="none" stroke="#F3EDE4" stroke-width="3.2" stroke-linecap="butt" stroke-linejoin="miter"/>
+  <path data-part="curve" d="M0,100 C18.75,13.83 52.68,3.19 100,0" fill="none" stroke="#F3EDE4" stroke-width="3.2" stroke-linecap="butt" stroke-linejoin="miter"/>
+  <rect data-part="operating-point" x="26.90" y="17.84" width="13" height="13" fill="#C4521E"/>
+</g>
+<path data-part="initials" d="M56.39 92.05Q42.9 92.05 42.9 72.56Q42.9 53.08 56.39 53.08Q58.71 53.08 60.49 53.73Q62.28 54.38 63.62 55.46Q64.97 56.54 65.92 57.99Q66.86 59.45 67.51 61.07L64.76 62.31Q64.22 60.96 63.49 59.77Q62.76 58.59 61.76 57.72Q60.76 56.86 59.44 56.37Q58.12 55.89 56.39 55.89Q51.32 55.89 48.84 59.58Q46.35 63.28 46.35 70.03V75.1Q46.35 81.85 48.84 85.54Q51.32 89.24 56.39 89.24Q58.12 89.24 59.44 88.76Q60.76 88.27 61.76 87.41Q62.76 86.54 63.49 85.38Q64.22 84.22 64.76 82.82L67.51 84.06Q66.86 85.68 65.92 87.14Q64.97 88.59 63.62 89.67Q62.28 90.75 60.49 91.4Q58.71 92.05 56.39 92.05ZM78.3 91.4V53.73H81.54V88.59H100V91.4Z" fill="#F3EDE4"/>
+</svg>

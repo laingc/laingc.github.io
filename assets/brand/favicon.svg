@@ -1,14 +1,15 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" role="img" aria-label="Christopher Laing">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Christopher Laing">
 <title>Christopher Laing</title>
-<desc>Integrated cadence v1.0. One selected square on a rising curve; no terminal punctuation. Wordmark is fixed vector artwork traced from the selected reference, not live font text.</desc>
+<desc>CL mark: square axes, the Integrated cadence ROC curve from corner to corner, the Copper operating point, and the initials CL in IBM Plex Mono SemiBold, converted to outlines.</desc>
 <style>
 :root { --ic-ink: #282522; --ic-accent: #C4521E; --ic-ground: #F1EDE6; }
 @media (prefers-color-scheme: dark) { :root { --ic-ink: #F3EDE4; --ic-accent: #C4521E; --ic-ground: #171615; } }
 </style>
-<rect width="16" height="16" fill="var(--ic-ground)"/>
-<g data-part="symbol">
-  <path data-part="axes" d="M2.5,2 V14 H13.5" fill="none" stroke="var(--ic-ink)" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter"/>
-  <path data-part="curve" d="M2.5,14 C4.5,5.5 8.2,3.5 14,3" fill="none" stroke="var(--ic-ink)" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter"/>
-  <rect data-part="operating-point" x="4.661434" y="4.62928" width="3" height="3" fill="var(--ic-accent)"/>
+<rect width="128" height="128" fill="var(--ic-ground)"/>
+<g transform="translate(14 14)">
+  <path d="M0,0 V100 H100" fill="none" stroke="var(--ic-ink)" stroke-width="7" stroke-linecap="butt" stroke-linejoin="miter"/>
+  <path d="M0,100 C18.75,13.83 52.68,3.19 100,0" fill="none" stroke="var(--ic-ink)" stroke-width="7" stroke-linecap="butt"/>
+  <rect x="24.40" y="15.34" width="18" height="18" fill="var(--ic-accent)"/>
+  <path d="M59.58 89.09Q52.84 89.09 49.62 84.47Q46.4 79.85 46.4 71.34Q46.4 62.88 49.62 58.23Q52.84 53.59 59.58 53.59Q62.14 53.59 64.08 54.27Q66.02 54.96 67.45 56.17Q68.87 57.37 69.81 59.07Q70.74 60.77 71.28 62.78L65.38 64.45Q65.04 63.27 64.59 62.24Q64.15 61.21 63.49 60.45Q62.82 59.68 61.84 59.27Q60.86 58.85 59.48 58.85Q56.14 58.85 54.69 61.4Q53.24 63.96 53.24 68.39V74.29Q53.24 78.71 54.69 81.27Q56.14 83.83 59.48 83.83Q60.86 83.83 61.84 83.41Q62.82 82.99 63.49 82.23Q64.15 81.47 64.59 80.44Q65.04 79.4 65.38 78.22L71.28 79.89Q70.74 81.91 69.81 83.61Q68.87 85.3 67.45 86.51Q66.02 87.71 64.08 88.4Q62.14 89.09 59.58 89.09ZM78.36 88.5V54.18H84.81V83.19H100V88.5Z" fill="var(--ic-ink)"/>
 </g>
 </svg>

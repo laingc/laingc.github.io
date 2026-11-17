@@ -1,11 +1,12 @@
 import { test, expect } from '@playwright/test';
 
-// The masthead label as the server sends it, before the decoder runs. Reading it from the
-// page keeps these tests independent of the homepage copy.
+// The first decoded label on the homepage, and its text as the server sends it before the
+// decoder runs. Reading it from the page keeps these tests independent of the homepage copy.
+const firstLabel = 'main .accent-label >> nth=0';
 const serverLabel = async request => {
   const html = await (await request.get('/')).text();
-  const match = /class="?eyebrow accent-label"?>([^<]+)</.exec(html);
-  expect(match, 'masthead label in the homepage HTML').not.toBeNull();
+  const match = /class="?[^">]*\baccent-label\b[^">]*"?>([^<]+)</.exec(html);
+  expect(match, 'decoded label in the homepage HTML').not.toBeNull();
   return match[1].replace(/&amp;/g, '&').replace(/&#39;|&rsquo;/g, '’').trim();
 };
 
@@ -75,10 +76,12 @@ test('motion effects resolve to the original content without errors', async ({ p
   const label = await serverLabel(request);
   await page.goto('/');
 
-  // The decoder restores the exact label and removes its temporary spans.
-  const eyebrow = page.locator('.hero .accent-label');
+  // The decoder restores the exact label once it is on screen and removes its temporary spans.
+  const eyebrow = page.locator(firstLabel);
+  await eyebrow.scrollIntoViewIfNeeded();
   await expect(eyebrow).toHaveText(label);
   await expect(eyebrow.locator('span')).toHaveCount(0);
+  await page.evaluate(() => scrollTo(0, 0));
 
   // The ROC plot is decorative, covers the masthead exactly, and paints.
   const plot = page.locator('.fx-roc');
@@ -160,6 +163,27 @@ test('the writing page shows every article as the reader scrolls', async ({ page
   expect(errors).toEqual([]);
 });
 
+test('links decode briefly under a mouse pointer and settle unchanged', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'The effect needs a mouse pointer.');
+  await page.goto('/blog/');
+  const link = page.locator('.site-nav a').first();
+  const text = await link.textContent();
+  const before = await link.boundingBox();
+  // Record every change to the link's text while the pointer arrives.
+  await link.evaluate(element => {
+    window.fxChanges = [];
+    new MutationObserver(records => records.forEach(record => window.fxChanges.push(record.target.data)))
+      .observe(element, { characterData: true, subtree: true });
+  });
+  await link.hover();
+  await expect.poll(() => page.evaluate(() => window.fxChanges.length)).toBeGreaterThan(1);
+  await expect(link).toHaveText(text);
+  await expect.poll(() => link.evaluate(element => [element.getAttribute('aria-label'), element.getAttribute('style')])).toEqual([null, null]);
+  expect(await link.boundingBox()).toEqual(before);
+  // Screen readers kept the real text throughout.
+  await expect(page.getByRole('link', { name: text.trim(), exact: true }).first()).toBeVisible();
+});
+
 test('the writing page keeps its page links without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
@@ -178,8 +202,8 @@ test.describe('with reduced motion', () => {
     const label = await serverLabel(request);
     await page.goto('/');
     await expect(page.locator('.fx-reveal, .fx-rule, .fx-wipe')).toHaveCount(0);
-    await expect(page.locator('.hero .accent-label')).toHaveText(label);
-    await expect(page.locator('.hero .accent-label span')).toHaveCount(0);
+    await expect(page.locator(firstLabel)).toHaveText(label);
+    await expect(page.locator(firstLabel).locator('span')).toHaveCount(0);
     await expect(page.locator('.hero h1')).toHaveCSS('animation-name', 'none');
     for (const card of await page.locator('.post-card').all()) await expect(card).toHaveCSS('opacity', '1');
     expect((await pulseStyles(page)).map(pulse => pulse.name)).toEqual(['none', 'none', 'none']);

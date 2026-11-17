@@ -353,6 +353,8 @@
   const LOGO_FPR = 0.334;
   // Axis labels: what you take on runs across, what you gain runs up.
   const AXES = { across: 'COMPLEXITY', up: 'CAPABILITY' };
+  // Variant under review: end the plot just past the name, with the introduction on the grid.
+  const PLOT_ENDS_AT_NAME = true;
   const bezier = (t, a, b) => 3 * (1 - t) * (1 - t) * t * a + 3 * (1 - t) * t * t * b + t * t * t;
   const curveAt = t => [bezier(t, P1[0], P2[0]), bezier(t, P1[1], P2[1])];
   function curveAtRate(fpr) {
@@ -431,17 +433,62 @@
       canvas.width = Math.round(width * scale);
       canvas.height = Math.round(height * scale);
       ctx.setTransform(scale, 0, 0, scale, 0, 0);
-      // The axes sit just outside the text column and inside the masthead padding.
+      // The grid sits just outside the text column and inside the masthead padding. It has
+      // ten columns. Its rows divide the plot's height into ten and carry on down the masthead.
       const gap = Math.min(40, rect.left * 0.4);
+      const x0 = Math.max(12, rect.left - gap);
+      const gridRight = Math.min(width - 12, rect.right + gap);
+      const gridBottom = height - clamp(parseFloat(style.paddingBottom) / 2, 24, 48);
       plot = {
-        x0: Math.max(12, rect.left - gap),
-        x1: Math.min(width - 12, rect.right + gap),
-        y0: height - clamp(parseFloat(style.paddingBottom) / 2, 24, 48),
+        x0,
+        x1: gridRight,
+        y0: gridBottom,
         y1: clamp(parseFloat(style.paddingTop) * 0.35, 20, 40),
+        gridRight,
+        gridBottom,
+        cell: (gridRight - x0) / 10,
+        lift: 0,
       };
       plot.labels = plot.x0 >= 36;
+      // The plot ends just past the name. When the introduction sits beside the name, the plot
+      // ends at the first grid column after it. When the introduction sits below, the plot ends
+      // just under the name. Either way the introduction sits on the open grid beyond the plot.
+      const name = hero.querySelector('h1');
+      const intro = hero.querySelector('.hero-introduction');
+      const range = document.createRange();
+      if (name) range.selectNodeContents(name);
+      const lines = name ? [...range.getClientRects()].filter(box => box.width) : [];
+      if (PLOT_ENDS_AT_NAME && lines.length && intro) {
+        const introBox = intro.getBoundingClientRect();
+        const right = Math.max(...lines.map(box => box.right));
+        const bottom = Math.max(...lines.map(box => box.bottom));
+        if (introBox.left > right) {
+          plot.x1 = x0 + plot.cell * clamp(Math.ceil((right + 8 - x0) / plot.cell), 3, 10);
+        } else if (introBox.top >= bottom - 1) {
+          plot.y0 = Math.min(gridBottom, bottom - rect.top + 16);
+        }
+        // The stylesheet places the name under the curve. If a screen's proportions still leave
+        // a line above it, the curve starts that little way up its axis. The curve rises from
+        // left to right, so each line's left end is where it sits lowest.
+        let lift = 0;
+        for (const box of lines) {
+          const rise = curveAtRate(clamp((box.left - x0) / (plot.x1 - x0), 0.001, 1))[1];
+          const needed = (plot.y0 - (box.top - rect.top)) / (plot.y0 - plot.y1) + 0.03;
+          lift = Math.max(lift, (needed - rise) / (1 - rise));
+        }
+        plot.lift = clamp(lift, 0, 0.85);
+      }
+      plot.row = (plot.y0 - plot.y1) / 10;
       measureText();
       draw(performance.now());
+    }
+
+    // Grid rows: ten above the plot's horizontal axis, then on down the masthead.
+    function gridRows() {
+      const rows = [];
+      for (let j = 0; j < 10; j++) rows.push(plot.y1 + j * plot.row);
+      for (let y = plot.y0 + plot.row; y <= plot.gridBottom + 0.5; y += plot.row) rows.push(y);
+      return rows;
     }
 
     const X = rate => plot.x0 + (plot.x1 - plot.x0) * rate;
@@ -449,30 +496,45 @@
 
     function line(x1, y1, x2, y2) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); }
 
-    // On wide windows the grid carries on past the plot and fades out towards the edges.
+    // On wide windows the grid carries on past its edges and fades out towards the window.
     function drawMargins(a) {
-      const cell = (plot.x1 - plot.x0) / 10;
+      const { cell } = plot;
       for (const side of [-1, 1]) {
-        const edge = side < 0 ? plot.x0 : plot.x1;
-        const room = side < 0 ? plot.x0 : width - plot.x1;
+        const edge = side < 0 ? plot.x0 : plot.gridRight;
+        const room = side < 0 ? plot.x0 : width - plot.gridRight;
         const reach = Math.min(room, Math.max(240, cell * 3));
         if (room < 48) continue;
         const fade = ctx.createLinearGradient(edge, 0, edge + side * reach, 0);
         fade.addColorStop(0, rgba(colours.copper, a.minor));
         fade.addColorStop(1, rgba(colours.copper, 0));
         ctx.strokeStyle = fade;
-        for (let i = 1; i <= 10; i++) line(edge, crisp(Y(i / 10)), edge + side * reach, crisp(Y(i / 10)));
-        for (let x = edge + side * cell; Math.abs(x - edge) < reach; x += side * cell) line(crisp(x), plot.y0, crisp(x), plot.y1);
+        for (const y of gridRows()) line(edge, crisp(y), edge + side * reach, crisp(y));
+        for (let x = edge + side * cell; Math.abs(x - edge) < reach; x += side * cell) line(crisp(x), plot.gridBottom, crisp(x), plot.y1);
       }
     }
 
     function drawFrame(a) {
       ctx.lineWidth = 1;
       drawMargins(a);
-      for (let i = 1; i <= 10; i++) {
-        ctx.strokeStyle = rgba(colours.copper, i === 5 ? a.major : a.minor);
-        line(crisp(X(i / 10)), plot.y0, crisp(X(i / 10)), plot.y1);
-        line(plot.x0, crisp(Y(i / 10)), plot.x1, crisp(Y(i / 10)));
+      // The backing grid. A full plot marks its middle column. A narrower plot marks its end.
+      const partial = plot.x1 < plot.gridRight - 0.5;
+      for (let k = 1; k <= 10; k++) {
+        const x = plot.x0 + k * plot.cell;
+        ctx.strokeStyle = rgba(colours.copper, (partial ? Math.abs(x - plot.x1) < 0.5 : k === 5) ? a.major : a.minor);
+        line(crisp(x), plot.gridBottom, crisp(x), plot.y1);
+      }
+      for (const [j, y] of gridRows().entries()) {
+        ctx.strokeStyle = rgba(colours.copper, j === 5 ? a.major : a.minor);
+        line(plot.x0, crisp(y), plot.gridRight, crisp(y));
+      }
+      // A shorter plot leaves the grid's left edge open below its axis.
+      if (plot.y0 < plot.gridBottom - 0.5) {
+        ctx.strokeStyle = rgba(colours.copper, a.minor);
+        line(crisp(plot.x0), plot.y0 + 8, crisp(plot.x0), plot.gridBottom);
+      }
+      if (partial) {
+        ctx.strokeStyle = rgba(colours.copper, a.minor);
+        line(plot.x1 + 8, crisp(plot.y0), plot.gridRight, crisp(plot.y0));
       }
       ctx.strokeStyle = rgba(colours.copper, a.guide * 0.6);
       ctx.setLineDash([3, 6]);
@@ -525,19 +587,22 @@
       drawFrame(a);
       canvas.classList.add('is-ready');
 
-      // The curve draws itself once, after the masthead entrance.
+      // The curve draws itself once, after the masthead entrance. A lifted curve starts part
+      // of the way up its axis and keeps its shape over the remaining height.
+      const raise = value => plot.lift + (1 - plot.lift) * value;
       const progress = still ? 1 : easeInOut(clamp((t - 0.4) / 1.8));
       const count = Math.round(progress * (CURVE.length - 1));
       const trace = () => {
         ctx.beginPath();
         for (let i = 0; i <= count; i++) {
           const [x, y] = CURVE[i];
-          if (i) ctx.lineTo(X(x), Y(y)); else ctx.moveTo(X(x), Y(y));
+          if (i) ctx.lineTo(X(x), Y(raise(y))); else ctx.moveTo(X(x), Y(raise(y)));
         }
       };
       if (progress >= 1) {
         trace();
         ctx.lineTo(X(1), Y(0));
+        ctx.lineTo(X(0), Y(0));
         ctx.closePath();
         ctx.fillStyle = rgba(colours.copper, a.fill);
         ctx.fill();
@@ -554,7 +619,8 @@
         ? clamp((pointer.x - plot.x0) / (plot.x1 - plot.x0), 0.01, 0.99)
         : LOGO_FPR + (still ? 0 : 0.12 * Math.sin((t - 2.3) * 0.3));
       fpr += (target - fpr) * (still ? 1 : 0.08);
-      const [across, up] = curveAtRate(fpr);
+      const [across, rise] = curveAtRate(fpr);
+      const up = raise(rise);
       const x = X(across);
       const y = Y(up);
       ctx.strokeStyle = rgba(colours.copper, a.guide * appear);
@@ -611,8 +677,8 @@
     document.addEventListener('visibilitychange', update);
     reducedMotion.addEventListener('change', update);
     // Text moves while the entrance plays and when web fonts arrive, so measure it again then.
-    document.fonts?.ready.then(() => { measureText(); draw(performance.now()); });
-    setTimeout(() => { measureText(); draw(performance.now()); }, 2000);
+    document.fonts?.ready.then(measure);
+    setTimeout(measure, 2000);
 
     window.addEventListener('pointermove', event => {
       if (!finePointer.matches) return;
@@ -623,6 +689,74 @@
     root.addEventListener('pointerleave', () => { pointer.active = false; });
 
     update();
+  }
+
+  /* Link decoder. When a mouse pointer arrives on a link, its text runs through random
+     letters and digits for a moment, then settles. The text nodes change in place, so the
+     link and its click target stay the same, and screen readers keep the real text through
+     a temporary aria-label. A link in a proportional face holds its width while it
+     scrambles, so nearby text does not move. */
+  function setupLinkDecoder() {
+    const busy = new WeakSet();
+    const pick = set => set[Math.floor(Math.random() * set.length)];
+    const LOWER = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    const UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+    const scramble = char => (/\d/.test(char) ? pick('0123456789') : /[a-z]/.test(char) ? pick(LOWER) : /[A-Z]/.test(char) ? pick(UPPER) : char);
+    const visibleText = node => node.data.trim() && !node.parentElement.closest('[aria-hidden="true"], svg, .sr-only');
+
+    document.addEventListener('pointerover', event => {
+      if (event.pointerType !== 'mouse' || reducedMotion.matches) return;
+      const link = event.target.closest?.('a[href]');
+      if (!link || busy.has(link) || (event.relatedTarget && link.contains(event.relatedTarget))) return;
+      const walker = document.createTreeWalker(link, NodeFilter.SHOW_TEXT, { acceptNode: node => (visibleText(node) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT) });
+      const nodes = [];
+      while (walker.nextNode()) nodes.push(walker.currentNode);
+      if (!nodes.length) return;
+      const style = getComputedStyle(link);
+      const mono = /plex mono|monospace/i.test(style.fontFamily);
+      // A wrapped link in a proportional face would reflow its paragraph, so it stays still.
+      if (!mono && link.getClientRects().length > 1) return;
+
+      busy.add(link);
+      const originals = nodes.map(node => node.data);
+      const hadLabel = link.hasAttribute('aria-label');
+      if (!hadLabel) link.setAttribute('aria-label', link.textContent.replace(/\s+/g, ' ').trim());
+      const saved = { display: link.style.display, width: link.style.width, whiteSpace: link.style.whiteSpace };
+      if (!mono) {
+        const width = link.getBoundingClientRect().width;
+        if (style.display === 'inline') link.style.display = 'inline-block';
+        link.style.width = `${width}px`;
+        link.style.whiteSpace = 'nowrap';
+      }
+
+      const total = originals.reduce((sum, text) => sum + text.length, 0);
+      const duration = Math.min(Math.max(220 + total * 12, 300), 600);
+      let position = 0;
+      const resolveAt = originals.map(text => Array.from(text, () => (position++ / total) * duration * 0.7 + Math.random() * duration * 0.3));
+      let start = 0;
+      let last = 0;
+
+      function finish() {
+        nodes.forEach((node, i) => { node.data = originals[i]; });
+        if (!hadLabel) link.removeAttribute('aria-label');
+        Object.assign(link.style, saved);
+        if (!link.getAttribute('style')) link.removeAttribute('style');
+        busy.delete(link);
+      }
+      function step(now) {
+        if (!start) start = now;
+        const elapsed = now - start;
+        if (elapsed >= duration || reducedMotion.matches) { finish(); return; }
+        if (now - last > 40) {
+          last = now;
+          nodes.forEach((node, i) => {
+            node.data = Array.from(originals[i], (char, j) => (elapsed >= resolveAt[i][j] ? char : scramble(char))).join('');
+          });
+        }
+        requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    });
   }
 
   /* Colour mode wipe. The theme toggle in main.js changes the theme. This listener runs
@@ -660,5 +794,8 @@
   if (watch) setupScroll(watch);
   // The endless list is a feature, not decoration, so it also runs for reduced motion.
   setupWriting(watch);
-  if (!reducedMotion.matches) setupThemeWipe();
+  if (!reducedMotion.matches) {
+    setupThemeWipe();
+    setupLinkDecoder();
+  }
 })();

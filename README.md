@@ -64,7 +64,8 @@ See [the archive notes](python_code/notebooks/README.md).
 The site uses the local Ash Hugo theme in `themes/ash/` and Christopher Laing's Integrated cadence logo.
 The theme supports Light and Dark modes, responsive layouts, and local search.
 The homepage copy and sections live in `content/_index.md`. Site navigation and branding use `hugo.toml`.
-Logo files in `assets/brand/` are unchanged copies of the approved identity assets.
+The header mark and the site icons (`ic-mark-cl-*.svg`, `favicon.svg`, `favicon-light.ico`, and `ic-icon-light-180.png`) show the Integrated cadence curve on square axes with the initials CL in IBM Plex Mono outlines.
+The other logo files in `assets/brand/` are unchanged copies of the approved identity assets.
 The theme supports the existing `[[images]]` article metadata without changes to article text.
 
 The earlier design adapted Future Imperfect. It no longer supplies templates, styles, or scripts.
