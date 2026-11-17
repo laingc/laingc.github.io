@@ -1,0 +1,19 @@
+{{ define "main" }}
+  {{ partial "ash/page-heading.html" . }}
+  <div class="container list-content search-page">
+    {{ with .Content }}<div class="prose list-introduction">{{ partial "ash/content.html" . }}</div>{{ end }}
+    {{ with .Site.Home.OutputFormats.Get "Search" }}
+      <div class="search" data-search-index="{{ .RelPermalink }}" data-loading="{{ i18n `searchLoading` }}" data-empty="{{ i18n `searchEmpty` }}" data-results="{{ i18n `searchResults` }}" data-error="{{ i18n `searchError` }}" data-hint="{{ i18n `searchHint` }}">
+        <form role="search" hidden>
+          <label for="search-query">{{ i18n "searchLabel" }}</label>
+          <div class="search-controls"><input type="search" id="search-query" name="q" autocomplete="off" maxlength="200" aria-describedby="search-status"><button class="button" type="submit">{{ i18n "search" }}</button></div>
+        </form>
+        <p id="search-status" role="status" aria-live="polite"></p>
+        <ol class="search-results"></ol>
+      </div>
+    {{ else }}
+      {{ errorf "Ash: %s uses the search layout. Add Search to outputs.home in your site configuration." .Path }}
+    {{ end }}
+    <div class="search-fallback"><p>{{ i18n "searchNoScript" }}</p><ul>{{ range .Site.RegularPages }}{{ if and (ne .Params.search false) (not .Params.hidden) (not .Params.noindex) (not (in (slice "search" "archive") .Layout)) }}<li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>{{ end }}{{ end }}</ul></div>
+  </div>
+{{ end }}

@@ -1,0 +1,215 @@
+/* chrislaing.net motion layer.
+   Ash appends this file to its stylesheet (themes/ash/layouts/_partials/ash/head.html).
+   It adds entrance, scroll, and hover motion. It does not change layout or content.
+   assets/js/motion.js adds the fx-* classes and the ROC plot. Without JavaScript,
+   only the CSS entrance and hover details apply. Nothing moves when the reader
+   prefers reduced motion. */
+
+:root {
+  --fx-ease-out: cubic-bezier(.16, 1, .3, 1);
+  --fx-ease-in-out: cubic-bezier(.65, 0, .35, 1);
+}
+
+/* Homepage band. The header and masthead are always dark, in both colour modes. The values
+   repeat Ash's own dark roles, in the same way as the theme's reverse section. */
+body:has(.hero) .site-header,
+.hero {
+  color-scheme: dark;
+  --canvas: var(--ash-black);
+  --surface: var(--ash-charcoal);
+  --raised: var(--ash-charcoal-raised);
+  --ink: var(--ash-ivory);
+  --muted: var(--ash-warm-grey);
+  --line: var(--ash-dark-line);
+  --line-strong: var(--ash-dark-line-strong);
+  --accent-text: var(--ash-copper-ink);
+  --focus: var(--ash-ivory);
+  --button: var(--ash-ivory);
+  --button-ink: var(--ash-black);
+  --image-grade: saturate(.45) sepia(.1) brightness(.78);
+  color: var(--ink);
+}
+body:has(.hero) .site-header { background: var(--ash-black); }
+body:has(.hero) .site-header .brand-light:has(+ .brand-dark) { display: none; }
+body:has(.hero) .site-header .brand-dark { display: block; }
+/* The masthead keeps the text column. A border-image outset paints its band to both window
+   edges without widening the page. */
+.hero { position: relative; isolation: isolate; border-image: linear-gradient(var(--ash-black), var(--ash-black)) 0 fill / 0 / 0 100vmax; }
+
+/* Short landscape screens, such as a phone on its side. The name and the introduction sit
+   side by side, and the name is sized to the height of the screen. */
+@media (orientation: landscape) and (max-height: 520px) and (min-width: 600px) {
+  .header-inner { min-height: 72px; padding-block: 12px; }
+  .hero { grid-template-columns: 1.1fr 1fr; gap: 36px; padding-block: 36px 52px; }
+  .hero h1 { font-size: clamp(2.75rem, 7.5vw, 4.5rem); }
+  .hero .accent-label { margin-block-end: 20px; }
+  .hero-location { margin-block-start: 16px; }
+  .hero-lead { font-size: 21px; }
+  .hero-description { margin-block-start: 16px; font-size: 15px; }
+}
+
+/* Wide screens. The column grows so that the page does not sit small in the middle. */
+@media (min-width: 1800px) {
+  :root { --container: 1440px; }
+  .hero h1 { font-size: clamp(4.5rem, 7.2vw, 9rem); }
+  .hero-lead { font-size: 33px; }
+}
+@media (min-width: 2300px) {
+  :root { --container: 1600px; }
+  body { font-size: 18px; }
+}
+
+/* The ROC plot sits in the dark band behind the masthead text. motion.js sets its position
+   and size so that it spans the window. */
+.fx-roc { position: absolute; z-index: -1; inset-block-start: 0; display: block; pointer-events: none; opacity: 0; transition: opacity 1.2s ease; }
+.fx-roc.is-ready { opacity: 1; }
+
+/* Article card rules carry two Copper layers. The first is a rule that grows along the line
+   under the pointer or keyboard focus. The second is a soft pulse that travels along the
+   line. Each card has its own pace and starting point, so the pulses never line up. */
+.post-card { position: relative; --fx-pulse-time: 14.3s; --fx-pulse-start: -4.6s; }
+.post-card:nth-child(4n+1) { --fx-pulse-time: 11.7s; --fx-pulse-start: -1.3s; }
+.post-card:nth-child(4n+3) { --fx-pulse-time: 16.9s; --fx-pulse-start: -9.8s; }
+.post-card:nth-child(4n+4) { --fx-pulse-time: 19.1s; --fx-pulse-start: -6.2s; }
+.post-card::after {
+  content: '';
+  position: absolute;
+  inset-block-start: -1px;
+  inset-inline: 0;
+  height: 1px;
+  pointer-events: none;
+  background-image: linear-gradient(var(--accent), var(--accent)), linear-gradient(90deg, transparent, var(--accent), transparent);
+  background-repeat: no-repeat;
+  background-size: 0% 100%, 24% 100%;
+  /* -32% and 132% place the 24% pulse just outside each end of the line. */
+  background-position: 0 0, -32% 0;
+}
+[dir='rtl'] .post-card::after { background-position: 100% 0, 132% 0; }
+.post-card:focus-within::after { background-size: 100% 100%, 24% 100%; }
+/* Touch screens have no hover, so a tap does not leave hover effects switched on. */
+@media (hover: hover) {
+  .post-card:hover::after { background-size: 100% 100%, 24% 100%; }
+}
+
+/* Unresolved decoder glyphs. */
+.fx-glyph { color: var(--accent-text); }
+
+/* Cadence strip above article lists (motion.js). Each Copper tick is an article on a time
+   axis. The square marks the article the reader is on, and the line above names it. */
+.fx-cadence-probe { height: 1px; margin-block-end: -1px; }
+.fx-cadence { position: sticky; top: 0; z-index: 5; margin-block-end: 12px; padding-block: 14px 4px; background: var(--canvas); }
+/* A rule under the strip once it sticks. A box-shadow left a faint edge at fractional widths. */
+.fx-cadence::after { content: ''; position: absolute; inset-inline: 0; bottom: 0; height: 1px; background: var(--line); opacity: 0; transition: opacity .3s ease; }
+.fx-cadence.is-stuck::after { opacity: 1; }
+.fx-cadence-readout { display: flex; gap: 16px; align-items: baseline; min-width: 0; min-height: 22px; margin: 0; white-space: nowrap; }
+.fx-cadence-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; font: 16px/1.4 var(--font-display); letter-spacing: -.01em; color: var(--ink); }
+.fx-cadence-date { flex: none; font: 10px/1.6 var(--font-mono); letter-spacing: .04em; color: var(--muted); }
+.fx-cadence-track { position: relative; height: 36px; margin-block-start: 8px; }
+.fx-cadence-track::before { content: ''; position: absolute; inset-inline: 0; top: 18px; height: 1px; background: var(--line-strong); }
+.fx-cadence-year { position: absolute; top: 18px; left: calc(var(--x) * 100%); padding: 8px 0 0 5px; font: 9px/1 var(--font-mono); letter-spacing: .04em; color: var(--muted); white-space: nowrap; pointer-events: none; }
+.fx-cadence-year::before { content: ''; position: absolute; left: 0; top: 0; width: 1px; height: 5px; background: var(--line-strong); }
+.fx-cadence-year:empty { padding: 0; }
+.fx-cadence-tick { position: absolute; top: 4px; left: calc(var(--x) * 100%); width: 2px; height: 14px; margin-inline-start: -1px; background: var(--accent); opacity: .5; cursor: pointer; transform-origin: 50% 100%; transition: opacity .2s ease, transform .2s ease; }
+.fx-cadence-tick::before { content: ''; position: absolute; inset: -4px -5px; }
+.fx-cadence-tick.is-active { opacity: 1; transform: scaleY(1.35); }
+@media (hover: hover) { .fx-cadence-tick:hover { opacity: 1; } }
+.fx-cadence-marker { position: absolute; top: 14px; left: calc(var(--x) * 100%); width: 9px; height: 9px; margin-inline-start: -4.5px; background: var(--accent); pointer-events: none; }
+.fx-cadence ~ .post-list > .post-card { scroll-margin-top: 104px; }
+
+/* The note that closes a list once every article is shown. */
+.fx-writing-sentinel { height: 1px; }
+.fx-writing-end { display: flex; align-items: center; gap: 14px; margin-block-start: 0; padding-block-start: 28px; border-top: 1px solid var(--line); font: 11px/1.6 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.fx-writing-end::before { content: ''; flex: none; width: 9px; height: 9px; background: var(--accent); }
+
+/* The theme toggle reveals the new colour mode in a circle (motion.js). */
+:root.fx-theme-wipe::view-transition-old(root),
+:root.fx-theme-wipe::view-transition-new(root) { animation: none; mix-blend-mode: normal; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .post-card::after { transition: background-size .7s var(--fx-ease-out), opacity 1.2s ease; animation: fx-pulse var(--fx-pulse-time) linear var(--fx-pulse-start) infinite; }
+  [dir='rtl'] .post-card::after { animation-name: fx-pulse-rtl; }
+  /* A card that draws its rule on scroll shows the pulse once the rule is there. */
+  .fx-rule:not(.is-visible)::after { opacity: 0; }
+  .text-link svg,
+  .post-card-arrow svg { transition: translate .35s var(--fx-ease-out); }
+  .post-card-arrow:focus-visible svg { translate: 4px 0; }
+  @media (hover: hover) {
+    .text-link:hover svg,
+    .post-card:hover .post-card-arrow svg { translate: 4px 0; }
+    [dir='rtl'] .text-link:hover svg,
+    [dir='rtl'] .post-card:hover .post-card-arrow svg { translate: -4px 0; }
+  }
+
+  /* Homepage entrance: the rule draws, the labels decode, and the name sweeps in. */
+  .hero .eyebrow { animation: fx-fade .6s ease .1s both; }
+  .hero .hero-location { animation-delay: .9s; }
+  .hero .accent-label::before { transform-origin: left center; animation: fx-draw .9s var(--fx-ease-out) .15s both; }
+  /* The padding keeps descenders inside the mask. The negative margin keeps the layout. */
+  .hero h1 { padding-block-end: .14em; margin-block-end: -.14em; animation: fx-ink 1.6s var(--fx-ease-out) .2s backwards; }
+  .hero-lead { animation: fx-rise 1.1s var(--fx-ease-out) .45s both; }
+  .hero-description { animation: fx-rise 1.1s var(--fx-ease-out) .6s both; }
+  .hero-actions { animation: fx-rise 1.1s var(--fx-ease-out) .75s both; }
+  .hero-figure { animation: fx-rise 1.2s var(--fx-ease-out) .8s both; }
+
+  /* List page headings sweep in the same way, and the cadence strip draws itself. */
+  .page-heading .breadcrumb { animation: fx-fade .6s ease .05s both; }
+  .page-heading h1 { padding-block-end: .14em; margin-block-end: -.14em; animation: fx-ink 1.4s var(--fx-ease-out) .1s backwards; }
+  .page-heading .page-description { animation: fx-rise 1s var(--fx-ease-out) .35s both; }
+  .fx-cadence-readout { animation: fx-fade .6s ease .3s backwards; }
+  .fx-cadence-track::before { transform-origin: left center; animation: fx-draw 1.2s var(--fx-ease-out) .2s backwards; }
+  .fx-cadence-year { animation: fx-fade .8s ease .5s backwards; }
+  .fx-cadence-tick { animation: fx-tick .6s var(--fx-ease-out) backwards; animation-delay: calc(.35s + var(--i) * 45ms); }
+  .fx-cadence-marker { animation: fx-fade .5s ease 1.3s backwards; }
+
+  /* Scroll reveals. motion.js adds these classes only to content below the fold. */
+  .fx-reveal { transition: opacity .9s ease var(--fx-delay, 0s), translate 1.2s var(--fx-ease-out) var(--fx-delay, 0s); }
+  .fx-reveal:not(.is-visible) { opacity: 0; translate: 0 32px; }
+  .fx-rule { position: relative; border-block-start-color: transparent; }
+  .fx-rule::before { content: ''; position: absolute; inset-block-start: -1px; inset-inline: 0; height: 1px; background: var(--line); transform-origin: left center; transition: transform 1.4s var(--fx-ease-in-out) var(--fx-delay, 0s); pointer-events: none; }
+  .fx-rule:not(.is-visible)::before { transform: scaleX(0); }
+  .fx-wipe { transition: clip-path 1.5s var(--fx-ease-in-out) calc(var(--fx-delay, 0s) + .15s); }
+  .fx-wipe:not(.is-visible) { clip-path: inset(100% 0 0 0); }
+
+  [dir='rtl'] .fx-rule::before,
+  [dir='rtl'] .hero .accent-label::before { transform-origin: right center; }
+  [dir='rtl'] .post-card-arrow:focus-visible svg { translate: -4px 0; }
+  [dir='rtl'] .hero h1 { animation-name: fx-ink-rtl; }
+}
+
+@keyframes fx-fade { from { opacity: 0; } }
+@keyframes fx-draw { from { transform: scaleX(0); } }
+@keyframes fx-rise { from { opacity: 0; translate: 0 24px; } }
+@keyframes fx-tick { from { transform: scaleY(0); } }
+@keyframes fx-pulse { from { background-position: 0 0, -32% 0; } to { background-position: 0 0, 132% 0; } }
+@keyframes fx-pulse-rtl { from { background-position: 100% 0, 132% 0; } to { background-position: 100% 0, -32% 0; } }
+/* A soft mask edge moves across the heading. The mask exists only during the animation. */
+@keyframes fx-ink {
+  from {
+    -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent 60%); mask-image: linear-gradient(90deg, #000 40%, transparent 60%);
+    -webkit-mask-size: 250% 100%; mask-size: 250% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: 100% 0; mask-position: 100% 0;
+  }
+  to {
+    -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent 60%); mask-image: linear-gradient(90deg, #000 40%, transparent 60%);
+    -webkit-mask-size: 250% 100%; mask-size: 250% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: 0 0; mask-position: 0 0;
+  }
+}
+@keyframes fx-ink-rtl {
+  from {
+    -webkit-mask-image: linear-gradient(270deg, #000 40%, transparent 60%); mask-image: linear-gradient(270deg, #000 40%, transparent 60%);
+    -webkit-mask-size: 250% 100%; mask-size: 250% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: 0 0; mask-position: 0 0;
+  }
+  to {
+    -webkit-mask-image: linear-gradient(270deg, #000 40%, transparent 60%); mask-image: linear-gradient(270deg, #000 40%, transparent 60%);
+    -webkit-mask-size: 250% 100%; mask-size: 250% 100%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    -webkit-mask-position: 100% 0; mask-position: 100% 0;
+  }
+}
+
+@media print {
+  .fx-roc, .fx-cadence, .fx-cadence-probe { display: none !important; }
+  .hero { border-image: none; color: #222; --ink: #222; --muted: #444; }
+  .fx-reveal, .fx-wipe { opacity: 1 !important; translate: none !important; clip-path: none !important; }
+}

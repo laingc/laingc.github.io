@@ -1,0 +1,42 @@
+{{ define "main" }}
+{{ $article := partial "ash/is-article.html" . }}
+<article class="single-page">
+  <header class="article-heading container">
+    {{ with .Parent }}<a class="eyebrow breadcrumb" href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>{{ end }}
+    <h1>{{ .Title }}</h1>
+    {{ with .Params.subtitle }}<p class="article-subtitle">{{ . }}</p>{{ end }}
+    {{ if $article }}<div class="article-meta">
+      <span>{{ partial "ash/author.html" . }}</span>
+      {{ if not .Date.IsZero }}<time datetime="{{ .Date.Format `2006-01-02T15:04:05Z07:00` }}">{{ .Date | time.Format (.Site.Params.dateFormat | default "2 January 2006") }}</time>{{ end }}
+      {{ if and (not .Lastmod.IsZero) (gt .Lastmod .Date) }}<span>{{ i18n "updated" }} <time datetime="{{ .Lastmod.Format `2006-01-02T15:04:05Z07:00` }}">{{ .Lastmod | time.Format (.Site.Params.dateFormat | default "2 January 2006") }}</time></span>{{ end }}
+      {{ if .Param "showReadingTime" }}<span>{{ i18n "minuteRead" (dict "Count" .ReadingTime) }}</span>{{ end }}
+    </div>{{ end }}
+    {{ $cover := .Params.cover }}
+    {{ if not $cover }}{{ with .Params.images }}{{ $first := index . 0 }}{{ if reflect.IsMap $first }}{{ $cover = $first }}{{ end }}{{ end }}{{ end }}
+    {{ with $cover }}<figure class="article-cover">{{ partial "ash/image.html" (dict "page" $ "src" .src "alt" .alt "class" "editorial-image" "loading" "eager" "sizes" "(max-width: 760px) calc(100vw - 48px), 1000px") }}{{ with .caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}</figure>{{ end }}
+  </header>
+  {{ $toc := and (.Param "showToc") (gt (len .Fragments.Headings) 0) }}
+  <div class="container article-grid{{ if $toc }} with-toc{{ end }}">
+    {{ if $toc }}<aside class="toc"><details open><summary>{{ i18n "contents" }}</summary>{{ .TableOfContents }}</details></aside>{{ end }}
+    <div class="article-body">
+      <div class="prose">{{ partial "ash/content.html" .Content }}</div>
+      {{ if $article }}
+        <footer class="article-footer">
+          {{ range $taxonomy, $_ := .Site.Taxonomies }}{{ with $.GetTerms $taxonomy }}<ul class="article-terms" aria-label="{{ with $.Site.GetPage (printf `/%s` $taxonomy) }}{{ .Title }}{{ else }}{{ $taxonomy }}{{ end }}">{{ range . }}<li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>{{ end }}</ul>{{ end }}{{ end }}
+        </footer>
+        {{ if .Param "showPostNavigation" }}
+          {{ $siblings := (where (where .Site.RegularPages "Section" .Section) "Params.hidden" "ne" true).ByDate }}
+          <nav class="post-navigation" aria-label="{{ i18n `allWriting` }}">
+            <div>{{ with $siblings.Prev . }}<p class="eyebrow">{{ i18n "previous" }}</p><a href="{{ .RelPermalink }}" rel="prev">{{ .LinkTitle }}</a>{{ end }}</div>
+            <div>{{ with $siblings.Next . }}<p class="eyebrow">{{ i18n "next" }}</p><a href="{{ .RelPermalink }}" rel="next">{{ .LinkTitle }}</a>{{ end }}</div>
+          </nav>
+        {{ end }}
+      {{ end }}
+    </div>
+  </div>
+</article>
+{{ if and $article (.Param "showRelated") }}
+  {{ $related := where (.Site.RegularPages.Related .) "Params.hidden" "ne" true | first 3 }}
+  {{ with $related }}<section class="container section related"><h2>{{ i18n "related" }}</h2><div class="post-list">{{ range . }}{{ partial "ash/post-card.html" . }}{{ end }}</div></section>{{ end }}
+{{ end }}
+{{ end }}

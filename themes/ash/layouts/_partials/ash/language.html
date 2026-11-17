@@ -1,0 +1,8 @@
+{{/* Hugo renamed the language API in 0.158. Keep the legacy calls in this branch only. */}}
+{{- $language := dict -}}
+{{- if ge hugo.Version "0.158.0" -}}
+  {{- $language = dict "name" .Name "locale" .Locale "label" (.Label | default .Name) "direction" (.Direction | default "ltr") -}}
+{{- else -}}
+  {{- $language = dict "name" .Lang "locale" (.LanguageCode | default .Params.locale | default .Lang) "label" (.LanguageName | default .Params.label | default .Lang) "direction" (.LanguageDirection | default .Params.direction | default "ltr") -}}
+{{- end -}}
+{{- return $language -}}

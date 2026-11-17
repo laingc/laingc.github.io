@@ -1,0 +1,1 @@
+<figure class="pull-quote"><blockquote>{{ .Inner | .Page.RenderString (dict "display" "block") }}</blockquote>{{ with .Get "author" }}<figcaption>{{ . }}{{ with $.Get "source" }} · {{ with $.Get "url" }}<a href="{{ . }}">{{ end }}<cite>{{ . }}</cite>{{ if $.Get "url" }}</a>{{ end }}{{ end }}</figcaption>{{ end }}</figure>

@@ -51,7 +51,7 @@ for (const filename of files) {
 }
 
 const index = JSON.parse(await readFile(path.join(output, 'index.json'), 'utf8'));
-const publishedPosts = content.filter(page => page.published && page.route.startsWith('/blog/'));
+const publishedPosts = content.filter(page => page.published && !page.isSection && page.route.startsWith('/blog/'));
 assert.deepEqual(index.map(post => post.url).sort(), publishedPosts.map(post => post.route).sort(), 'Search index must contain exactly the published posts');
 assert.equal(await readFile(path.join(output, 'CNAME'), 'utf8'), 'chrislaing.net\n');
 const sitemap = await readFile(path.join(output, 'sitemap.xml'), 'utf8');
@@ -66,7 +66,7 @@ for (const page of content) {
         errors.push(`${path.relative(root, page.filename)}: missing featured image ${image.src}`);
       }
     }
-    if (page.route.startsWith('/blog/') && !rss.includes(`${origin}${page.route}`)) errors.push(`Post missing from RSS: ${page.route}`);
+    if (!page.isSection && page.route.startsWith('/blog/') && !rss.includes(`${origin}${page.route}`)) errors.push(`Post missing from RSS: ${page.route}`);
   } else {
     if (await exists(target) || sitemap.includes(`${origin}${page.route}`) || rss.includes(`${origin}${page.route}`)) errors.push(`Unpublished content exposed: ${page.route}`);
   }

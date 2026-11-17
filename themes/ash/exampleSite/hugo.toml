@@ -1,0 +1,126 @@
+baseURL = 'https://example.org/'
+title = 'Christopher Laing'
+theme = 'ash'
+themesDir = '../..'
+defaultContentLanguage = 'en'
+timeZone = 'Pacific/Auckland'
+enableRobotsTXT = true
+
+[outputs]
+home = ['HTML', 'RSS', 'Search']
+
+[markup.highlight]
+noClasses = false
+
+[pagination]
+pagerSize = 4
+
+[params]
+description = 'An example personal website built with the Ash Hugo theme.'
+mainSections = ['blog']
+images = ['images/landscape.jpg']
+homePosts = 3
+copyright = 'Christopher Laing'
+favicon = 'brand/favicon.svg'
+faviconFallback = 'brand/favicon-light.ico'
+appleTouchIcon = 'brand/ic-icon-light-180.png'
+[params.brand]
+name = 'Christopher Laing'
+light = 'brand/ic-lockup-compact-light.svg'
+dark = 'brand/ic-lockup-compact-dark.svg'
+smallLight = 'brand/ic-symbol-small-light.svg'
+smallDark = 'brand/ic-symbol-small-dark.svg'
+width = 320
+height = 74
+[params.author]
+name = 'Alex Morgan'
+[[params.social]]
+name = 'Email'
+url = 'mailto:alex@example.org'
+
+[taxonomies]
+category = 'categories'
+tag = 'tags'
+series = 'series'
+
+[languages.en]
+locale = 'en-NZ'
+label = 'English'
+weight = 1
+[[languages.en.menus.main]]
+name = 'Writing'
+pageRef = '/blog'
+weight = 10
+[[languages.en.menus.main]]
+name = 'About'
+pageRef = '/about'
+weight = 20
+[[languages.en.menus.main]]
+name = 'Topics'
+identifier = 'topics'
+weight = 30
+[[languages.en.menus.main]]
+name = 'Categories'
+pageRef = '/categories'
+parent = 'topics'
+weight = 10
+[[languages.en.menus.main]]
+name = 'Tags'
+pageRef = '/tags'
+parent = 'topics'
+weight = 20
+[[languages.en.menus.main]]
+name = 'Series'
+pageRef = '/series'
+parent = 'topics'
+weight = 30
+[[languages.en.menus.main]]
+name = 'Archive'
+pageRef = '/archive'
+weight = 40
+[[languages.en.menus.footer]]
+name = 'About this example'
+pageRef = '/about'
+
+[languages.fr]
+locale = 'fr-FR'
+label = 'Français'
+weight = 2
+[[languages.fr.menus.main]]
+name = 'Articles'
+pageRef = '/blog'
+weight = 10
+[[languages.fr.menus.main]]
+name = 'À propos'
+pageRef = '/about'
+weight = 20
+
+[languages.ar]
+locale = 'ar'
+label = 'العربية'
+direction = 'rtl'
+weight = 3
+[[languages.ar.menus.main]]
+name = 'المقالات'
+pageRef = '/blog'
+weight = 10
+
+[markup.goldmark.extensions.passthrough]
+enable = true
+[markup.goldmark.extensions.passthrough.delimiters]
+block = [['\[', '\]'], ['$$', '$$']]
+inline = [['\(', '\)']]
+
+[related]
+includeNewer = true
+threshold = 70
+toLower = true
+[[related.indices]]
+name = 'tags'
+weight = 100
+[[related.indices]]
+name = 'series'
+weight = 80
+
+[privacy.youtube]
+privacyEnhanced = true

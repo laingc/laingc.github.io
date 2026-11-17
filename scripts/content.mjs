@@ -17,11 +17,15 @@ export function parseContent(text, filename) {
   if (!match) throw new Error(`${filename}: expected TOML front matter`);
   const front = parse(match[1]);
   if (typeof front.title !== 'string' || !front.title.trim()) throw new Error(`${filename}: missing title`);
+  const section = path.basename(path.dirname(filename));
+  const stem = path.basename(filename, '.md');
+  const isSection = stem === '_index';
+  const isPost = section === 'blog' && !isSection;
   const date = String(front.date ?? '');
-  if (!/^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2}))?$/.test(date) || Number.isNaN(Date.parse(date))) {
+  if ((date || isPost) && (!/^\d{4}-\d{2}-\d{2}(?:T\d{2}:\d{2}:\d{2}(?:Z|[+-]\d{2}:\d{2}))?$/.test(date) || Number.isNaN(Date.parse(date)))) {
     throw new Error(`${filename}: expected an ISO date or a timezone-aware timestamp`);
   }
-  if (filename.replaceAll('\\', '/').includes('/blog/') && typeof front.draft !== 'boolean') {
+  if (isPost && typeof front.draft !== 'boolean') {
     throw new Error(`${filename}: draft must be explicitly true or false`);
   }
   for (const field of ['tags', 'categories', 'aliases']) {
@@ -29,10 +33,8 @@ export function parseContent(text, filename) {
       throw new Error(`${filename}: ${field} must be an array of strings`);
     }
   }
-  const section = path.basename(path.dirname(filename));
-  const stem = path.basename(filename, '.md');
-  const route = section === 'blog' ? `/blog/${stem}/` : `/${stem}/`;
-  return { filename, front, body: text.slice(match[0].length), route, published: front.draft !== true && Date.parse(date) <= Date.now() };
+  const route = isSection ? (section === 'content' ? '/' : `/${section}/`) : (isPost ? `/blog/${stem}/` : `/${stem}/`);
+  return { filename, front, body: text.slice(match[0].length), route, isSection, published: front.draft !== true && (!date || Date.parse(date) <= Date.now()) };
 }
 
 export async function loadContent(root) {

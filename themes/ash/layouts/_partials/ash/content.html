@@ -1,0 +1,9 @@
+{{/* Goldmark emits disabled task checkboxes without labels. Name them from the adjacent task text before minification. */}}
+{{- $content := . -}}
+{{- range findRE `<input (?:checked="" )?disabled="" type="checkbox">[^\n]*` $content -}}
+  {{- $label := replaceRE `^<input[^>]+>` "" . | plainify | htmlUnescape | strings.TrimSpace -}}
+  {{- $label = $label | default (i18n "taskStatus") -}}
+  {{- $labelled := replace . "<input " (printf `<input aria-label="%s" ` ($label | htmlEscape)) -}}
+  {{- $content = replace $content . $labelled -}}
+{{- end -}}
+{{- return ($content | safeHTML) -}}

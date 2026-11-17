@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" width="16" height="16" role="img" aria-label="Christopher Laing">
+<title>Christopher Laing</title>
+<desc>Integrated cadence v1.0. One selected square on a rising curve; no terminal punctuation. Wordmark is fixed vector artwork traced from the selected reference, not live font text.</desc>
+<style>
+:root { --ic-ink: #282522; --ic-accent: #C4521E; --ic-ground: #F1EDE6; }
+@media (prefers-color-scheme: dark) { :root { --ic-ink: #F3EDE4; --ic-accent: #C4521E; --ic-ground: #171615; } }
+</style>
+<rect width="16" height="16" fill="var(--ic-ground)"/>
+<g data-part="symbol">
+  <path data-part="axes" d="M2.5,2 V14 H13.5" fill="none" stroke="var(--ic-ink)" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter"/>
+  <path data-part="curve" d="M2.5,14 C4.5,5.5 8.2,3.5 14,3" fill="none" stroke="var(--ic-ink)" stroke-width="1.2" stroke-linecap="butt" stroke-linejoin="miter"/>
+  <rect data-part="operating-point" x="4.661434" y="4.62928" width="3" height="3" fill="var(--ic-accent)"/>
+</g>
+</svg>

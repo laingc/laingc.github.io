@@ -1,0 +1,664 @@
+/* chrislaing.net motion layer. assets/css/custom.css holds the matching styles.
+   Each effect enhances a page that is already complete. The script hides no content
+   that is visible when it starts. When the reader prefers reduced motion, the script
+   draws one still frame of the ROC plot and does nothing else. */
+(() => {
+  'use strict';
+
+  const root = document.documentElement;
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const finePointer = matchMedia('(hover: hover) and (pointer: fine)');
+  const pageIsNew = () => performance.now() < 900;
+  const byDocumentOrder = (a, b) => (a.compareDocumentPosition(b) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1);
+  const clamp = (value, low = 0, high = 1) => Math.min(Math.max(value, low), high);
+
+  /* Decoder text. A monospace label starts as random glyphs and resolves from the start
+     of the line. Screen readers get the real text from a visually hidden copy. */
+  const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#*+';
+  const randomGlyph = () => GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+
+  function createDecoder(element) {
+    const text = element.textContent;
+    if (!text.trim() || element.childElementCount) return null;
+    const chars = Array.from(text);
+    const label = document.createElement('span');
+    label.className = 'sr-only';
+    label.textContent = text;
+    const display = document.createElement('span');
+    display.setAttribute('aria-hidden', 'true');
+    const glyphs = chars.map(randomGlyph);
+    let frame = 0;
+
+    function paint(resolved) {
+      const nodes = [];
+      let run = '';
+      let runIsGlyph = false;
+      const flush = () => {
+        if (!run) return;
+        if (runIsGlyph) {
+          const span = document.createElement('span');
+          span.className = 'fx-glyph';
+          span.textContent = run;
+          nodes.push(span);
+        } else {
+          nodes.push(document.createTextNode(run));
+        }
+        run = '';
+      };
+      chars.forEach((char, index) => {
+        const glyph = !resolved[index] && !/\s/.test(char);
+        if (glyph !== runIsGlyph) { flush(); runIsGlyph = glyph; }
+        run += glyph ? glyphs[index] : char;
+      });
+      flush();
+      display.replaceChildren(...nodes);
+    }
+
+    function finish() {
+      cancelAnimationFrame(frame);
+      element.textContent = text;
+    }
+
+    element.replaceChildren(label, display);
+    paint(chars.map(() => false));
+
+    return {
+      finish,
+      run(delay = 0) {
+        const duration = Math.min(Math.max(500 + chars.length * 18, 700), 1400);
+        const resolveAt = chars.map((_, index) => delay + (index / chars.length) * duration * 0.75 + Math.random() * duration * 0.25);
+        const end = Math.max(...resolveAt);
+        let start = 0;
+        let lastSwap = 0;
+        const step = now => {
+          if (!start) start = now;
+          const elapsed = now - start;
+          if (elapsed >= end || reducedMotion.matches) { finish(); return; }
+          if (now - lastSwap > 55) {
+            lastSwap = now;
+            glyphs.forEach((_, index) => { glyphs[index] = randomGlyph(); });
+            paint(resolveAt.map(time => elapsed >= time));
+          }
+          frame = requestAnimationFrame(step);
+        };
+        frame = requestAnimationFrame(step);
+      },
+    };
+  }
+
+  /* Scroll reveals. Only content below the fold receives a hidden starting state, so
+     nothing that the reader can already see disappears. */
+  const REVEALS = [
+    ['.home-content, .home-section .editorial-grid > *, .section-heading, .term-list > li', 'fx-reveal'],
+    ['.post-list > .post-card, .archive-year', 'fx-reveal fx-rule'],
+    ['.home-section, .writing-section', 'fx-rule'],
+    ['.home-section figure img', 'fx-wipe'],
+  ];
+  const DECODERS = 'main .accent-label, main .hero-location, main .page-heading .breadcrumb, main .post-card-meta time';
+
+  // Runs a callback once for each element, when the element first scrolls into view.
+  // Elements that arrive together share a short stagger.
+  function createWatcher() {
+    const pending = new Map();
+    const observer = new IntersectionObserver(entries => {
+      entries
+        .filter(entry => entry.isIntersecting)
+        .map(entry => entry.target)
+        .sort(byDocumentOrder)
+        .forEach((element, index) => {
+          element.style.setProperty('--fx-delay', `${Math.min(index, 5) * 90}ms`);
+          pending.get(element)?.forEach(run => run());
+          pending.delete(element);
+          observer.unobserve(element);
+        });
+    }, { rootMargin: '0px 0px -10% 0px' });
+    reducedMotion.addEventListener('change', () => {
+      if (!reducedMotion.matches) return;
+      pending.forEach(runs => runs.forEach(run => run()));
+      pending.clear();
+      observer.disconnect();
+    });
+    // An element can carry several callbacks, such as a reveal and a decoder.
+    return (element, run) => { pending.set(element, [...(pending.get(element) ?? []), run]); observer.observe(element); };
+  }
+
+  function revealLater(watch, element, classes) {
+    element.classList.add(...classes.split(' '));
+    watch(element, () => element.classList.add('is-visible'));
+  }
+
+  function decode(element, watch) {
+    const decoder = createDecoder(element);
+    if (!decoder) return;
+    if (watch) watch(element, () => decoder.run());
+    else decoder.run(element.closest('.hero, .page-heading') ? 250 : 0);
+    reducedMotion.addEventListener('change', () => { if (reducedMotion.matches) decoder.finish(); }, { once: true });
+  }
+
+  function setupScroll(watch) {
+    const fold = innerHeight * 0.9;
+    const belowFold = element => element.getBoundingClientRect().top > fold;
+    for (const [selector, classes] of REVEALS) {
+      for (const element of document.querySelectorAll(selector)) {
+        if (belowFold(element)) revealLater(watch, element, classes);
+      }
+    }
+    for (const element of document.querySelectorAll(DECODERS)) {
+      if (belowFold(element)) decode(element, watch);
+      else if (pageIsNew()) decode(element, null);
+    }
+  }
+
+  /* Article lists. The page carries every card in an inert template (extend-footer.html).
+     As the reader nears the end of the list, the next cards join it, so the list continues
+     until every article is shown. The back button returns to the same depth. A cadence strip
+     above the list marks each article on a time axis, and a Copper square follows the
+     article that the reader is on. */
+  function setupWriting(watch) {
+    const template = document.getElementById('fx-writing');
+    const list = document.querySelector('.list-content > .post-list');
+    if (!template || !list || !('IntersectionObserver' in window)) return;
+    const hrefOf = card => card?.querySelector('h3 a')?.getAttribute('href');
+    const all = [...template.content.querySelectorAll('.post-card')];
+    const shownAtLoad = [...list.querySelectorAll(':scope > .post-card')];
+    let next = all.findIndex(card => hrefOf(card) === hrefOf(shownAtLoad.at(-1))) + 1;
+    if (next <= 0) return;
+    const firstShown = next - shownAtLoad.length;
+
+    const status = document.createElement('p');
+    status.className = 'sr-only';
+    status.setAttribute('role', 'status');
+    const sentinel = document.createElement('div');
+    sentinel.className = 'fx-writing-sentinel';
+    list.after(sentinel, status);
+
+    // Previous pages stay reachable. The next-page link and page count are no longer needed.
+    const pagination = list.parentElement.querySelector('.pagination');
+    if (pagination) {
+      if (pagination.querySelector('[rel="prev"]')) {
+        pagination.querySelector('[rel="next"]')?.remove();
+        pagination.querySelector(':scope > span:not(:empty)')?.remove();
+      } else {
+        pagination.hidden = true;
+      }
+    }
+
+    const cards = () => [...list.querySelectorAll(':scope > .post-card')];
+    let announce = 0;
+
+    function append(count, animate) {
+      const added = [];
+      for (; count > 0 && next < all.length; count--, next++) added.push(document.importNode(all[next], true));
+      if (!added.length) return;
+      list.append(...added);
+      for (const card of added) {
+        if (animate && watch) {
+          revealLater(watch, card, 'fx-reveal fx-rule');
+          const date = card.querySelector('.post-card-meta time');
+          if (date) decode(date, watch);
+        }
+      }
+      try { history.replaceState({ ...(history.state || {}), fxShown: next }, ''); } catch {}
+      clearTimeout(announce);
+      announce = setTimeout(() => { status.textContent = `Showing ${next - firstShown} of ${all.length - firstShown} articles.`; }, 400);
+      if (next >= all.length) finish();
+      cadence?.refresh();
+    }
+
+    function finish() {
+      observer.disconnect();
+      sentinel.remove();
+      const dates = all.map(card => card.querySelector('time')?.getAttribute('datetime')?.slice(0, 4)).filter(Boolean).sort();
+      const end = document.createElement('p');
+      end.className = 'fx-writing-end';
+      end.textContent = dates.length ? `${all.length} articles, ${dates[0]} to ${dates.at(-1)}` : `${all.length} articles`;
+      list.after(end);
+      if (watch) { revealLater(watch, end, 'fx-reveal'); decode(end, watch); }
+    }
+
+    // Load more while the end of the list is within about a screen of the viewport.
+    function fill() {
+      let guard = 0;
+      while (next < all.length && sentinel.isConnected && sentinel.getBoundingClientRect().top < innerHeight * 2 && guard++ < 6) append(3, true);
+    }
+    const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) fill(); }, { rootMargin: '0px 0px 100% 0px' });
+
+    const restore = history.state?.fxShown;
+    const cadence = setupCadence(all, list, cards, index => {
+      if (index < firstShown) { location.href = hrefOf(all[index]); return null; }
+      if (index >= next) append(index - next + 1, false);
+      return cards().find(card => hrefOf(card) === hrefOf(all[index]));
+    });
+    if (restore > next) append(restore - next, false);
+    observer.observe(sentinel);
+  }
+
+  function setupCadence(all, list, cards, find) {
+    const items = all.map(card => {
+      const time = card.querySelector('time');
+      return { href: card.querySelector('h3 a')?.getAttribute('href'), title: card.querySelector('h3 a')?.textContent.trim() ?? '', label: time?.textContent.trim() ?? '', date: Date.parse(time?.getAttribute('datetime') ?? '') };
+    });
+    if (items.length < 2 || items.some(item => Number.isNaN(item.date))) return null;
+    const years = items.map(item => new Date(item.date).getUTCFullYear());
+    const first = Math.min(...years);
+    const last = Math.max(...years) + 1;
+    const start = Date.UTC(first, 0, 1);
+    const span = Date.UTC(last, 0, 1) - start;
+    const position = date => (date - start) / span;
+
+    const strip = document.createElement('div');
+    strip.className = 'fx-cadence';
+    strip.setAttribute('aria-hidden', 'true');
+    const readout = document.createElement('p');
+    readout.className = 'fx-cadence-readout';
+    const title = document.createElement('span');
+    title.className = 'fx-cadence-title';
+    const when = document.createElement('span');
+    when.className = 'fx-cadence-date';
+    readout.append(title, when);
+    const track = document.createElement('div');
+    track.className = 'fx-cadence-track';
+    for (let year = first; year <= last; year++) {
+      const mark = document.createElement('span');
+      mark.className = 'fx-cadence-year';
+      mark.style.setProperty('--x', position(Date.UTC(year, 0, 1)));
+      if (year < last) mark.textContent = year;
+      track.append(mark);
+    }
+    const ticks = items.map((item, index) => {
+      const tick = document.createElement('span');
+      tick.className = 'fx-cadence-tick';
+      tick.style.setProperty('--x', position(item.date));
+      tick.style.setProperty('--i', items.length - 1 - index);
+      tick.addEventListener('pointerenter', () => show(index, true));
+      tick.addEventListener('pointerleave', () => show(current, false));
+      tick.addEventListener('click', () => {
+        const card = find(index);
+        if (card) card.scrollIntoView({ behavior: reducedMotion.matches ? 'auto' : 'smooth', block: 'start' });
+      });
+      track.append(tick);
+      return tick;
+    });
+    const marker = document.createElement('span');
+    marker.className = 'fx-cadence-marker';
+    track.append(marker);
+    strip.append(readout, track);
+    list.before(strip);
+
+    // A one-pixel probe above the strip shows when the strip has stuck to the top.
+    const probe = document.createElement('div');
+    probe.className = 'fx-cadence-probe';
+    strip.before(probe);
+    new IntersectionObserver(([entry]) => strip.classList.toggle('is-stuck', !entry.isIntersecting)).observe(probe);
+
+    let current = 0;
+    let hovering = -1;
+    let shownX = position(items[0].date);
+    let targetX = shownX;
+    let frame = 0;
+    marker.style.setProperty('--x', shownX);
+
+    function show(index, hover) {
+      hovering = hover ? index : -1;
+      ticks.forEach((tick, i) => tick.classList.toggle('is-active', i === index));
+      title.textContent = items[index].title;
+      when.textContent = items[index].label;
+    }
+
+    function glide() {
+      frame = 0;
+      shownX += (targetX - shownX) * (reducedMotion.matches ? 1 : 0.14);
+      if (Math.abs(targetX - shownX) < 0.0005) shownX = targetX;
+      marker.style.setProperty('--x', shownX);
+      if (shownX !== targetX) frame = requestAnimationFrame(glide);
+    }
+
+    // The current article is the first card, or the last card whose top has passed the
+    // reading line, a little below the strip.
+    const hrefs = items.map(item => item.href);
+    function refresh() {
+      const line = strip.getBoundingClientRect().bottom + innerHeight * 0.2;
+      let index = -1;
+      for (const card of cards()) {
+        if (index >= 0 && card.getBoundingClientRect().top > line) break;
+        index = hrefs.indexOf(card.querySelector('h3 a')?.getAttribute('href'));
+      }
+      if (index < 0) return;
+      current = index;
+      targetX = position(items[index].date);
+      if (hovering < 0) show(index, false);
+      if (!frame) frame = requestAnimationFrame(glide);
+    }
+
+    let pending = false;
+    window.addEventListener('scroll', () => {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(() => { pending = false; refresh(); });
+    }, { passive: true });
+    window.addEventListener('resize', refresh, { passive: true });
+    refresh();
+    return { refresh };
+  }
+
+  /* ROC plot. The Integrated cadence logo is an ROC curve with a Copper operating point.
+     Behind the homepage masthead, the same curve is drawn as a faint plot of capability
+     against complexity. The operating point starts where it is in the logo, drifts slowly,
+     and follows a fine pointer along the curve. The plot pauses off screen and in
+     background tabs. */
+
+  // The logo's curve, M0,100 C21,19 59,9 112,6, scaled so both rates run from 0 to 1.
+  const P1 = [21 / 112, 81 / 94];
+  const P2 = [59 / 112, 91 / 94];
+  const LOGO_FPR = 0.334;
+  // Axis labels: what you take on runs across, what you gain runs up.
+  const AXES = { across: 'COMPLEXITY', up: 'CAPABILITY' };
+  const bezier = (t, a, b) => 3 * (1 - t) * (1 - t) * t * a + 3 * (1 - t) * t * t * b + t * t * t;
+  const curveAt = t => [bezier(t, P1[0], P2[0]), bezier(t, P1[1], P2[1])];
+  function curveAtRate(fpr) {
+    let low = 0;
+    let high = 1;
+    for (let i = 0; i < 24; i++) {
+      const middle = (low + high) / 2;
+      if (curveAt(middle)[0] < fpr) low = middle; else high = middle;
+    }
+    return curveAt((low + high) / 2);
+  }
+  const CURVE = Array.from({ length: 121 }, (_, i) => curveAt(i / 120));
+
+  // Line strengths on the masthead's dark band.
+  const STRENGTH = { minor: 0.08, major: 0.15, axis: 0.5, curve: 0.68, fill: 0.055, guide: 0.4, text: 0.85 };
+
+  function rgba(hex, alpha) {
+    const match = /^#([0-9a-f]{6})$/i.exec(hex.trim());
+    if (!match) return `rgba(196, 82, 30, ${alpha})`;
+    const n = parseInt(match[1], 16);
+    return `rgba(${n >> 16}, ${(n >> 8) & 255}, ${n & 255}, ${alpha})`;
+  }
+  const crisp = value => Math.round(value) + 0.5;
+  const easeInOut = x => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+
+  function setupPlot() {
+    const hero = document.querySelector('main .hero');
+    if (!hero) return;
+    const canvas = document.createElement('canvas');
+    canvas.className = 'fx-roc';
+    canvas.setAttribute('aria-hidden', 'true');
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+    hero.prepend(canvas);
+
+    let width = 0;
+    let height = 0;
+    let plot = null;
+    let colours = null;
+    let frame = 0;
+    let onScreen = true;
+    let fpr = LOGO_FPR;
+    let obstacles = [];
+    let placement = 0;
+    const pointer = { x: 0, active: false };
+    const start = performance.now();
+
+    // Boxes around each line of masthead text, in canvas coordinates. The readout avoids them.
+    function measureText() {
+      const top = hero.getBoundingClientRect().top;
+      const range = document.createRange();
+      obstacles = [];
+      for (const element of hero.querySelectorAll('.eyebrow, h1, .hero-lead, .hero-description, .hero-actions, figure')) {
+        range.selectNodeContents(element);
+        for (const box of range.getClientRects()) {
+          if (box.width && box.height) obstacles.push({ x0: box.left - 8, x1: box.right + 8, y0: box.top - top - 6, y1: box.bottom - top + 6 });
+        }
+      }
+    }
+
+    function readColours() {
+      const style = getComputedStyle(hero);
+      colours = { copper: style.getPropertyValue('--accent'), muted: style.getPropertyValue('--muted'), strength: STRENGTH };
+    }
+
+    // The canvas spans the window, so its coordinates match the pointer's clientX.
+    function measure() {
+      const rect = hero.getBoundingClientRect();
+      const style = getComputedStyle(hero);
+      const scale = Math.min(devicePixelRatio || 1, 2);
+      width = root.clientWidth;
+      height = Math.ceil(rect.height);
+      canvas.style.left = `${-rect.left}px`;
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      canvas.width = Math.round(width * scale);
+      canvas.height = Math.round(height * scale);
+      ctx.setTransform(scale, 0, 0, scale, 0, 0);
+      // The axes sit just outside the text column and inside the masthead padding.
+      const gap = Math.min(40, rect.left * 0.4);
+      plot = {
+        x0: Math.max(12, rect.left - gap),
+        x1: Math.min(width - 12, rect.right + gap),
+        y0: height - clamp(parseFloat(style.paddingBottom) / 2, 24, 48),
+        y1: clamp(parseFloat(style.paddingTop) * 0.35, 20, 40),
+      };
+      plot.labels = plot.x0 >= 36;
+      measureText();
+      draw(performance.now());
+    }
+
+    const X = rate => plot.x0 + (plot.x1 - plot.x0) * rate;
+    const Y = rate => plot.y0 - (plot.y0 - plot.y1) * rate;
+
+    function line(x1, y1, x2, y2) { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(x2, y2); ctx.stroke(); }
+
+    // On wide windows the grid carries on past the plot and fades out towards the edges.
+    function drawMargins(a) {
+      const cell = (plot.x1 - plot.x0) / 10;
+      for (const side of [-1, 1]) {
+        const edge = side < 0 ? plot.x0 : plot.x1;
+        const room = side < 0 ? plot.x0 : width - plot.x1;
+        const reach = Math.min(room, Math.max(240, cell * 3));
+        if (room < 48) continue;
+        const fade = ctx.createLinearGradient(edge, 0, edge + side * reach, 0);
+        fade.addColorStop(0, rgba(colours.copper, a.minor));
+        fade.addColorStop(1, rgba(colours.copper, 0));
+        ctx.strokeStyle = fade;
+        for (let i = 1; i <= 10; i++) line(edge, crisp(Y(i / 10)), edge + side * reach, crisp(Y(i / 10)));
+        for (let x = edge + side * cell; Math.abs(x - edge) < reach; x += side * cell) line(crisp(x), plot.y0, crisp(x), plot.y1);
+      }
+    }
+
+    function drawFrame(a) {
+      ctx.lineWidth = 1;
+      drawMargins(a);
+      for (let i = 1; i <= 10; i++) {
+        ctx.strokeStyle = rgba(colours.copper, i === 5 ? a.major : a.minor);
+        line(crisp(X(i / 10)), plot.y0, crisp(X(i / 10)), plot.y1);
+        line(plot.x0, crisp(Y(i / 10)), plot.x1, crisp(Y(i / 10)));
+      }
+      ctx.strokeStyle = rgba(colours.copper, a.guide * 0.6);
+      ctx.setLineDash([3, 6]);
+      line(plot.x0, plot.y0, plot.x1, plot.y1);
+      ctx.setLineDash([]);
+      // Axes with open arrowheads: capability rises up the page, complexity runs to the right.
+      ctx.strokeStyle = rgba(colours.copper, a.axis);
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(plot.x0, plot.y1 - 6);
+      ctx.lineTo(plot.x0, plot.y0);
+      ctx.lineTo(plot.x1 + 6, plot.y0);
+      ctx.moveTo(plot.x0 - 4, plot.y1 - 1);
+      ctx.lineTo(plot.x0, plot.y1 - 6);
+      ctx.lineTo(plot.x0 + 4, plot.y1 - 1);
+      ctx.moveTo(plot.x1 + 1, plot.y0 - 4);
+      ctx.lineTo(plot.x1 + 6, plot.y0);
+      ctx.lineTo(plot.x1 + 1, plot.y0 + 4);
+      ctx.stroke();
+
+      ctx.fillStyle = rgba(colours.muted, a.text);
+      ctx.font = '400 10px "IBM Plex Mono", monospace';
+      if (plot.labels) {
+        ctx.textBaseline = 'top';
+        ctx.textAlign = 'right';
+        ctx.fillText(AXES.across, plot.x1, plot.y0 + 9);
+        ctx.save();
+        ctx.translate(plot.x0 - 9, plot.y1);
+        ctx.rotate(-Math.PI / 2);
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(AXES.up, 0, 0);
+        ctx.restore();
+      } else {
+        // Narrow screens have no room outside the axes, so the labels sit just inside them.
+        ctx.textAlign = 'left';
+        ctx.textBaseline = 'top';
+        ctx.fillText(AXES.up, plot.x0 + 8, plot.y1 - 2);
+        ctx.textAlign = 'right';
+        ctx.textBaseline = 'bottom';
+        ctx.fillText(AXES.across, plot.x1 - 2, plot.y0 - 6);
+      }
+    }
+
+    function draw(now) {
+      if (!plot) return;
+      const still = reducedMotion.matches;
+      const a = colours.strength;
+      const t = (now - start) / 1000;
+      ctx.clearRect(0, 0, width, height);
+      drawFrame(a);
+      canvas.classList.add('is-ready');
+
+      // The curve draws itself once, after the masthead entrance.
+      const progress = still ? 1 : easeInOut(clamp((t - 0.4) / 1.8));
+      const count = Math.round(progress * (CURVE.length - 1));
+      const trace = () => {
+        ctx.beginPath();
+        for (let i = 0; i <= count; i++) {
+          const [x, y] = CURVE[i];
+          if (i) ctx.lineTo(X(x), Y(y)); else ctx.moveTo(X(x), Y(y));
+        }
+      };
+      if (progress >= 1) {
+        trace();
+        ctx.lineTo(X(1), Y(0));
+        ctx.closePath();
+        ctx.fillStyle = rgba(colours.copper, a.fill);
+        ctx.fill();
+      }
+      trace();
+      ctx.strokeStyle = rgba(colours.copper, a.curve);
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // The operating point appears when the curve is complete.
+      const appear = still ? 1 : clamp((t - 2.3) / 0.5);
+      if (appear <= 0) return;
+      const target = pointer.active && !still
+        ? clamp((pointer.x - plot.x0) / (plot.x1 - plot.x0), 0.01, 0.99)
+        : LOGO_FPR + (still ? 0 : 0.12 * Math.sin((t - 2.3) * 0.3));
+      fpr += (target - fpr) * (still ? 1 : 0.08);
+      const [across, up] = curveAtRate(fpr);
+      const x = X(across);
+      const y = Y(up);
+      ctx.strokeStyle = rgba(colours.copper, a.guide * appear);
+      ctx.lineWidth = 1;
+      ctx.setLineDash([2, 4]);
+      line(crisp(x), y, crisp(x), plot.y0);
+      line(plot.x0, crisp(y), x, crisp(y));
+      ctx.setLineDash([]);
+      ctx.fillStyle = rgba(colours.copper, 0.92 * appear);
+      ctx.fillRect(Math.round(x - 5), Math.round(y - 5), 10, 10);
+
+      // The readout sits beside the point where the masthead text leaves room. Otherwise it
+      // waits in the top corner of the plot, and it is left out when there is no clear space.
+      const readout = `${AXES.across} ${across.toFixed(2)}  ${AXES.up} ${up.toFixed(2)}`;
+      ctx.font = '400 10px "IBM Plex Mono", monospace';
+      const w = ctx.measureText(readout).width;
+      const h = 12;
+      const spots = [
+        [x + 14, y + 10], [x + 14, y - 10 - h], [x - 14 - w, y + 10], [x - 14 - w, y - 10 - h],
+        [plot.x1 - w - 4, plot.labels ? plot.y1 + 6 : plot.y1 - 2],
+      ];
+      const blocked = plot.labels ? obstacles : [...obstacles, { x0: plot.x0, x1: plot.x0 + 20 + ctx.measureText(AXES.up).width, y0: plot.y1 - 4, y1: plot.y1 + 12 }];
+      const clear = ([sx, sy]) => sx >= 4 && sx + w <= width - 4 && sy >= 2 && sy + h <= height - 2
+        && !blocked.some(box => sx < box.x1 && sx + w > box.x0 && sy < box.y1 && sy + h > box.y0);
+      if (placement < 0 || placement === 4 || !clear(spots[placement])) {
+        const near = spots.slice(0, 4).findIndex(clear);
+        placement = near >= 0 ? near : clear(spots[4]) ? 4 : -1;
+      }
+      if (placement < 0) return;
+      ctx.fillStyle = rgba(colours.muted, a.text * appear);
+      ctx.textBaseline = 'top';
+      ctx.textAlign = 'left';
+      ctx.fillText(readout, spots[placement][0], spots[placement][1]);
+    }
+
+    const animating = () => onScreen && !document.hidden && !reducedMotion.matches;
+    let last = 0;
+    function tick(now) {
+      frame = 0;
+      if (!animating()) return;
+      if (now - last >= 33) { last = now; draw(now); }
+      frame = requestAnimationFrame(tick);
+    }
+    function update() {
+      if (animating() && !frame) frame = requestAnimationFrame(tick);
+      if (!animating()) draw(performance.now());
+    }
+
+    readColours();
+    measure();
+    new ResizeObserver(measure).observe(hero);
+    window.addEventListener('resize', measure, { passive: true });
+    new IntersectionObserver(([entry]) => { onScreen = entry.isIntersecting; update(); }).observe(hero);
+    document.addEventListener('visibilitychange', update);
+    reducedMotion.addEventListener('change', update);
+    // Text moves while the entrance plays and when web fonts arrive, so measure it again then.
+    document.fonts?.ready.then(() => { measureText(); draw(performance.now()); });
+    setTimeout(() => { measureText(); draw(performance.now()); }, 2000);
+
+    window.addEventListener('pointermove', event => {
+      if (!finePointer.matches) return;
+      const rect = hero.getBoundingClientRect();
+      pointer.active = event.clientY >= rect.top && event.clientY <= rect.bottom;
+      pointer.x = event.clientX;
+    }, { passive: true });
+    root.addEventListener('pointerleave', () => { pointer.active = false; });
+
+    update();
+  }
+
+  /* Colour mode wipe. The theme toggle in main.js changes the theme. This listener runs
+     first, then replays the click inside a view transition so that the new mode
+     spreads in a circle from the button. */
+  function setupThemeWipe() {
+    const toggle = document.querySelector('.theme-toggle');
+    if (!toggle || typeof document.startViewTransition !== 'function') return;
+    let replaying = false;
+
+    document.addEventListener('click', event => {
+      if (replaying || reducedMotion.matches || !event.target.closest?.('.theme-toggle')) return;
+      event.stopImmediatePropagation();
+      const rect = toggle.getBoundingClientRect();
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      const radius = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      root.classList.add('fx-theme-wipe');
+      const transition = document.startViewTransition(() => {
+        replaying = true;
+        try { toggle.click(); } finally { replaying = false; }
+      });
+      transition.ready.then(() => {
+        root.animate(
+          { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${radius}px at ${x}px ${y}px)`] },
+          { duration: 650, easing: 'cubic-bezier(.65, 0, .35, 1)', pseudoElement: '::view-transition-new(root)' },
+        );
+      }).catch(() => {});
+      transition.finished.catch(() => {}).finally(() => root.classList.remove('fx-theme-wipe'));
+    }, true);
+  }
+
+  setupPlot();
+  const watch = !reducedMotion.matches && 'IntersectionObserver' in window ? createWatcher() : null;
+  if (watch) setupScroll(watch);
+  // The endless list is a feature, not decoration, so it also runs for reduced motion.
+  setupWriting(watch);
+  if (!reducedMotion.matches) setupThemeWipe();
+})();

@@ -1,0 +1,19 @@
+<header class="site-header">
+  <div class="container header-inner">
+    {{ partial "ash/brand.html" . }}
+    <nav id="main-navigation" class="site-nav" aria-label="{{ i18n `navigation` }}">
+      <ul>
+        {{ with .Site.Menus.main }}
+          {{ partial "ash/menu.html" (dict "page" $ "entries" .) }}
+        {{ else }}
+          {{ range .Site.Sections }}<li><a href="{{ .RelPermalink }}"{{ if eq $.RelPermalink .RelPermalink }} aria-current="page"{{ end }}>{{ .LinkTitle }}</a></li>{{ end }}
+        {{ end }}
+      </ul>
+    </nav>
+    <div class="header-actions">
+      {{ with .Site.GetPage "/search" }}<a class="icon-button search-link" href="{{ .RelPermalink }}" aria-label="{{ i18n `search` }}">{{ partial "ash/icon.html" "search" }}</a>{{ end }}
+      <button class="icon-button theme-toggle" type="button" hidden aria-label="{{ i18n `darkTheme` }}" aria-pressed="false" data-light-label="{{ i18n `lightTheme` }}" data-dark-label="{{ i18n `darkTheme` }}"><span class="moon">{{ partial "ash/icon.html" "moon" }}</span><span class="sun">{{ partial "ash/icon.html" "sun" }}</span></button>
+      <button class="icon-button menu-toggle" type="button" hidden aria-label="{{ i18n `openMenu` }}" aria-controls="main-navigation" aria-expanded="false" data-open-label="{{ i18n `openMenu` }}" data-close-label="{{ i18n `closeMenu` }}">{{ partial "ash/icon.html" "menu" }}</button>
+    </div>
+  </div>
+</header>

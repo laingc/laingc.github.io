@@ -1,0 +1,9 @@
+{{ define "main" }}
+  {{ partial "ash/page-heading.html" . }}
+  <div class="container list-content">
+    {{ with .Content }}<div class="prose list-introduction">{{ partial "ash/content.html" . }}</div>{{ end }}
+    {{ $pages := where .Pages "Params.hidden" "ne" true }}
+    <div class="post-list">{{ range (.Paginate $pages).Pages }}{{ partial "ash/post-card.html" . }}{{ else }}<p>{{ i18n "empty" }}</p>{{ end }}</div>
+    {{ partial "ash/pagination.html" . }}
+  </div>
+{{ end }}

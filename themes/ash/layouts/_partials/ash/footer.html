@@ -1,0 +1,16 @@
+<footer class="site-footer container">
+  <div class="footer-top">
+    {{ partial "ash/brand.html" . }}
+    <nav aria-label="{{ i18n `footerNavigation` }}"><ul>
+      {{ partial "ash/menu.html" (dict "page" . "entries" .Site.Menus.footer) }}
+      {{ range .Site.Params.social }}<li><a href="{{ partial `ash/url.html` (dict `url` .url) }}" rel="me">{{ .name }}</a></li>{{ end }}
+      {{ with .Site.Home.OutputFormats.Get "RSS" }}<li><a href="{{ .RelPermalink }}">{{ i18n "feed" }}</a></li>{{ end }}
+    </ul></nav>
+  </div>
+  <div class="footer-bottom">
+    <p>© {{ now.Format "2006" }} {{ .Site.Params.copyright | default .Site.Params.author.name | default .Site.Title }}</p>
+    {{ if .IsTranslated }}<nav aria-label="{{ i18n `languages` }}"><ul class="languages">{{ range .AllTranslations }}{{ $language := partial "ash/language.html" .Language }}<li><a href="{{ .RelPermalink }}" lang="{{ $language.locale }}" hreflang="{{ $language.locale }}"{{ if eq .RelPermalink $.RelPermalink }} aria-current="page"{{ end }}>{{ $language.label }}</a></li>{{ end }}</ul></nav>{{ end }}
+    {{ if .Site.Params.showThemeCredit }}<p>{{ i18n "themeCredit" }}</p>{{ end }}
+    <a href="#top">{{ i18n "backToTop" }} ↑</a>
+  </div>
+</footer>

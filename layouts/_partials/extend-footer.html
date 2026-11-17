@@ -1,0 +1,11 @@
+{{/* Project motion layer. Replaces the theme's empty extend-footer hook. See assets/js/motion.js. */}}
+{{- /* Article lists: every card on one inert template, so motion.js can continue the list as the
+   reader scrolls. The paginated pages stay as they are for readers without JavaScript. */ -}}
+{{- if in (slice "section" "term") .Kind -}}
+  {{- $pages := where .Pages "Params.hidden" "ne" true -}}
+  {{- if gt (len $pages) 1 -}}
+<template id="fx-writing">{{ range $pages }}{{ partial "ash/post-card.html" . }}{{ end }}</template>
+  {{- end -}}
+{{- end }}
+{{ $motion := resources.Get "js/motion.js" | minify | fingerprint "sha384" }}
+<script src="{{ $motion.RelPermalink }}" integrity="{{ $motion.Data.Integrity }}" defer></script>

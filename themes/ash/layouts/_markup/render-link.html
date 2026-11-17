@@ -1,0 +1,14 @@
+{{- $url := .Destination -}}
+{{- $parsed := urls.Parse $url -}}
+{{- if and (not $parsed.Scheme) (not (strings.HasPrefix $url "//")) $parsed.Path -}}
+  {{- with .Page.GetPage $parsed.Path -}}
+    {{- $url = .RelPermalink -}}
+  {{- else -}}
+    {{- with .Page.Resources.Get $parsed.Path }}{{ $url = .RelPermalink }}{{ else }}{{ if strings.HasPrefix $url "/" }}{{ $url = strings.TrimPrefix "/" $parsed.Path | relURL }}{{ end }}{{ end -}}
+  {{- end -}}
+  {{- if ne $url .Destination -}}
+    {{- with $parsed.RawQuery }}{{ $url = printf "%s?%s" $url . }}{{ end -}}
+    {{- with $parsed.Fragment }}{{ $url = printf "%s#%s" $url . }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+<a href="{{ $url }}"{{ with .Title }} title="{{ . }}"{{ end }}>{{ .Text | safeHTML }}</a>

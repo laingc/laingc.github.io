@@ -1,0 +1,20 @@
+{{- $brand := .Site.Params.brand | default dict -}}
+{{- $light := $brand.light | default .Site.Params.logo -}}
+{{- $dark := $brand.dark | default $light -}}
+{{- $name := $brand.name | default .Site.Title -}}
+<a class="wordmark{{ if $light }} image-wordmark{{ if $brand.smallLight }} has-small-logo{{ end }}{{ end }}" href="{{ .Site.Home.RelPermalink }}"{{ if $light }} aria-label="{{ $name }}"{{ end }}>
+  {{- if $light -}}
+    <span class="brand-full"{{ if $brand.width }} style="--brand-width: {{ int $brand.width }}px"{{ end }}>
+      <img class="brand-light" src="{{ partial `ash/media-url.html` (dict `page` . `src` $light) }}" alt="" width="{{ $brand.width | default 320 }}"{{ with $brand.height }} height="{{ . }}"{{ end }} decoding="async">
+      {{ if ne $dark $light }}<img class="brand-dark" src="{{ partial `ash/media-url.html` (dict `page` . `src` $dark) }}" alt="" width="{{ $brand.width | default 320 }}"{{ with $brand.height }} height="{{ . }}"{{ end }} decoding="async">{{ end }}
+    </span>
+    {{- with $brand.smallLight -}}
+      <span class="brand-small">
+        <img class="brand-light" src="{{ partial `ash/media-url.html` (dict `page` $ `src` .) }}" alt="" width="48" height="44" decoding="async">
+        <img class="brand-dark" src="{{ partial `ash/media-url.html` (dict `page` $ `src` ($brand.smallDark | default .)) }}" alt="" width="48" height="44" decoding="async">
+      </span>
+    {{- end -}}
+  {{- else -}}
+    {{ .Site.Title }}<span aria-hidden="true">.</span>
+  {{- end -}}
+</a>

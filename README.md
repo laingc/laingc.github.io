@@ -60,6 +60,11 @@ See [the archive notes](python_code/notebooks/README.md).
 
 ## Design attribution
 
-The project-owned design adapts Future Imperfect by HTML5 UP, Julio Pescador, and Patrick Collins.
-The templates, styles, and browser code replace the retired theme implementation.
+The site uses the local Ash Hugo theme in `themes/ash/` and Christopher Laing's Integrated cadence logo.
+The theme supports Light and Dark modes, responsive layouts, and local search.
+The homepage copy and sections live in `content/_index.md`. Site navigation and branding use `hugo.toml`.
+Logo files in `assets/brand/` are unchanged copies of the approved identity assets.
+The theme supports the existing `[[images]]` article metadata without changes to article text.
+
+The earlier design adapted Future Imperfect. It no longer supplies templates, styles, or scripts.
 See [the design licence](docs/design-licence.md).

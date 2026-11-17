@@ -1,0 +1,8 @@
+<div class="code-block">
+  <div class="code-toolbar"><span>{{ .Type }}</span><button type="button" class="copy-code" hidden data-copy="{{ i18n `copy` }}" data-copied="{{ i18n `copied` }}" data-error="{{ i18n `copyError` }}">{{ i18n "copy" }}</button><span class="sr-only copy-status" role="status"></span></div>
+  {{ $options := merge .Options (dict "noClasses" true "lineNos" false) }}
+  {{ if transform.CanHighlight .Type }}
+    {{ $options = merge .Options (dict "noClasses" false) }}
+    {{ $result := transform.HighlightCodeBlock . $options }}{{ $result.Wrapped }}
+  {{ else }}<pre tabindex="0"><code>{{ .Inner }}</code></pre>{{ end }}
+</div>

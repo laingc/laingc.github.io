@@ -1,0 +1,23 @@
+{
+  "name": "hugo-theme-ash",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Development checks for the Ash Hugo theme. Hugo builds the theme independently.",
+  "engines": {
+    "node": "^22.22.0 || >=24.8.0"
+  },
+  "scripts": {
+    "dev": "hugo server --source exampleSite --bind 127.0.0.1 --port 1313 --disableFastRender",
+    "build": "hugo --source exampleSite --minify",
+    "test:build": "python3 scripts/check-builds.py",
+    "test:html": "node scripts/check-html.mjs",
+    "test": "playwright test",
+    "screenshots": "node scripts/screenshots.mjs"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.64.0",
+    "html-validate": "^11.16.2"
+  }
+}

@@ -1,0 +1,29 @@
+{{- $src := .src -}}
+{{- $url := partial "ash/media-url.html" . -}}
+{{- $width := .width | default 0 -}}
+{{- $height := .height | default 0 -}}
+{{- $srcset := slice -}}
+{{- with partial "ash/resource.html" . -}}
+  {{- if in (slice "image/jpeg" "image/png" "image/webp" "image/gif") .MediaType.Type -}}
+    {{- $width = .Width -}}{{- $height = .Height -}}
+    {{- if in (slice "image/jpeg" "image/png") .MediaType.Type -}}
+      {{- $original := . -}}
+      {{- range slice 480 800 1200 1600 -}}
+        {{- if lt . $original.Width -}}
+          {{- $resized := $original.Resize (printf "%dx" .) -}}
+          {{- $srcset = $srcset | append (printf "%s %dw" $resized.RelPermalink $resized.Width) -}}
+        {{- end -}}
+      {{- end -}}
+      {{- $srcset = $srcset | append (printf "%s %dw" .RelPermalink .Width) -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- if and (not $width) (not $height) -}}
+  {{- $static := printf "static/%s" (strings.TrimPrefix "/" $src) -}}
+  {{- if and (fileExists $static) (in (slice ".jpg" ".jpeg" ".png" ".gif" ".webp") (lower (path.Ext $src))) -}}
+    {{- with images.Config $static -}}
+      {{- $width = .Width -}}{{- $height = .Height -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+<img src="{{ $url }}" alt="{{ .alt | default `` }}"{{ with .title }} title="{{ . }}"{{ end }}{{ with .class }} class="{{ . }}"{{ end }}{{ if $width }} width="{{ $width }}"{{ end }}{{ if $height }} height="{{ $height }}"{{ end }}{{ with $srcset }} srcset="{{ delimit . `, ` }}" sizes="{{ $.sizes | default `(max-width: 760px) calc(100vw - 48px), 740px` }}"{{ end }} loading="{{ .loading | default `lazy` }}" decoding="async"{{ if eq .loading "eager" }} fetchpriority="high"{{ end }}>

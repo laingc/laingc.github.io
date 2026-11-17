@@ -1,0 +1,156 @@
+/* Generated from design-language/ash-tokens.css. Run scripts/build-colours.py. */
+/* Ash 1.2 colour source, 19 October 2026. sRGB, opaque values.
+   Primitives identify colours. Semantic roles constrain their use.
+   Both existing theme attribute conventions are supported. */
+:root {
+  --ash-colour-copper: #C4521E;
+  --ash-colour-ember: #E6611E;
+  --ash-colour-ochre: #B47A2E;
+  --ash-colour-moss: #7E8A70;
+  --ash-colour-sage: #A0A58F;
+  --ash-colour-fjord: #5E7280;
+  --ash-colour-slate: #7A8088;
+  --ash-colour-mulberry: #7C5F6A;
+
+  /* Intentional interaction and surface treatments, not contrast corrections. */
+  --ash-colour-copper-hover: #AC4518;
+  --ash-colour-copper-pressed: #913914;
+  --ash-colour-copper-light-subtle: #EFE0D6;
+  --ash-colour-copper-dark-subtle: #352820;
+  --ash-colour-on-accent: #FFFFFF;
+  --ash-colour-ember-light-text: #993C0B;
+  --ash-colour-ember-dark-text: #F1A070;
+  --ash-colour-moss-light-text: #4E5D43;
+  --ash-colour-moss-dark-text: #B6C3A6;
+  --ash-colour-moss-light-subtle: #E8EDE3;
+  --ash-colour-moss-dark-subtle: #283023;
+  --ash-colour-fjord-light-text: #435C6C;
+  --ash-colour-fjord-dark-text: #ADC4D1;
+  --ash-colour-fjord-light-subtle: #E3E9ED;
+  --ash-colour-fjord-dark-subtle: #242D33;
+  --ash-colour-ochre-light-text: #79501C;
+  --ash-colour-ochre-dark-text: #D4AD72;
+  --ash-colour-ochre-light-subtle: #F1E7D6;
+  --ash-colour-ochre-dark-subtle: #332B20;
+  --ash-colour-mulberry-light-text: #684653;
+  --ash-colour-mulberry-dark-text: #D3ADB9;
+  --ash-colour-mulberry-light-subtle: #EDE2E6;
+  --ash-colour-mulberry-dark-subtle: #33262C;
+  --ash-colour-sage-light-text: #565D47;
+  --ash-colour-sage-light-subtle: #E3E5DA;
+  --ash-colour-sage-dark-subtle: #2B3027;
+  --ash-colour-slate-light-text: #5B616A;
+  --ash-colour-slate-dark-text: #B5BBC4;
+}
+
+:root,
+[data-theme='ash-light'],
+[data-theme='light'] {
+  color-scheme: light;
+  --ash-canvas: #F1EDE6;
+  --ash-surface: #FAF8F4;
+  --ash-surface-raised: #E8E1D8;
+  --ash-ink: #282522;
+  --ash-ink-muted: #69635C;
+  --ash-line: #C8BFB4;
+  --ash-line-strong: #968B80;
+  --ash-inverse-canvas: #302B27;
+  --ash-inverse-ink: #F3EDE4;
+  --ash-accent: var(--ash-colour-copper);
+  --ash-accent-text: var(--ash-colour-copper);
+  --ash-accent-hover: var(--ash-colour-copper-hover);
+  --ash-accent-pressed: var(--ash-colour-copper-pressed);
+  --ash-accent-subtle: var(--ash-colour-copper-light-subtle);
+  --ash-on-accent: var(--ash-colour-on-accent);
+  --ash-success-text: var(--ash-colour-moss-light-text);
+  --ash-success-surface: var(--ash-colour-moss-light-subtle);
+  --ash-information-text: var(--ash-colour-fjord-light-text);
+  --ash-information-surface: var(--ash-colour-fjord-light-subtle);
+  --ash-warning-text: var(--ash-colour-ochre-light-text);
+  --ash-warning-surface: var(--ash-colour-ochre-light-subtle);
+  --ash-danger-text: var(--ash-colour-mulberry-light-text);
+  --ash-danger-surface: var(--ash-colour-mulberry-light-subtle);
+  --ash-editorial-secondary: var(--ash-colour-ember-light-text);
+  --ash-support-text: var(--ash-colour-sage-light-text);
+  --ash-support-surface: var(--ash-colour-sage-light-subtle);
+  --ash-data-neutral: var(--ash-colour-slate-light-text);
+  --ash-button-neutral-bg: var(--ash-ink);
+  --ash-button-neutral-label: #F3EDE4;
+}
+
+[data-theme='ash-dark'],
+[data-theme='dark'] {
+  color-scheme: dark;
+  --ash-canvas: #171615;
+  --ash-surface: #211F1D;
+  --ash-surface-raised: #302B27;
+  --ash-surface-high: #39332F;
+  --ash-ink: #F3EDE4;
+  --ash-ink-muted: #B8AFA6;
+  --ash-line: #57504B;
+  --ash-line-strong: #86786D;
+  --ash-shadow-warm: #493127;
+  --ash-inverse-canvas: #F1EDE6;
+  --ash-inverse-ink: #282522;
+  --ash-accent: var(--ash-colour-copper);
+  --ash-accent-text: var(--ash-colour-copper);
+  --ash-accent-hover: var(--ash-colour-copper-hover);
+  --ash-accent-pressed: var(--ash-colour-copper-pressed);
+  --ash-accent-subtle: var(--ash-colour-copper-dark-subtle);
+  --ash-on-accent: var(--ash-colour-on-accent);
+  --ash-success-text: var(--ash-colour-moss-dark-text);
+  --ash-success-surface: var(--ash-colour-moss-dark-subtle);
+  --ash-information-text: var(--ash-colour-fjord-dark-text);
+  --ash-information-surface: var(--ash-colour-fjord-dark-subtle);
+  --ash-warning-text: var(--ash-colour-ochre-dark-text);
+  --ash-warning-surface: var(--ash-colour-ochre-dark-subtle);
+  --ash-danger-text: var(--ash-colour-mulberry-dark-text);
+  --ash-danger-surface: var(--ash-colour-mulberry-dark-subtle);
+  --ash-editorial-secondary: var(--ash-colour-ember-dark-text);
+  --ash-support-text: var(--ash-colour-sage);
+  --ash-support-surface: var(--ash-colour-sage-dark-subtle);
+  --ash-data-neutral: var(--ash-colour-slate-dark-text);
+  --ash-button-neutral-bg: var(--ash-ink);
+  --ash-button-neutral-label: #171615;
+}
+
+/* Repeat aliases at each theme boundary so nested inserts resolve locally. */
+:root,
+[data-theme='ash-light'],
+[data-theme='light'],
+[data-theme='ash-dark'],
+[data-theme='dark'] {
+  --ash-accent-strong: var(--ash-accent-text);
+  --ash-accent-border: var(--ash-accent-text);
+  --ash-accent-link-hover: var(--ash-accent-text);
+  --ash-focus: var(--ash-ink);
+  --ash-control-border: var(--ash-ink-muted);
+  --ash-selected-border: var(--ash-accent-border);
+  --ash-success-icon: var(--ash-success-text);
+  --ash-success-border: var(--ash-success-text);
+  --ash-information-icon: var(--ash-information-text);
+  --ash-information-border: var(--ash-information-text);
+  --ash-warning-icon: var(--ash-warning-text);
+  --ash-warning-border: var(--ash-warning-text);
+  --ash-danger-icon: var(--ash-danger-text);
+  --ash-danger-border: var(--ash-danger-text);
+
+  /* Component roles. Existing neutral primary actions remain available. */
+  --ash-button-copper-bg: var(--ash-accent);
+  --ash-button-copper-label: var(--ash-on-accent);
+  --ash-button-copper-hover-bg: var(--ash-accent-hover);
+  --ash-button-copper-pressed-bg: var(--ash-accent-pressed);
+  --ash-button-copper-border: var(--ash-accent-border);
+  --ash-button-disabled-bg: var(--ash-surface-raised);
+  --ash-button-disabled-label: var(--ash-ink-muted);
+  --ash-nav-active-rule: var(--ash-accent);
+  --ash-nav-active-rule-high: var(--ash-accent-border);
+  --ash-row-selected-bg: var(--ash-accent-subtle);
+  --ash-row-selected-border: var(--ash-selected-border);
+  --ash-chart-focal: var(--ash-accent);
+  --ash-chart-focal-high: var(--ash-accent-text);
+  --ash-chart-annotation: var(--ash-accent-text);
+  --ash-chart-secondary: var(--ash-data-neutral);
+  --ash-chart-grid: var(--ash-line);
+  --ash-notification-border: var(--ash-information-border);
+}

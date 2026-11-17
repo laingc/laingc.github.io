@@ -1,6 +1,7 @@
 baseURL = "https://chrislaing.net/"
 locale = "en-GB"
-title = "chrislaing.net"
+title = "Christopher Laing"
+theme = "ash"
 timeZone = "Pacific/Auckland"
 enableRobotsTXT = true
 pluralizeListTitles = false
@@ -9,7 +10,7 @@ pluralizeListTitles = false
   pagerSize = 3
 
 [outputs]
-  home = ["HTML", "RSS", "JSON"]
+  home = ["HTML", "RSS", "JSON", "Search"]
 
 [markup.goldmark.renderer]
   unsafe = false
@@ -18,15 +19,31 @@ pluralizeListTitles = false
   noClasses = false
 
 [params]
-  author = "Christopher Laing"
-  description = "The personal website of Christopher Laing."
-  tagline = "Beware the Mathematician"
-  profileImage = "/img/main/wading_small.png"
+  description = "Christopher Laing is a software executive combining AI and automation experience with commercial leadership."
+  mainSections = ["blog"]
+  defaultTheme = "dark"
+  images = ["/img/about-me/WADING.jpg"]
+  homePosts = 3
+  showThemeCredit = false
+  favicon = "brand/favicon.svg"
+  faviconFallback = "brand/favicon-light.ico"
+  appleTouchIcon = "brand/ic-icon-light-180.png"
 
-  [params.social]
-    linkedin = "https://www.linkedin.com/in/christopherlaing/"
-    twitter = "https://twitter.com/cjlaing"
-    mastodon = "https://mastodon.sdf.org/@laingc"
+  [params.author]
+    name = "Christopher Laing"
+
+  [params.brand]
+    name = "Christopher Laing"
+    light = "brand/ic-lockup-compact-light.svg"
+    dark = "brand/ic-lockup-compact-dark.svg"
+    smallLight = "brand/ic-symbol-small-light.svg"
+    smallDark = "brand/ic-symbol-small-dark.svg"
+    width = 320
+    height = 74
+
+  [[params.social]]
+    name = "LinkedIn"
+    url = "https://www.linkedin.com/in/christopherlaing/"
 
 [module]
   [[module.mounts]]
@@ -39,11 +56,7 @@ pluralizeListTitles = false
   url = "/"
   weight = 1
 [[menus.main]]
-  name = "About"
-  url = "/about/"
-  weight = 2
-[[menus.main]]
-  name = "Blog"
+  name = "Writing"
   url = "/blog/"
   weight = 3
 [[menus.main]]

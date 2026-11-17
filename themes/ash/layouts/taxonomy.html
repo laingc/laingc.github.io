@@ -1,0 +1,7 @@
+{{ define "main" }}
+  {{ partial "ash/page-heading.html" . }}
+  <div class="container list-content">
+    {{ with .Content }}<div class="prose list-introduction">{{ partial "ash/content.html" . }}</div>{{ end }}
+    <ul class="term-list">{{ range .Data.Terms.Alphabetical }}<li><a href="{{ .Page.RelPermalink }}"><span>{{ .Page.LinkTitle }}</span><span class="term-count">{{ len (where .Pages "Params.hidden" "ne" true) }}</span></a></li>{{ else }}<li>{{ i18n "empty" }}</li>{{ end }}</ul>
+  </div>
+{{ end }}

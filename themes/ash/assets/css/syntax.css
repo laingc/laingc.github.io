@@ -1,0 +1,12 @@
+/* Syntax follows the semantic family contract, including labelled diff markers. */
+.chroma { color: var(--ink); background: var(--surface); }
+.chroma .err { text-decoration: underline wavy var(--ash-danger-text); }
+.chroma :is(.k,.kc,.kd,.kn,.kp,.kr,.kt,.ow) { color: var(--accent-text); font-weight: 600; }
+.chroma :is(.s,.sa,.sb,.sc,.dl,.sd,.s2,.se,.sh,.si,.sx,.sr,.s1,.ss) { color: var(--ash-success-text); }
+.chroma :is(.m,.mb,.mf,.mh,.mi,.il,.mo,.l) { color: var(--ink); }
+.chroma :is(.c,.ch,.cm,.c1,.cs,.cp,.cpf) { color: var(--muted); font-style: italic; }
+.chroma :is(.nf,.fm,.nc,.nn,.nt,.na) { color: var(--ash-information-text); }
+.chroma .gd { color: var(--ash-danger-text); background: var(--ash-danger-surface); }
+.chroma .gi { color: var(--ash-success-text); background: var(--ash-success-surface); }
+.chroma :is(.gh,.gu,.gs) { font-weight: 600; }
+.chroma .ge { font-style: italic; }

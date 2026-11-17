@@ -1,0 +1,18 @@
+{{- $page := .page -}}
+{{- range .entries -}}
+  {{- $url := partial "ash/url.html" (dict "url" .URL) -}}
+  {{- with .Page }}{{ $url = .RelPermalink }}{{ end -}}
+  <li>
+    {{ if .HasChildren }}
+      <details class="nav-group">
+        <summary>{{ .Name }}</summary>
+        <ul>
+          {{ if .URL }}<li><a href="{{ $url }}">{{ .Name }}</a></li>{{ end }}
+          {{ partial "ash/menu.html" (dict "page" $page "entries" .Children) }}
+        </ul>
+      </details>
+    {{ else }}
+      <a href="{{ $url }}"{{ if eq $url $page.RelPermalink }} aria-current="page"{{ else if and .Page ($page.IsDescendant .Page) }} class="is-ancestor"{{ end }}{{ with .Params.rel }} rel="{{ . }}"{{ end }}>{{ .Name }}</a>
+    {{ end }}
+  </li>
+{{- end -}}

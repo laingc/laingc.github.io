@@ -1,0 +1,7 @@
+{{ if gt .Paginator.TotalPages 1 }}
+<nav class="pagination" aria-label="{{ i18n `pagination` }}">
+  {{ with .Paginator.Prev }}<a class="text-link" href="{{ .URL }}" rel="prev">← {{ i18n "previous" }}</a>{{ else }}<span></span>{{ end }}
+  <span>{{ i18n "pageNumber" (dict "Number" .Paginator.PageNumber "Total" .Paginator.TotalPages) }}</span>
+  {{ with .Paginator.Next }}<a class="text-link" href="{{ .URL }}" rel="next">{{ i18n "next" }} →</a>{{ else }}<span></span>{{ end }}
+</nav>
+{{ end }}

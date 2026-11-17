@@ -1,0 +1,8 @@
+{{ define "main" }}
+<div class="container error-page">
+  <p class="eyebrow accent-label">404</p>
+  <h1>{{ i18n "notFound" }}</h1>
+  <p>{{ i18n "notFoundText" }}</p>
+  <a class="button" href="{{ .Site.Home.RelPermalink }}">{{ i18n "backHome" }} {{ partial "ash/icon.html" "arrow" }}</a>
+</div>
+{{ end }}

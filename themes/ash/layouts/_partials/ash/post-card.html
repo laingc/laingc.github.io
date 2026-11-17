@@ -1,0 +1,12 @@
+<article class="post-card">
+  <div class="post-card-meta">
+    {{ if not .Date.IsZero }}<time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date | time.Format (.Site.Params.dateFormat | default "2 January 2006") }}</time>{{ end }}
+    {{ with .GetTerms "categories" }}<a href="{{ (index . 0).RelPermalink }}">{{ (index . 0).LinkTitle }}</a>{{ end }}
+  </div>
+  <div class="post-card-copy">
+    <h3><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></h3>
+    <p>{{ .Description | default (.Summary | plainify | htmlUnescape | truncate 190) }}</p>
+    {{ if and (partial "ash/is-article.html" .) (.Param "showReadingTime") }}<p class="reading-time">{{ i18n "minuteRead" (dict "Count" .ReadingTime) }}</p>{{ end }}
+  </div>
+  <a class="post-card-arrow" href="{{ .RelPermalink }}" aria-label="{{ i18n `readArticle` }}: {{ .LinkTitle }}">{{ partial "ash/icon.html" "arrow" }}</a>
+</article>

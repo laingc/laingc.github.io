@@ -1,0 +1,9 @@
+{{- $resource := false -}}
+{{- $src := .src | default "" -}}
+{{- if and $src (not (or (urls.Parse $src).Scheme (strings.HasPrefix $src "//"))) -}}
+  {{- with .page.Resources.Get $src }}{{ $resource = . }}{{ end -}}
+  {{- if not $resource -}}
+    {{- with resources.Get (strings.TrimPrefix "/" $src) }}{{ $resource = . }}{{ end -}}
+  {{- end -}}
+{{- end -}}
+{{- return $resource -}}

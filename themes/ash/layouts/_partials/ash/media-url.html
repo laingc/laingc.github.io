@@ -1,0 +1,9 @@
+{{- $url := .src | default "" -}}
+{{- with partial "ash/resource.html" . -}}
+  {{- $url = .RelPermalink -}}
+{{- else -}}
+  {{- if and $url (not (or (urls.Parse $url).Scheme (strings.HasPrefix $url "//"))) -}}
+    {{- $url = strings.TrimPrefix "/" $url | relURL -}}
+  {{- end -}}
+{{- end -}}
+{{- return $url -}}

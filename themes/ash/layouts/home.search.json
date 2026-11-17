@@ -1,0 +1,10 @@
+{{- $documents := slice -}}
+{{- range .Site.RegularPages -}}
+  {{- if and (ne .Params.search false) (not .Params.hidden) (not .Params.noindex) (not (in (slice "search" "archive") .Layout)) -}}
+    {{- $terms := slice -}}
+    {{- $page := . -}}
+    {{- range $taxonomy, $_ := .Site.Taxonomies }}{{ range $page.GetTerms $taxonomy }}{{ $terms = $terms | append .LinkTitle }}{{ end }}{{ end -}}
+    {{- $documents = $documents | append (dict "title" .Title "url" .RelPermalink "summary" (.Description | default (.Summary | plainify | htmlUnescape | truncate 190)) "text" (.Plain | htmlUnescape) "terms" $terms) -}}
+  {{- end -}}
+{{- end -}}
+{{- $documents | jsonify -}}

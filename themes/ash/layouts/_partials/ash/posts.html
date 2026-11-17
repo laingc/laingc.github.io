@@ -1,0 +1,3 @@
+{{- $pages := where .RegularPages "Section" "in" .MainSections -}}
+{{- $pages = where $pages "Params.hidden" "ne" true -}}
+{{- return $pages.ByDate.Reverse -}}

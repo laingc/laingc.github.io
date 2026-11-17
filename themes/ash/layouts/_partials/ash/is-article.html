@@ -1,0 +1,1 @@
+{{- return (and .IsPage (or (eq .Type "article") (in .Site.MainSections .Section)) (not (in (slice "search" "archive") .Layout))) -}}

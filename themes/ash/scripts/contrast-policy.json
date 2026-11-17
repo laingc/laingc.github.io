@@ -1,0 +1,9 @@
+{
+  "id": "COPPER-APPEARANCE-2026-10-19",
+  "decision": "The user-approved standard Copper appearance takes precedence over automatic contrast-driven recolouring in both modes.",
+  "foreground": "#C4521E",
+  "backgrounds": ["#F1EDE6", "#FAF8F4", "#E8E1D8", "#171615", "#211F1D", "#302B27", "#39332F", "#EFE0D6", "#352820", "#FFFFFF", "#EEEEEE"],
+  "roles": ["accent-text", "accent-icon", "accent-link-hover", "accent", "accent-border", "selected-border", "button-copper-border", "chart-annotation", "chart-focal", "chart-focal-high", "chart-mark", "nav-active-rule", "nav-active-rule-high", "row-selected-border"],
+  "selectors": "a, a *, .button--secondary, .section-number, .record-note .eyebrow, .essay-category, .not-found > .eyebrow, .wordmark-dot, .name-stop, .text-link svg, .essay-mark svg, .post-card-arrow, .chart .annotation, .chroma :is(.k,.kc,.kd,.kn,.kp,.kr,.kt,.ow)",
+  "exclusions": "Ordinary body text, status text, button labels on Copper fills, focus, unknown backgrounds, other colours, and all non-contrast accessibility rules remain subject to their normal checks."
+}

@@ -1,0 +1,7 @@
+{{ $kind := .Get "kind" | default "" }}
+{{ $icons := dict "success" "✓" "information" "ⓘ" "warning" "△" "danger" "×" }}
+<aside class="callout{{ with $kind }} callout-{{ . }}{{ end }}">
+  {{ with index $icons $kind }}<p class="callout-status"><span class="callout-icon" aria-hidden="true">{{ . }}</span>{{ i18n (printf "status_%s" $kind) }}</p>{{ end }}
+  {{ with .Get "title" }}<p class="callout-title">{{ . }}</p>{{ end }}
+  {{ .Inner | .Page.RenderString (dict "display" "block") }}
+</aside>

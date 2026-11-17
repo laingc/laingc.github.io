@@ -1,0 +1,42 @@
+{{- $title := .Title | default .Site.Title -}}
+{{- if not .IsHome }}{{ $title = printf "%s · %s" $title .Site.Title }}{{ end -}}
+{{- $description := .Description | default .Site.Params.description -}}
+{{- if and .IsPage (not .Description) }}{{ $description = .Summary | plainify | htmlUnescape | truncate 180 }}{{ end -}}
+{{- $canonical := .Params.canonicalURL | default .Permalink -}}
+{{- $image := "" -}}
+{{- with .Site.Params.images }}{{ $image = index . 0 }}{{ end -}}
+{{- with .Params.images }}{{ $image = index . 0 }}{{ end -}}
+{{- if reflect.IsMap $image }}{{ $image = $image.src | default "" }}{{ end -}}
+{{- with .Params.cover.src }}{{ $image = . }}{{ end -}}
+{{- if $image }}{{ $image = partial "ash/media-url.html" (dict "page" . "src" $image) | absURL }}{{ end -}}
+{{- $article := partial "ash/is-article.html" . -}}
+{{- $language := partial "ash/language.html" .Language -}}
+<title>{{ $title }}</title>
+{{ with $description }}<meta name="description" content="{{ . }}">{{ end }}
+<link rel="canonical" href="{{ $canonical }}">
+{{ if or .Params.noindex (eq .Kind "404") }}<meta name="robots" content="noindex, follow">{{ end }}
+<meta name="author" content="{{ partial `ash/author.html` . }}">
+<meta property="og:site_name" content="{{ .Site.Title }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:url" content="{{ $canonical }}">
+<meta property="og:locale" content="{{ replace $language.locale `-` `_` }}">
+<meta property="og:type" content="{{ if $article }}article{{ else }}website{{ end }}">
+{{ if $article }}
+  {{ if not .Date.IsZero }}<meta property="article:published_time" content="{{ .Date.Format `2006-01-02T15:04:05Z07:00` }}">{{ end }}
+  {{ if not .Lastmod.IsZero }}<meta property="article:modified_time" content="{{ .Lastmod.Format `2006-01-02T15:04:05Z07:00` }}">{{ end }}
+{{ end }}
+{{ with $image }}<meta property="og:image" content="{{ . }}"><meta name="twitter:image" content="{{ . }}">{{ end }}
+{{ with .Params.cover.alt }}<meta property="og:image:alt" content="{{ . }}"><meta name="twitter:image:alt" content="{{ . }}">{{ end }}
+<meta name="twitter:card" content="{{ if $image }}summary_large_image{{ else }}summary{{ end }}">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $description }}">
+{{- $schema := dict "@context" "https://schema.org" "@type" "WebPage" "name" $title "url" $canonical "description" $description "inLanguage" $language.locale -}}
+{{- if .IsHome }}{{ $schema = merge $schema (dict "@type" "WebSite") }}{{ end -}}
+{{- if $article -}}
+  {{- $schema = merge $schema (dict "@type" "BlogPosting" "headline" .Title "author" (dict "@type" "Person" "name" (partial "ash/author.html" .)) "mainEntityOfPage" (dict "@type" "WebPage" "@id" $canonical)) -}}
+  {{- if not .Date.IsZero }}{{ $schema = merge $schema (dict "datePublished" (.Date.Format "2006-01-02T15:04:05Z07:00")) }}{{ end -}}
+  {{- if not .Lastmod.IsZero }}{{ $schema = merge $schema (dict "dateModified" (.Lastmod.Format "2006-01-02T15:04:05Z07:00")) }}{{ end -}}
+{{- end -}}
+{{- with $image }}{{ $schema = merge $schema (dict "image" .) }}{{ end -}}
+{{ if ne .Kind "404" }}<script type="application/ld+json">{{ $schema | jsonify | safeJS }}</script>{{ end }}

@@ -1,0 +1,19 @@
+<!doctype html>
+{{ $language := partial "ash/language.html" site.Language }}
+{{ with .Page }}{{ $language = partial "ash/language.html" .Language }}{{ end }}
+<html lang="{{ $language.locale }}" dir="{{ $language.direction }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ i18n "pageMoved" }} · {{ site.Title }}</title>
+  <link rel="canonical" href="{{ .Permalink }}">
+  <meta name="robots" content="noindex, follow">
+  <meta http-equiv="refresh" content="0; url={{ .RelPermalink }}">
+</head>
+<body>
+  <main>
+    <h1>{{ i18n "pageMoved" }}</h1>
+    <p><a href="{{ .RelPermalink }}">{{ i18n "continueToPage" }}</a></p>
+  </main>
+</body>
+</html>

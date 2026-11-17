@@ -24,3 +24,13 @@ test('metadata rejects missing titles and malformed taxonomy arrays', () => {
   assert.throws(() => parseContent(sample().replace('"Example"', '""'), '/content/blog/example.md'), /missing title/);
   assert.throws(() => parseContent(sample('tags = "AI"'), '/content/blog/example.md'), /array of strings/);
 });
+
+test('home, section, and utility pages support undated Hugo front matter', () => {
+  for (const [filename, route] of [['/content/_index.md', '/'], ['/content/blog/_index.md', '/blog/'], ['/content/search.md', '/search/']]) {
+    const page = parseContent('+++\ntitle = "Page"\n+++\n', filename);
+    assert.equal(page.route, route);
+    assert.equal(page.published, true);
+    assert.equal(page.isSection, filename.endsWith('_index.md'));
+  }
+  assert.throws(() => parseContent('+++\ntitle = "Post"\ndraft = false\n+++\n', '/content/blog/post.md'), /expected an ISO date/);
+});

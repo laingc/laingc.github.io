@@ -1,0 +1,5 @@
+<figure class="media-figure">
+  <audio controls preload="metadata"{{ with .Get "title" }} aria-label="{{ . }}"{{ end }}><source src="{{ partial `ash/media-url.html` (dict `page` .Page `src` (.Get `src`)) }}"{{ with .Get "type" }} type="{{ . }}"{{ end }}><a href="{{ partial `ash/media-url.html` (dict `page` .Page `src` (.Get `src`)) }}">{{ i18n "audioFallback" }}</a></audio>
+  {{ with .Get "caption" }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}
+</figure>
+{{ with .Inner }}<div class="transcript">{{ . | $.Page.RenderString (dict "display" "block") }}</div>{{ end }}

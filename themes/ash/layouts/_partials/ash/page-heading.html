@@ -1,0 +1,5 @@
+<header class="page-heading container">
+  {{ if and (not .IsHome) .Parent }}<a class="eyebrow breadcrumb" href="{{ .Parent.RelPermalink }}">{{ .Parent.LinkTitle }}</a>{{ end }}
+  <h1>{{ .Title }}</h1>
+  {{ with .Description }}<p class="page-description">{{ . }}</p>{{ end }}
+</header>

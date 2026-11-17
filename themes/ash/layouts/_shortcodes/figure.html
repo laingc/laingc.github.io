@@ -1,0 +1,6 @@
+<figure{{ with .Get "class" }} class="{{ . }}"{{ end }}>
+  {{ with .Get "link" }}<a href="{{ partial `ash/url.html` (dict `url` .) }}">{{ end }}
+  {{ partial "ash/image.html" (dict "page" .Page "src" (.Get "src") "alt" (.Get "alt") "width" (.Get "width") "height" (.Get "height")) }}
+  {{ if .Get "link" }}</a>{{ end }}
+  {{ if or (.Get "caption") (.Get "title") (.Get "attr") }}<figcaption>{{ with .Get "title" }}<strong>{{ . }}</strong> {{ end }}{{ with .Get "caption" }}{{ . | markdownify }}{{ end }}{{ with .Get "attr" }} {{ with $.Get "attrlink" }}<a href="{{ . }}">{{ end }}{{ . }}{{ if $.Get "attrlink" }}</a>{{ end }}{{ end }}</figcaption>{{ end }}
+</figure>

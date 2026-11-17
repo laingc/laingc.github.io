@@ -1,0 +1,18 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="{{ if eq .Site.Params.defaultTheme `dark` }}#171615{{ else }}#f1ede6{{ end }}">
+{{ partial "ash/metadata.html" . }}
+{{ with .Site.Params.favicon }}<link rel="icon" href="{{ partial `ash/media-url.html` (dict `page` $ `src` .) }}">{{ else }}<link rel="icon" href="{{ `ash/favicon.svg` | relURL }}" type="image/svg+xml">{{ end }}
+{{ with .Site.Params.faviconFallback }}<link rel="icon" href="{{ partial `ash/media-url.html` (dict `page` $ `src` .) }}" sizes="16x16 32x32 48x48" type="image/x-icon">{{ end }}
+{{ with .Site.Params.appleTouchIcon }}<link rel="apple-touch-icon" href="{{ partial `ash/media-url.html` (dict `page` $ `src` .) }}" sizes="180x180">{{ end }}
+{{ $init := resources.Get "js/theme-init.js" | minify | fingerprint "sha384" }}
+<script src="{{ $init.RelPermalink }}" integrity="{{ $init.Data.Integrity }}"></script>
+{{ $fonts := resources.Get "css/fonts.css" | resources.ExecuteAsTemplate "ash/fonts.css" . }}
+{{ $styles := slice $fonts (resources.Get "css/ash-tokens.css") (resources.Get "css/ash.css") (resources.Get "css/ash-colour-components.css") (resources.Get "css/syntax.css") }}
+{{ with resources.Get "css/custom.css" }}{{ $styles = $styles | append . }}{{ end }}
+{{ $css := $styles | resources.Concat "ash/ash.css" | minify | fingerprint "sha384" }}
+<link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+{{ range .AlternativeOutputFormats }}<link rel="alternate" type="{{ .MediaType.Type }}" href="{{ .Permalink }}" title="{{ $.Site.Title }} · {{ .Name }}">{{ end }}
+{{ range .AllTranslations }}<link rel="alternate" hreflang="{{ (partial `ash/language.html` .Language).locale }}" href="{{ .Permalink }}">{{ end }}
+{{ partial "extend-head.html" . }}

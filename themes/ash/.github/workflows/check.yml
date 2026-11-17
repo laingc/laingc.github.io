@@ -1,0 +1,33 @@
+name: Check theme
+on: [push, pull_request]
+jobs:
+  theme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v6
+        with:
+          go-version: '1.27.x'
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - uses: peaceiris/actions-hugo@v3
+        with:
+          hugo-version: '0.168.0'
+          extended: false
+      - name: Install minimum Hugo version
+        run: |
+          mkdir -p "$RUNNER_TEMP/hugo-min"
+          curl -fsSL https://github.com/gohugoio/hugo/releases/download/v0.146.7/hugo_0.146.7_linux-amd64.tar.gz -o "$RUNNER_TEMP/hugo-min/hugo.tar.gz"
+          curl -fsSL https://github.com/gohugoio/hugo/releases/download/v0.146.7/hugo_0.146.7_checksums.txt -o "$RUNNER_TEMP/hugo-min/checksums.txt"
+          mv "$RUNNER_TEMP/hugo-min/hugo.tar.gz" "$RUNNER_TEMP/hugo-min/hugo_0.146.7_linux-amd64.tar.gz"
+          cd "$RUNNER_TEMP/hugo-min"
+          grep ' hugo_0.146.7_linux-amd64.tar.gz$' checksums.txt | sha256sum --check
+          tar -xzf hugo_0.146.7_linux-amd64.tar.gz hugo
+          echo "HUGO_MIN_BIN=$RUNNER_TEMP/hugo-min/hugo" >> "$GITHUB_ENV"
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run test:build
+      - run: npm run test:html
+      - run: npm test

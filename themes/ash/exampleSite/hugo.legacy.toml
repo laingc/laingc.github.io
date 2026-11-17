@@ -1,0 +1,11 @@
+# Use with Hugo 0.146.7–0.157.x: --config hugo.toml,hugo.legacy.toml
+[languages.en]
+languageCode = 'en-NZ'
+languageName = 'English'
+[languages.fr]
+languageCode = 'fr-FR'
+languageName = 'Français'
+[languages.ar]
+languageCode = 'ar'
+languageName = 'العربية'
+languageDirection = 'rtl'

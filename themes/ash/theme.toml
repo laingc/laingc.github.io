@@ -1,0 +1,11 @@
+name = 'Ash'
+license = 'MIT'
+description = 'A warm editorial theme for personal websites, essays, and technical writing. Two colour modes, local search, and native Hugo assets.'
+# Set homepage and licenselink to the public repository before directory submission.
+homepage = ''
+licenselink = ''
+tags = ['personal', 'blog', 'responsive', 'light', 'dark', 'multilingual', 'minimal']
+features = ['search', 'syntax highlighting', 'math', 'taxonomies', 'page bundles', 'accessibility', 'rss']
+[author]
+name = 'Christopher Laing'
+homepage = 'https://chrislaing.net/'

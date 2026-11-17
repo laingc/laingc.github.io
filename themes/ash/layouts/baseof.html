@@ -1,0 +1,16 @@
+<!doctype html>
+{{ $language := partial "ash/language.html" .Language }}
+<html lang="{{ $language.locale }}" dir="{{ $language.direction }}" data-theme="{{ if eq .Site.Params.defaultTheme `dark` }}dark{{ else }}light{{ end }}" data-default-theme="{{ .Site.Params.defaultTheme | default `light` }}">
+<head>
+  {{ partial "ash/head.html" . }}
+  {{ block "head" . }}{{ end }}
+</head>
+<body id="top">
+  <a class="skip-link" href="#main">{{ i18n "skip" }}</a>
+  {{ partial "ash/header.html" . }}
+  <main id="main" tabindex="-1">{{ block "main" . }}{{ end }}</main>
+  {{ partial "ash/footer.html" . }}
+  {{ partial "ash/scripts.html" . }}
+  {{ partial "extend-footer.html" . }}
+</body>
+</html>

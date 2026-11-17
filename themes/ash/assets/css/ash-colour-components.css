@@ -1,0 +1,57 @@
+/* Generated from design-language/ash-colour-components.css. Run scripts/build-colours.py. */
+/* Colour/state extensions. Existing type, dimensions, and geometry remain local. */
+.button:hover:not(:disabled) { opacity: 1; text-decoration: underline; }
+.button:active:not(:disabled) { text-decoration: underline; text-decoration-thickness: 2px; }
+.button.button--copper {
+  background: var(--ash-button-copper-bg);
+  color: var(--ash-button-copper-label);
+  border-color: var(--ash-button-copper-border);
+  opacity: 1;
+}
+.button.button--copper:hover:not(:disabled) {
+  background: var(--ash-button-copper-hover-bg);
+  color: var(--ash-button-copper-label);
+}
+.button.button--copper:active:not(:disabled),
+.button.button--copper[aria-pressed='true'] {
+  background: var(--ash-button-copper-pressed-bg);
+  color: var(--ash-button-copper-label);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+.button.button--secondary {
+  background: var(--ash-surface);
+  color: var(--ash-accent-text);
+  border-color: var(--ash-control-border);
+}
+.button.button--secondary:hover:not(:disabled) { color: var(--ash-accent-link-hover); }
+.button.button--secondary[aria-pressed='true'] {
+  background: var(--ash-row-selected-bg);
+  border-color: var(--ash-row-selected-border);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+.button:disabled, .button.button--copper:disabled {
+  background: var(--ash-button-disabled-bg);
+  color: var(--ash-button-disabled-label);
+  border-color: var(--ash-control-border);
+  opacity: 1;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+.button:focus-visible { outline: 2px solid var(--ash-focus); outline-offset: 5px; }
+.ash-selected-row, .prose tbody tr.ash-selected-row {
+  background: var(--ash-row-selected-bg);
+  border-inline-start: 3px solid var(--ash-row-selected-border);
+}
+.callout-success { --message-text: var(--ash-success-text); --message-icon: var(--ash-success-icon); --message-surface: var(--ash-success-surface); --message-border: var(--ash-success-border); }
+.callout-information { --message-text: var(--ash-information-text); --message-icon: var(--ash-information-icon); --message-surface: var(--ash-information-surface); --message-border: var(--ash-information-border); }
+.callout-warning { --message-text: var(--ash-warning-text); --message-icon: var(--ash-warning-icon); --message-surface: var(--ash-warning-surface); --message-border: var(--ash-warning-border); }
+.callout-danger { --message-text: var(--ash-danger-text); --message-icon: var(--ash-danger-icon); --message-surface: var(--ash-danger-surface); --message-border: var(--ash-danger-border); }
+.callout:is(.callout-success, .callout-information, .callout-warning, .callout-danger) {
+  color: var(--message-text);
+  background: var(--message-surface);
+  border-inline-start-color: var(--message-border);
+}
+.callout:is(.callout-success, .callout-information, .callout-warning, .callout-danger) a { color: inherit; text-decoration: underline; }
+.callout-icon { color: var(--message-icon); margin-inline-end: .5em; }
