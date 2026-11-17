@@ -7,7 +7,7 @@ for (const theme of ['light', 'dark']) {
     if (theme === 'light') await page.getByRole('button', { name: 'Use light colour theme' }).click();
     await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
     await expect(page.locator('body')).toHaveCSS('background-color', theme === 'light' ? 'rgb(241, 237, 230)' : 'rgb(23, 22, 21)');
-    await expect(page.locator('.writing-section h2')).toHaveCSS('color', theme === 'light' ? 'rgb(40, 37, 34)' : 'rgb(243, 237, 228)');
+    await expect(page.locator('.writing-section .post-card h3').first()).toHaveCSS('color', theme === 'light' ? 'rgb(40, 37, 34)' : 'rgb(243, 237, 228)');
     await expect(page.locator('.post-card-arrow').first()).toHaveCSS('color', 'rgb(196, 82, 30)');
 
     // Exercise optional components without changing published article content.

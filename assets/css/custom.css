@@ -91,6 +91,13 @@ body:has(.hero) .site-header .brand-dark { display: block; }
   .post-card:hover::after { background-size: 100% 100%, 24% 100%; }
 }
 
+/* The homepage writing list shows its label and the link to all writing, with no large
+   title. The title stays for screen readers, which use it to name the section. */
+.writing-section .section-heading { display: flex; align-items: center; }
+.writing-section .section-heading .accent-label { margin-block-end: 0; }
+.writing-section .section-heading > .text-link { margin-block-start: 0; }
+.writing-section .section-heading h2 { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
+
 /* Unresolved decoder glyphs. */
 .fx-glyph { color: var(--accent-text); }
 

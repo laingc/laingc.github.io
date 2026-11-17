@@ -1,6 +1,13 @@
 import { test, expect } from '@playwright/test';
 
-const label = 'Business, automation, and national security';
+// The masthead label as the server sends it, before the decoder runs. Reading it from the
+// page keeps these tests independent of the homepage copy.
+const serverLabel = async request => {
+  const html = await (await request.get('/')).text();
+  const match = /class="?eyebrow accent-label"?>([^<]+)</.exec(html);
+  expect(match, 'masthead label in the homepage HTML').not.toBeNull();
+  return match[1].replace(/&amp;/g, '&').replace(/&#39;|&rsquo;/g, '’').trim();
+};
 
 // Counts the canvas pixels that the ROC plot has painted.
 const paintedPixels = page => page.locator('.fx-roc').evaluate(canvas => {
@@ -31,7 +38,10 @@ for (const mode of ['dark', 'light']) {
     await expect(page.locator('.hero .hero-description')).toHaveCSS('color', 'rgb(184, 175, 166)');
     // Below the masthead, the page follows the reader's colour mode.
     await expect(page.locator('body')).toHaveCSS('background-color', mode === 'light' ? 'rgb(241, 237, 230)' : 'rgb(23, 22, 21)');
-    await expect(page.locator('.writing-section h2')).toHaveCSS('color', mode === 'light' ? 'rgb(40, 37, 34)' : 'rgb(243, 237, 228)');
+    await expect(page.locator('.writing-section .post-card h3').first()).toHaveCSS('color', mode === 'light' ? 'rgb(40, 37, 34)' : 'rgb(243, 237, 228)');
+    // The writing list has no large title, but screen readers still get a section name.
+    expect(await page.locator('#writing-title').evaluate(title => title.getBoundingClientRect().height)).toBeLessThanOrEqual(1);
+    await expect(page.locator('.writing-section')).toHaveAccessibleName(/\S/);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
   });
 }
@@ -59,9 +69,10 @@ test('the masthead fits short landscape screens and fills wide screens', async (
   }
 });
 
-test('motion effects resolve to the original content without errors', async ({ page }) => {
+test('motion effects resolve to the original content without errors', async ({ page, request }) => {
   const errors = [];
   page.on('pageerror', error => errors.push(error.message));
+  const label = await serverLabel(request);
   await page.goto('/');
 
   // The decoder restores the exact label and removes its temporary spans.
@@ -163,7 +174,8 @@ test('the writing page keeps its page links without JavaScript', async ({ browse
 test.describe('with reduced motion', () => {
   test.use({ reducedMotion: 'reduce' });
 
-  test('nothing is hidden, animated, or decoded, and the plot is still', async ({ page }) => {
+  test('nothing is hidden, animated, or decoded, and the plot is still', async ({ page, request }) => {
+    const label = await serverLabel(request);
     await page.goto('/');
     await expect(page.locator('.fx-reveal, .fx-rule, .fx-wipe')).toHaveCount(0);
     await expect(page.locator('.hero .accent-label')).toHaveText(label);
