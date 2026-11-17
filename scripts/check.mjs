@@ -7,7 +7,7 @@ import { filesUnder, loadContent } from './content.mjs';
 
 const root = fileURLToPath(new URL('../', import.meta.url));
 const output = path.join(root, 'public');
-const origin = 'https://chrislaing.net';
+const origin = 'https://laing.nz';
 const content = await loadContent(root);
 const files = await filesUnder(output);
 const filenames = new Set(files.map(file => path.relative(output, file).split(path.sep).join('/')));
@@ -53,7 +53,7 @@ for (const filename of files) {
 const index = JSON.parse(await readFile(path.join(output, 'index.json'), 'utf8'));
 const publishedPosts = content.filter(page => page.published && !page.isSection && page.route.startsWith('/blog/'));
 assert.deepEqual(index.map(post => post.url).sort(), publishedPosts.map(post => post.route).sort(), 'Search index must contain exactly the published posts');
-assert.equal(await readFile(path.join(output, 'CNAME'), 'utf8'), 'chrislaing.net\n');
+assert.equal(await readFile(path.join(output, 'CNAME'), 'utf8'), 'laing.nz\n');
 const sitemap = await readFile(path.join(output, 'sitemap.xml'), 'utf8');
 const rss = await readFile(path.join(output, 'index.xml'), 'utf8');
 for (const page of content) {

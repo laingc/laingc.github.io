@@ -8,4 +8,4 @@ tags = ['personal', 'blog', 'responsive', 'light', 'dark', 'multilingual', 'mini
 features = ['search', 'syntax highlighting', 'math', 'taxonomies', 'page bundles', 'accessibility', 'rss']
 [author]
 name = 'Christopher Laing'
-homepage = 'https://chrislaing.net/'
+homepage = 'https://laing.nz/'

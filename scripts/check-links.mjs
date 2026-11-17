@@ -12,7 +12,7 @@ for (const filename of (await filesUnder(output)).filter(file => file.endsWith('
     const value = link.getAttribute('href');
     if (!/^https?:\/\//.test(value)) continue;
     const url = new URL(value);
-    if (url.hostname === 'chrislaing.net') continue;
+    if (url.hostname === 'laing.nz') continue;
     url.hash = '';
     urls.add(url.href);
   }

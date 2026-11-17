@@ -1,7 +1,8 @@
 # chrislaing.net
 
 A Hugo site for Christopher Laing. This repository contains the source and the deployment workflow.
-GitHub Actions deploys the checked build to GitHub Pages at <https://chrislaing.net/>.
+GitHub Actions deploys the checked build to GitHub Pages at <https://laing.nz/>.
+Cloudflare redirects `chrislaing.net` and `christopherlaing.com` to the same path on `laing.nz`.
 
 ## Requirements
 
