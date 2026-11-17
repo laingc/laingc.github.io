@@ -8,7 +8,7 @@ featured = ['blog/the-memo', 'blog/the-economics-and-ergonomics-of-ai', 'blog/hi
 
 [hero]
 title = 'Christopher Laing'
-intro = '''Technology executive building companies in national security and resilience. '''
+intro = '''Technology executive building companies in intelligence and national security. '''
 description = '''I work with leading companies to maximise their impact through technology.
 
 I prioritise work that strengthens the capabilities a nation depends on for its security, prosperity, and wellbeing.'''
