@@ -10,7 +10,7 @@ postImages = true
 [hero]
 title = 'Christopher Laing'
 intro = '''Technology executive building companies in intelligence and national security. '''
-description = 'I work with leading companies to maximise their impact through technology.'
+description = 'I work with public and private sector organisations in critical sectors to elevate their technical capability and succeed in their missions.'
 
 [[hero.links]]
 label = 'Read'
