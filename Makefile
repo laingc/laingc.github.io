@@ -1,4 +1,4 @@
-.PHONY: bootstrap dev preview build check browser-check clean
+.PHONY: bootstrap dev preview new build check browser-check clean
 
 bootstrap:
 	python3 scripts/bootstrap.py
@@ -9,6 +9,10 @@ dev:
 
 preview:
 	.tools/hugo server --bind 127.0.0.1 --buildDrafts --buildFuture --noBuildLock
+
+new:
+	@test -n "$(SLUG)" || { echo 'Usage: make new SLUG=my-post' >&2; exit 1; }
+	TZ=Pacific/Auckland .tools/hugo new content blog/$(SLUG).md
 
 build:
 	node scripts/clean.mjs

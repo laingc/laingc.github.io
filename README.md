@@ -39,8 +39,10 @@ make browser-check
 ## Add a post
 
 ```sh
-TZ=Pacific/Auckland .tools/hugo new content blog/my-post.md
+make new SLUG=my-post
 ```
+
+This runs `TZ=Pacific/Auckland .tools/hugo new content blog/my-post.md`. The slug becomes the post's URL.
 
 Keep `draft = true` until the article is ready for publication. Use a timezone-aware date for new posts.
 Historical dates remain unchanged. A draft remains visible in this public source repository, even though the website excludes it.
