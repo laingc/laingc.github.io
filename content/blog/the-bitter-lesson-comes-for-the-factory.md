@@ -67,4 +67,4 @@ The open question is which parts, if any, survive. My guess is that the durable 
 
 Sutton observed that the chess researchers were not good losers. At this pace, we don't have time to be.
 
-[^1]: Sometimes a very well-paid one.
+[^1]: Sometimes a very well-paid one. In early 2023, Anthropic advertised for a [Prompt Engineer and Librarian](https://web.archive.org/web/20230301173255/https://jobs.lever.co/Anthropic/e3cde481-d446-460f-b576-93cab67bd1ed) with an expected salary of US$175,000 to US$335,000.
