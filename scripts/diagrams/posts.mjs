@@ -279,6 +279,46 @@ export const diagrams = {
     d.label(right - 24, base + 60, 'COMPUTE →', { anchor: 'end' });
   },
 
+  // Each craft is a hand-built terrace. Frontier models rise like a tide: prompts and harnesses
+  // are under, and the water is climbing the factory, whose upper floors are an org chart.
+  'the-bitter-lesson-comes-for-the-factory'(d) {
+    const rand = random(163);
+    const ground = 600, water = 400, left = 460;
+    const terrace = ({ centre, half, steps, rise, inset }) => {
+      const side = [];
+      for (let i = 0; i < steps; i++) {
+        const x = centre - half + i * inset;
+        side.push([x, ground - i * rise], [x, ground - (i + 1) * rise]);
+      }
+      return [...side, ...side.slice().reverse().map(([x, y]) => [2 * centre - x, y])];
+    };
+    const crafts = [
+      { centre: 740, half: 96, steps: 2, rise: 42, inset: 30, name: 'PROMPTS' },
+      { centre: 1000, half: 132, steps: 4, rise: 42, inset: 24, name: 'HARNESSES' },
+      { centre: 1320, half: 176, steps: 6, rise: 56, inset: 20, name: 'FACTORIES' },
+    ];
+    const outlines = crafts.map(craft => pathData(terrace(craft), true));
+    // Above the water, the terraces stand out. Below it, they fade under the striations.
+    d.clip('above', `M0 0H${W}V${water}H0Z`, () => outlines.forEach(o => d.path(o, 'dg-shape-strong', { 'stroke-width': 1.6 })));
+    d.clip('below', `M0 ${water}H${W}V${H}H0Z`, () => {
+      outlines.forEach(o => d.path(o, 'dg-shape-line'));
+      striations(d, rand, { top: water + 15, bottom: ground, step: 15, from: left + 20, spread: 300, length: [240, 700] });
+    });
+    // The factory's upper floors: a planner over an implementer, a reviewer, and a tester.
+    const factory = crafts[2];
+    const planner = [factory.centre, ground - 5.4 * factory.rise];
+    const roles = [-56, 0, 56].map(dx => [factory.centre + dx, ground - 4.4 * factory.rise]);
+    for (const role of roles) d.line(...planner, ...role, 'dg-line');
+    for (const role of roles) d.marker(...role, 'dg-node', 12);
+    d.marker(...planner, 'dg-node', 12);
+    d.line(left, water, W, water, 'dg-accent', { 'stroke-width': 2.6 });
+    d.line(1548, water + 70, 1548, water - 70, 'dg-accent', { 'stroke-width': 2 });
+    d.path(pathData([[1536, water - 56], [1548, water - 70], [1560, water - 56]]), 'dg-accent', { 'stroke-width': 2 });
+    d.label(1110, water - 22, 'FRONTIER MODELS', { anchor: 'end', accent: true });
+    d.line(left, ground, W, ground, 'dg-line');
+    for (const craft of crafts) d.label(craft.centre, ground + 42, craft.name, { anchor: 'middle' });
+  },
+
   // A short route through every stop: the problem deep learning may start to solve.
   'business-implications-of-combinatorial-optimisation'(d) {
     const rand = random(83);
