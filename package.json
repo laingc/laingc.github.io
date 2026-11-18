@@ -9,8 +9,8 @@
     "test:browser": "playwright test"
   },
   "devDependencies": {
-    "@playwright/test": "1.64.0",
-    "linkedom": "0.18.13",
+    "@playwright/test": "1.65.1",
+    "linkedom": "0.18.15",
     "smol-toml": "1.9.1"
   }
 }
