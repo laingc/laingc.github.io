@@ -4,7 +4,7 @@ aliases = ['/about/', '/about-me/']
 description = 'Christopher Laing on software, businesses, automation, and national security.'
 writingLabel = 'Read'
 writingTitle = 'Read'
-featured = ['blog/the-memo', 'blog/the-economics-and-ergonomics-of-ai', 'blog/high-code']
+featured = ['blog/the-bitter-lesson-comes-for-the-factory', 'blog/the-memo', 'blog/high-code']
 postImages = true
 
 [hero]
