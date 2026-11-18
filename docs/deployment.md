@@ -3,12 +3,12 @@
 ## Repository configuration
 
 The source repository is `laingc/laingc.github.io`. Its default branch is `master`.
-GitHub Pages uses GitHub Actions, not a branch of generated files.
-The custom domain is `laing.nz`. `static/CNAME` records this domain in each artefact.
-GitHub Actions deployments ignore this file. The Pages settings hold the active custom domain.
+GitHub Pages serves the root of the `gh-pages` branch. That branch contains only built files: one commit, replaced on each deployment.
+`./deploy.sh` builds and checks the site locally, adds `.nojekyll` so that Pages serves the files unchanged, and force-pushes the branch.
+The push uses your normal Git credentials. GitHub then publishes the branch with its own built-in job.
 
-The workflow has read-only permissions during the build. Only the deployment job receives Pages and OpenID Connect permissions.
-Deployment uses GitHub's temporary workflow token. No personal access token or SSH key is required.
+The custom domain is `laing.nz`. `static/CNAME` records this domain in each build, and the Pages settings hold the same value.
+The **Check** workflow runs the source and browser checks on pushes and pull requests to `master`, with read-only permissions. It does not deploy.
 
 ## Domains
 
@@ -32,25 +32,22 @@ Mail records on `chrislaing.net` and `laing.nz` are independent of the website r
 
 ## Publish a change
 
-1. Run `make bootstrap`.
-2. Run `make browser-check`.
-3. Review the source diff for private material and unrelated files.
-4. Commit the approved change.
-5. Push the commit to `master`.
-6. Verify the **Check and deploy** workflow in GitHub Actions.
-7. Verify the changed pages at <https://laing.nz/>.
+1. Run `make bootstrap` once, and again after a tool version changes.
+2. Review the change for private material and unrelated files.
+3. Run `./deploy.sh`. It stops if any check fails, and reports when the site is live.
+4. Verify the changed pages at <https://laing.nz/>.
+5. Commit the change and push `master`, so the source matches the live site.
 
-If a check fails, the workflow does not deploy the artefact.
-The workflow also supports a manual run from GitHub Actions.
+Cloudflare may serve cached copies of images and styles for a short time after a deployment.
 
 ## Roll back
 
-Revert the affected source commit. Run the checks before you push the revert.
+Revert the affected source commit, then run `./deploy.sh`. Push the revert to `master`.
 Do not restore generated output, backup files, or the retired publication history.
 
 ## Maintenance
 
-Dependabot proposes monthly npm and GitHub Actions updates. Every update runs the same validation before deployment.
+Dependabot proposes monthly npm and GitHub Actions updates. The **Check** workflow tests each update.
 The external-link workflow runs weekly and on request. External service errors do not block source changes or deployments.
 Review the Hugo, Gitleaks, and Node.js version pins monthly. Update the version files through a checked source change.
 

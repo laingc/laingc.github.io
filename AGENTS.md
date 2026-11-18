@@ -32,6 +32,7 @@
 - Preserve the existing `en-gb` site language. Use New Zealand spelling in new documentation and comments.
 - Do not open private keys, decrypt backups, or include credentials in output.
 - Do not commit, push, deploy, delete repositories, or rewrite history without explicit authorisation.
+- Deploy only with `./deploy.sh`, which builds and checks locally and publishes the `gh-pages` branch. Never commit generated output to a source branch.
 - Do not stage unrelated files.
 - Do not edit generated output to correct a source problem.
 - Bind development servers to `127.0.0.1`.

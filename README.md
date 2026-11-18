@@ -1,7 +1,7 @@
 # chrislaing.net
 
-A Hugo site for Christopher Laing. This repository contains the source and the deployment workflow.
-GitHub Actions deploys the checked build to GitHub Pages at <https://laing.nz/>.
+A Hugo site for Christopher Laing. This repository contains the source and the deployment script.
+GitHub Pages serves the checked build at <https://laing.nz/> from the `gh-pages` branch.
 Cloudflare redirects `chrislaing.net` and `christopherlaing.com` to the same path on `laing.nz`.
 
 ## Requirements
@@ -47,11 +47,16 @@ Historical dates remain unchanged. A draft remains visible in this public source
 
 ## Deploy
 
-Run the checks before a commit. Push approved source changes to `master`.
-The workflow runs source checks and desktop and mobile browser checks before deployment.
-Pull requests never deploy. Generated output never enters Git history.
+```sh
+./deploy
+```
 
-`./deploy.sh` runs local checks only. It does not create commits or push changes.
+`./deploy` (or `./deploy.sh`) builds the site, runs the source checks, the secret scan, and the desktop and mobile browser checks, then pushes the build to the `gh-pages` branch.
+GitHub Pages publishes that branch, usually within a minute, and the script waits until it is live.
+A failed check stops the deployment. Uncommitted changes go live too, so commit and push `master` to keep the source in step.
+
+The `gh-pages` branch holds one commit of built files, replaced on each deployment. The source branches never contain generated output.
+The **Check** workflow tests pushes and pull requests to `master`. It does not deploy.
 See [deployment](docs/deployment.md) and [architecture](docs/architecture.md) for details.
 
 ## Historical notebooks
