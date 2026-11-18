@@ -13,7 +13,8 @@
     </div>{{ end }}
     {{ $cover := .Params.cover }}
     {{ if not $cover }}{{ with .Params.images }}{{ $first := index . 0 }}{{ if reflect.IsMap $first }}{{ $cover = $first }}{{ end }}{{ end }}{{ end }}
-    {{ with $cover }}<figure class="article-cover">{{ partial "ash/image.html" (dict "page" $ "src" .src "alt" .alt "class" "editorial-image" "loading" "eager" "sizes" "(max-width: 760px) calc(100vw - 48px), 1000px") }}{{ with .caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}</figure>{{ end }}
+    {{ if .Params.diagram }}<figure class="article-cover article-diagram ash-diagram">{{ partial "ash/diagram.html" (dict "page" .) }}</figure>
+    {{ else }}{{ with $cover }}<figure class="article-cover">{{ partial "ash/image.html" (dict "page" $ "src" .src "alt" .alt "class" "editorial-image" "loading" "eager" "sizes" "(max-width: 760px) calc(100vw - 48px), 1000px") }}{{ with .caption }}<figcaption>{{ . | markdownify }}</figcaption>{{ end }}</figure>{{ end }}{{ end }}
   </header>
   {{ $toc := and (.Param "showToc") (gt (len .Fragments.Headings) 0) }}
   <div class="container article-grid{{ if $toc }} with-toc{{ end }}">

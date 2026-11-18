@@ -4,6 +4,11 @@ title = "A New Hope"
 date = "2016-11-03T23:04:26+01:00"
 categories = []
 draft = false
+[diagram]
+  src = "diagrams/a-new-hope.svg"
+  alt = "A copper sun rising over mountain ridges, with faint rings spreading from it, labelled open for business."
+[[images]]
+  src = "img/diagrams/a-new-hope.png"
 +++
 
 Many years ago, I had a blog. Being perfectly honest, it wasn't a very good blog; it consisted mainly of rants of one kind or another, inane musings, and the occasional photo from my holidays. On the modern web, social media is the default depository for said rants, musings, and photos, and so I had no need of a dedicated space on my website to share them.

@@ -8,15 +8,11 @@ categories = ["Business", "Technology"]
 comments = false
 draft = false
 removeBlur = true
-[cardImage]
-  src = "images/ash/memo-dark.jpg"
-  srcLight = "images/ash/memo-light.jpg"
-  position = "62% 58%"
-  tone = "dark"
+[diagram]
+  src = "diagrams/the-memo.svg"
+  alt = "A contour map of islands joined only by routes between ports on their shores. One route, labelled service interface, is copper."
 [[images]]
-  src = "img/2021/06/memo.jpg"
-  alt = "A Memo"
-  stretch = "vertical"
+  src = "img/diagrams/the-memo.png"
 +++
 
 In 2002, Amazon's Jeff Bezos issued a memo that has entered tech industry canon. The memo, known as the "API Mandate", is generally perceived as being a statement about technology at Amazon, and is therefore widely admired by technologists and wholly ignored by executives. This is unfortunate, because it's no exaggeration to say that the API Mandate completely transformed Amazon as a business and laid the foundation for its success. Better still, unlike many things that global technology titans do, it is something that can be replicated and put to use by almost any business. 

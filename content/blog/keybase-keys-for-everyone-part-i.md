@@ -5,7 +5,11 @@ author = "Christopher Laing"
 categories = ["cryptography", "technology"
 ]
 draft=false
-
+[diagram]
+  src = "diagrams/keybase-keys-for-everyone-part-i.svg"
+  alt = "A survey network. A copper key sits at the centre, with sight lines to stations on surrounding hills labelled Twitter, website, Reddit, Hacker News, and GitHub."
+[[images]]
+  src = "img/diagrams/keybase-keys-for-everyone-part-i.png"
 +++
 
 {{< figure src="/img/2016/11/chrislaing_keybase_proof_graph.png" alt="Graph of Keybase proofs for Keybase user chrislaing" type="right" >}}

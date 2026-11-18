@@ -6,7 +6,11 @@ author = "Christopher Laing"
 categories = ["cryptography", "technology"
 ]
 draft=false
-
+[diagram]
+  src = "diagrams/keybase-keys-for-everyone-part-ii.svg"
+  alt = "A Merkle tree drawn as streams that merge downhill into one root. A copper line runs from the root into one block of a chain along the horizon."
+[[images]]
+  src = "img/diagrams/keybase-keys-for-everyone-part-ii.png"
 +++
 
 In a [previous post]({{< ref "/blog/keybase-keys-for-everyone-part-i.md" >}}), we discussed [Keybase](https://keybase.io), a clever company that is solving a lot of the classic problems that users have had with PGP: managing keys, verifying identities, trusting third parties, and user experience.

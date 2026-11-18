@@ -7,15 +7,11 @@ categories = ["Technology"]
 comments = false
 removeBlur = false
 draft = false
-[cardImage]
-  src = "images/ash/highcode-dark.jpg"
-  srcLight = "images/ash/highcode-light.jpg"
-  position = "58% 48%"
-  tone = "dark"
+[diagram]
+  src = "diagrams/high-code.svg"
+  alt = "A mountain range filled with lines of diagram-as-code, with a copper cursor and the words always bet on text at the summit."
 [[images]]
-  src = "img/2024/08/high-code.jpg"
-  alt = "High-Code: The Unexpected Path to AI Democratisation"
-  stretch = "vertical"
+  src = "img/diagrams/high-code.png"
 +++
 
 Years ago, I read a blog post called [Always Bet on Text](https://graydon2.dreamwidth.org/193447.html) that left a lasting impression on me. Not only did it accord with my own experience, but it gave me a good, compact reference frame to think about technology. No recent technology is more suited to this reference frame than Generative AI, for the simple reason that, at its core, modern GenAI is all about text completion.

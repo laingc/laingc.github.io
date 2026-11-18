@@ -88,6 +88,26 @@ test('the archive, legacy redirects, and fixed images are present', async ({ pag
   }
 });
 
+test('every post leads with its Ash diagram, which a PNG copy stands in for in link previews', async ({ page, request }) => {
+  const posts = await (await request.get('/index.json')).json();
+  expect(posts.length).toBeGreaterThan(0);
+  for (const post of posts) {
+    await page.goto(post.url);
+    const diagram = page.locator('.article-diagram svg');
+    await expect(diagram).toBeVisible();
+    await expect(diagram).toHaveAttribute('role', 'img');
+    await expect(diagram).toHaveAttribute('aria-label', /^.{40,}$/);
+    const preview = await page.locator('meta[property="og:image"]').getAttribute('content');
+    expect(preview).toMatch(/\/img\/diagrams\/[a-z0-9-]+\.png$/);
+    expect((await request.get(new URL(preview).pathname)).status()).toBe(200);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
+  }
+  await page.goto('/blog/the-economics-and-ergonomics-of-ai/');
+  await page.getByRole('button', { name: 'Use light colour theme' }).click();
+  await expect(page.locator('.article-diagram .dg-label:not(.dg-label-accent)').first()).toHaveCSS('fill', 'rgb(105, 99, 92)');
+  await expect(page.locator('.article-diagram .dg-label-accent').first()).toHaveCSS('fill', 'rgb(196, 82, 30)');
+});
+
 test('the site remains readable without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();
@@ -125,16 +145,12 @@ for (const theme of ['light', 'dark']) {
     await expect(page.locator('.hero-description')).not.toBeEmpty();
     await expect(page.locator('.hero-description')).not.toContainText('I prioritise');
 
-    // One visible image per card. A card with a Light-mode image shows only the image for the mode.
-    const images = page.locator('.writing-section .post-card-image img').filter({ visible: true });
-    await expect(images).toHaveCount(3);
-    await expect(page.locator(`.writing-section .post-card-image img.is-${theme === 'light' ? 'dark' : 'light'}`).filter({ visible: true })).toHaveCount(0);
-    expect(await page.locator(`.writing-section .post-card-image img.is-${theme}`).count()).toBeGreaterThan(0);
-    for (const image of await images.all()) {
-      await expect(image).toHaveAttribute('alt', '');
-      await image.evaluate(element => { element.loading = 'eager'; });
-      await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
-    }
+    // One diagram per card, hidden from assistive technology because the card's title names the post.
+    const diagrams = page.locator('.writing-section .post-card-image svg').filter({ visible: true });
+    await expect(diagrams).toHaveCount(3);
+    for (const diagram of await diagrams.all()) await expect(diagram).toHaveAttribute('aria-hidden', 'true');
+    // Diagrams take their colours from the colour mode.
+    await expect(page.locator('.writing-section .post-card-image .dg-label:not(.dg-label-accent)').first()).toHaveCSS('fill', theme === 'light' ? 'rgb(105, 99, 92)' : 'rgb(184, 175, 166)');
 
     // Wide screens keep the excerpt over the faint edge of the image. Narrow screens put the
     // image above the card text.

@@ -8,10 +8,11 @@ comments = false
 removeBlur = false
 draft = false
 description = "A modest proposal for revolutionising everything."
+[diagram]
+  src = "diagrams/the-bitter-lesson-conditions.svg"
+  alt = "A copper curve passes three waypoints, general, scalable, and scales with compute, and overtakes a hand-crafted curve that levels off as compute grows."
 [[images]]
-  src = "img/2021/05/network.jpg"
-  alt = "Neural Network"
-  stretch = "vertical"
+  src = "img/diagrams/the-bitter-lesson-conditions.png"
 +++
 
 The hard truth of AI is that methods that exploit deep, hard-won human knowledge about a particular domain are outperformed by methods that cleverly exploit the increasing power of computation.

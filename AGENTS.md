@@ -35,6 +35,7 @@
 - Deploy only with `./deploy.sh`, which builds and checks locally and publishes the `gh-pages` branch. Never commit generated output to a source branch.
 - Do not stage unrelated files.
 - Do not edit generated output to correct a source problem.
+- Change a post's diagram in `scripts/diagrams/posts.mjs`, then run `npm run diagrams`. Do not edit the SVG or PNG files by hand.
 - Bind development servers to `127.0.0.1`.
 - Do not add a framework or runtime dependency without a demonstrated requirement.
 

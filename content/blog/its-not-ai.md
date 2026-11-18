@@ -8,10 +8,11 @@ categories = ["Technology", "Business"]
 comments = false
 draft = false
 removeBlur = true
+[diagram]
+  src = "diagrams/its-not-ai.svg"
+  alt = "A contour map of hills labelled computer vision, natural language, and summarisation. Past the dashed edge of the map, unmapped ground holds the word AI in copper."
 [[images]]
-  src = "img/2021/07/its-not-ai.jpg"
-  alt = ""
-  stretch = "vertical"
+  src = "img/diagrams/its-not-ai.png"
 +++
 
 Businesses are deeply confused about what AI is, and they have every right to be. Differences in terminology have plagued the Data-AI-Software landscape for many years, as anyone who has ever looked for a job as a "Data Scientist" will attest. Attempts to demystify the topic either conjure a series of analogies that are then strained to breaking point, or try to delve into the actual technology behind the hype, leaving everyone more confused than they were before.

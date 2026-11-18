@@ -7,10 +7,11 @@ categories = ["technology", "odds and ends"
 ]
 draft=false
 description="Karothek, Jupyter on K8s, and more."
+[diagram]
+  src = "diagrams/odds-and-ends-3.svg"
+  alt = "A cluster of hexagonal basalt columns of uneven heights, labelled columnar storage. One column has a copper top."
 [[images]]
-  src = "img/2019/06/jupyterhub.png"
-  alt = "JupyterHub Logo"
-  stretch = "horizontal"
+  src = "img/diagrams/odds-and-ends-3.png"
 +++
 
 * My former colleagues at Blue Yonder (now part of JDA) have introduced [Kartothek](https://tech.jda.com/introducing-kartothek/), software for managing tables stored as parquet files.

@@ -155,9 +155,32 @@ figcaption { margin-block-start: 12px; color: var(--muted); }
 .post-card-copy > p { margin-block-start: 16px; color: var(--muted); font-size: 16px; }
 .post-card-copy .reading-time { margin-block-start: 16px; font-size: 11px; }
 .post-card-arrow { display: flex; width: 44px; height: 44px; align-items: center; justify-content: center; }
-/* Illustrated homepage lists (`postImages` and each page's `cardImage`). On wide screens the
-   image sits behind the right of its row and runs to the window edge. Masks fade the image
-   itself, so it blends into either colour mode. The excerpt narrows to keep clear of it. */
+/* Ash diagrams (a page's `diagram`). Each is an inline SVG whose shapes name a role, not a
+   colour, so the diagram follows the colour mode. A stroke width set on a shape overrides the
+   default here. */
+.ash-diagram svg { display: block; width: 100%; height: auto; stroke-width: 1.4; }
+.ash-diagram :is(.dg-faint, .dg-line, .dg-strong, .dg-muted, .dg-ink, .dg-accent) { fill: none; }
+.ash-diagram .dg-faint { stroke: var(--line); stroke-opacity: .6; }
+.ash-diagram .dg-line { stroke: var(--line); }
+.ash-diagram .dg-strong { stroke: var(--line-strong); }
+.ash-diagram .dg-muted { stroke: var(--muted); }
+.ash-diagram .dg-ink { stroke: var(--ink); }
+.ash-diagram .dg-accent { stroke: var(--accent); }
+.ash-diagram :is(.dg-canvas, .dg-shape, .dg-shape-line, .dg-shape-strong, .dg-shape-ink, .dg-shape-accent, .dg-node) { fill: var(--canvas); }
+.ash-diagram .dg-shape { stroke: var(--muted); }
+.ash-diagram .dg-shape-line { stroke: var(--line); }
+.ash-diagram .dg-shape-strong { stroke: var(--line-strong); }
+.ash-diagram :is(.dg-shape-ink, .dg-node) { stroke: var(--ink); }
+.ash-diagram .dg-shape-accent { stroke: var(--accent); }
+.ash-diagram .dg-node-accent { fill: var(--accent); stroke: var(--accent); }
+.ash-diagram .dg-dot { fill: var(--muted); }
+.ash-diagram .dg-dot-ink { fill: var(--ink); }
+.ash-diagram .dg-label { fill: var(--muted); font: 24px var(--font-mono); letter-spacing: .08em; }
+.ash-diagram .dg-label-accent { fill: var(--accent-text); }
+.ash-diagram .dg-code { fill: var(--muted); font: 15px var(--font-mono); }
+/* Illustrated homepage lists (`postImages`, with each page's `diagram` or `cardImage`). On wide
+   screens the image sits behind the right of its row and runs to the window edge. Masks fade
+   the image itself, so it blends into either colour mode. The excerpt narrows to keep clear of it. */
 main:has(.post-list.has-images) { overflow-x: clip; }
 .post-list.has-images { border-bottom: 1px solid var(--line); }
 .post-card.has-image { --card-meta: 180px; --card-gap: 40px; position: relative; isolation: isolate; }
@@ -175,7 +198,7 @@ main:has(.post-list.has-images) { overflow-x: clip; }
   -webkit-mask-image: linear-gradient(270deg, transparent, rgb(0 0 0 / .05) 50px, rgb(0 0 0 / .3) 140px, rgb(0 0 0 / .7) 250px, #000 352px);
   mask-image: linear-gradient(270deg, transparent, rgb(0 0 0 / .05) 50px, rgb(0 0 0 / .3) 140px, rgb(0 0 0 / .7) 250px, #000 352px);
 }
-.post-card-image img {
+.post-card-image img, .post-card-image svg {
   width: 100%; height: 100%; object-fit: cover; object-position: var(--card-image-position, 50% 50%);
   -webkit-mask-image: linear-gradient(180deg, transparent, #000 26%, #000 74%, transparent);
   mask-image: linear-gradient(180deg, transparent, #000 26%, #000 74%, transparent);
@@ -195,7 +218,7 @@ main:has(.post-list.has-images) { overflow-x: clip; }
 @media (max-width: 900px) {
   .post-card.has-image .post-card-copy { max-width: 740px; }
   .post-card-image { position: relative; z-index: auto; grid-column: 1 / -1; height: 112px; inset: auto; margin-block-start: -36px; margin-inline-end: calc((100% - 100vw) / 2); }
-  .post-card-image img {
+  .post-card-image img, .post-card-image svg {
     -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 55%, transparent);
     mask-image: linear-gradient(180deg, transparent, #000 30%, #000 55%, transparent);
   }
@@ -272,6 +295,24 @@ main:has(.post-list.has-images) { overflow-x: clip; }
 .article-meta { display: flex; flex-wrap: wrap; gap: 12px 24px; margin-block-start: 36px; color: var(--muted); }
 .article-cover { margin-block-start: 48px; }
 .article-cover img { width: 100%; max-height: 580px; object-fit: cover; }
+/* A post's diagram runs from the text column to the window edge, like the homepage rows. Its
+   frame is wider than the drawing, which trims the quiet top and bottom. It fades into the
+   page at the left, where its detail is sparse, and at the top and bottom. */
+main:has(.article-diagram) { overflow-x: clip; }
+.article-diagram {
+  margin-inline-end: calc((100% - 100vw) / 2);
+  -webkit-mask-image: linear-gradient(90deg, transparent, rgb(0 0 0 / .3) 6%, rgb(0 0 0 / .8) 16%, #000 26%);
+  mask-image: linear-gradient(90deg, transparent, rgb(0 0 0 / .3) 6%, rgb(0 0 0 / .8) 16%, #000 26%);
+}
+.article-diagram svg {
+  aspect-ratio: 3 / 1; height: auto;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 12%, #000 88%, transparent);
+}
+/* On a phone, a taller frame crops the quiet left side instead, so the detail stays larger. */
+@media (max-width: 600px) {
+  .article-diagram svg { aspect-ratio: 8 / 5; }
+}
 .article-grid { display: grid; grid-template-columns: minmax(0,740px); justify-content: center; gap: 64px; padding-block-end: 96px; }
 .article-grid.with-toc { grid-template-columns: 220px minmax(0,740px); justify-content: start; }
 .article-body { min-width: 0; }

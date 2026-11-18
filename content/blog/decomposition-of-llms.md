@@ -8,10 +8,11 @@ categories = ["Technology"]
 comments = false
 draft = false
 removeBlur = false
+[diagram]
+  src = "diagrams/decomposition-of-llms.svg"
+  alt = "A mountain split into four separated layers: generation, synthesis, embedding search, and input interpretation. A copper line joins them."
 [[images]]
-  src = "img/2023/05/circuit.jpeg"
-  alt = "a circuitboard"
-  stretch = "vertical"
+  src = "img/diagrams/decomposition-of-llms.png"
 +++
 
 While many AI systems can be very complex, Large Language Models (LLMs) seem to be refreshingly simple to understand. With their ability to generate human-like text, applications like ChatGPT have captured the popular imagination. However, as compelling an experience as chatbots are, the tradeoffs that they make can lead us to misunderstand LLMs as a whole. In this post, we will explore the idea that the functions of LLMs can be thought of as discrete capabilities, and how different composition of these functions leads to a much wider variety of user experiences.

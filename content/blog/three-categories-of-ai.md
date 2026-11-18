@@ -9,10 +9,11 @@ comments = false
 draft = false
 aliases = ["/blog/three-types-of-ai/"]
 removeBlur = true
+[diagram]
+  src = "diagrams/three-categories-of-ai.svg"
+  alt = "Three peaks labelled advanced analytics, applied ML, and future magic. The first is measured in even contours, the second is solid, and the third is dotted and dissolves into the sky below a copper point."
 [[images]]
-  src = "img/2021/07/three-types-of-ai.jpg"
-  alt = ""
-  stretch = "vertical"
+  src = "img/diagrams/three-categories-of-ai.png"
 +++
 
 The term "AI" has at least three entirely different meanings in the modern business context, and any particular business leader usually has only one of these meanings in mind when they use the term. Not only is it common for participants in a discussion to have different interpretations of the term "AI", but most will be unaware that this terminological confusion exists, leaving leaders in both public and private sector organisations poorly equipped to discuss one of the most important technologies of our time.

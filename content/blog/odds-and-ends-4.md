@@ -7,10 +7,11 @@ categories = ["technology", "odds and ends", "podcasts"
 ]
 draft=false
 description="Kops, podcasts, and Milvus."
+[diagram]
+  src = "diagrams/odds-and-ends-4.svg"
+  alt = "Clusters of points inside density contours, labelled nearest neighbours. A copper query point is linked to its nearest points inside a dashed circle."
 [[images]]
-  src = "img/2020/01/podcasts.png"
-  alt = "Podcasts"
-  stretch = "vertical"
+  src = "img/diagrams/odds-and-ends-4.png"
 +++
 
 * I just discovered [kops](https://github.com/kubernetes/kops), apparently an excellent way to deploy and manage Kubernetes clusters on the cloud. Since managing a k8s cluster seems to be a full-time job at the best of times, I'm interested to see if this really does make it much easier.

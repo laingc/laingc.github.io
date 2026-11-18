@@ -166,9 +166,23 @@ Optional hero fields are `image`, `imageAlt`, and `caption`. Ordinary homepage M
 
 Without `featured`, the homepage selects recent entries from `mainSections`. Set `homeMode = 'journal'` for pagination or `showPosts = false` to hide entries.
 
+#### Ash diagrams
+
+A page's `diagram` is a line drawing in SVG under `assets/`. The theme inlines it, so its shapes take the colours of the current colour mode:
+
+```toml
+[diagram]
+src = 'diagrams/the-memo.svg'
+alt = 'A contour map of islands joined only by routes between ports on their shores.'
+```
+
+The diagram replaces the cover image at the top of the page. It runs from the text column to the window edge and fades in at the left, so put the detail of a drawing to the right and keep its left side quiet. A wide window shows the middle third of its height, and a phone crops its left side. `alt` names the diagram for assistive technology.
+
+Shapes name a role with a class rather than a colour: `dg-faint`, `dg-line`, `dg-strong`, `dg-muted`, `dg-ink`, and `dg-accent` for lines; `dg-canvas` and the `dg-shape-*` classes for shapes filled with the page canvas; `dg-node`, `dg-node-accent`, `dg-dot`, and `dg-dot-ink` for markers; and `dg-label`, `dg-label-accent`, and `dg-code` for text. A diagram's own ids must be unique on the page. Link previews cannot use SVG, so give the page an `[[images]]` entry with a raster copy.
+
 #### Illustrated entries and a closing band
 
-Set `postImages = true` on the homepage to show each entry's `cardImage` behind its row:
+Set `postImages = true` on the homepage to show each entry's `diagram`, or failing that its `cardImage`, behind its row. A diagram on a card is decorative and hidden from assistive technology. A `cardImage` is a raster image:
 
 ```toml
 [cardImage]

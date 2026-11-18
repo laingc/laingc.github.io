@@ -1,0 +1,13 @@
+{{- /* Inlines a page's Ash diagram, so the theme's colours for the current mode reach its
+   shapes. Takes a dict: `page`, and `decorative` to hide the diagram from assistive
+   technology. Otherwise the diagram is an image named by the page's `diagram.alt`. */ -}}
+{{- with .page.Params.diagram -}}
+  {{- $alt := .alt | default "" -}}
+  {{- with resources.Get .src -}}
+    {{- $attributes := `aria-hidden="true"` -}}
+    {{- if not $.decorative }}{{ $attributes = printf `role="img" aria-label="%s"` (htmlEscape $alt) }}{{ end -}}
+    {{- replaceRE `^<svg ` (printf `<svg %s ` $attributes) .Content 1 | safeHTML -}}
+  {{- else -}}
+    {{- errorf "%s: diagram %q not found in assets" $.page.File.Path .src -}}
+  {{- end -}}
+{{- end -}}

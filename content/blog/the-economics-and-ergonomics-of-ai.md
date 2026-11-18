@@ -7,14 +7,11 @@ categories = ["Business", "Technology"]
 comments = false
 removeBlur = false
 draft = false
-[cardImage]
-  src = "images/ash/economics.jpg"
-  position = "78% 45%"
-  tone = "light"
+[diagram]
+  src = "diagrams/the-economics-and-ergonomics-of-ai.svg"
+  alt = "Two cost curves over mountain ridges. Software rises steeply and then levels off; the copper LLM curve keeps rising in steps with usage."
 [[images]]
-  src = "img/2024/07/llm-economics.webp"
-  alt = "Large Language Model Economics"
-  stretch = "vertical"
+  src = "img/diagrams/the-economics-and-ergonomics-of-ai.png"
 +++
 
 For all the millions of words that have been devoted to the capabilities of LLMs, the economics and ergonomics of these systems seem to me to be under-discussed. In much the same way that technology changes - from records to CDs to streaming - have been a dominant factor in the evolution of popular music, prosaic matters such as cost structures will have a substantial influence on the development and impact of AI. While it is still early days for LLMs, there are already signs that economic factors are impacting everything from product design and technology choice to adoption and even regulation.

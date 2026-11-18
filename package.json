@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "engines": { "node": ">=24 <27" },
   "scripts": {
-    "check": "node --test tests/unit/*.test.mjs && node scripts/check.mjs",
+    "check": "node --test tests/unit/*.test.mjs && node scripts/diagrams/build.mjs --check && node scripts/check.mjs",
+    "diagrams": "node scripts/diagrams/build.mjs --png",
     "test:browser": "playwright test"
   },
   "devDependencies": {

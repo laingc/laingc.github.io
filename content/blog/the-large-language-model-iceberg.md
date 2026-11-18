@@ -8,10 +8,11 @@ categories = ["Business", "Technology"]
 comments = false
 draft = false
 removeBlur = false
+[diagram]
+  src = "diagrams/the-large-language-model-iceberg.svg"
+  alt = "An iceberg. The small tip above the waterline is labelled chatbots. The far larger mass below holds summarisation, extraction, search, classification, generation, and, in copper, context-aware translation."
 [[images]]
-  src = "img/2023/04/iceberg.jpg"
-  alt = "The Large Language Model Iceberg"
-  stretch = "vertical"
+  src = "img/diagrams/the-large-language-model-iceberg.png"
 +++
 
 As the capabilities of Artificial Intelligence (AI) continue to evolve, the term "chatbot" has become synonymous with a new era of digital interactions. What was once a seemingly futuristic concept is now an integral part of our everyday lives. However, it is the Machine Learning models underlying them - Large Language Models (LLMs) - that are the true powers in these waters.

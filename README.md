@@ -73,7 +73,9 @@ The header mark (`ic-mark-cl-*.svg`) shows the Integrated cadence curve on squar
 The site icons (`favicon.svg`, `favicon-light.ico`, and `ic-icon-light-180.png`) use the same mark without the grid.
 The other logo files in `assets/brand/` are unchanged copies of the approved identity assets.
 The theme supports the existing `[[images]]` article metadata without changes to article text.
-The homepage images in `assets/images/ash/` are generated Ash landscapes, upscaled with Real-ESRGAN. Their originals, prompts, and processing are recorded in the brand repository under `brand/imagery/ash-landscapes-v1/`.
+Each post leads with an Ash diagram: a line drawing of the post's idea in the site's type and colours. The homepage list shows the same diagrams.
+The drawings are code in `scripts/diagrams/posts.mjs`, one function per post. `npm run diagrams` writes them to `assets/diagrams/` and renders a PNG copy of each to `static/img/diagrams/` for link previews. Commit both. Edit a drawing rather than its SVG; `make check` fails when an SVG no longer matches its drawing, and when a published post has no diagram.
+The closing band's image in `assets/images/ash/` is a generated Ash landscape, upscaled with Real-ESRGAN. Its original, prompt, and processing are recorded in the brand repository under `brand/imagery/ash-landscapes-v1/`.
 
 The earlier design adapted Future Imperfect. It no longer supplies templates, styles, or scripts.
 See [the design licence](docs/design-licence.md).

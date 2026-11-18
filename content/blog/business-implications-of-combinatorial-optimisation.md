@@ -8,10 +8,11 @@ categories = ["Business", "Technology"]
 comments = false
 draft = false
 removeBlur = false
+[diagram]
+  src = "diagrams/business-implications-of-combinatorial-optimisation.svg"
+  alt = "Stops scattered over contoured terrain, joined by a single copper route that leaves a depot and visits every stop."
 [[images]]
-  src = "img/2021/05/combinatorial.png"
-  alt = "Combinatorial Optimisation"
-  stretch = "vertical"
+  src = "img/diagrams/business-implications-of-combinatorial-optimisation.png"
 +++
 
 Recently, Deep Learning has revolutionised a multitude of technical fields, most notably Computer Vision and Natural Language Processing. The implications for business are enormous, with the ramifications of these change still filtering through the mostly technology-shy world of business. There are signs that Combinatorial Optimisation might be the next technical field to undergo Revolution-By-Neural-Network. If this comes to fruition, then the impact on business will be seismic.

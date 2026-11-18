@@ -38,7 +38,7 @@
       {{ range first 1 .Site.MainSections }}{{ with $.Site.GetPage . }}<a class="text-link" href="{{ .RelPermalink }}">{{ i18n "allWriting" }} {{ partial "ash/icon.html" "arrow" }}</a>{{ end }}{{ end }}
     </div>
     {{ $images := .Params.postImages }}
-    {{ $illustrated := false }}{{ if $images }}{{ range $posts }}{{ with .Params.cardImage }}{{ $illustrated = true }}{{ end }}{{ end }}{{ end }}
+    {{ $illustrated := false }}{{ if $images }}{{ range $posts }}{{ if or .Params.diagram .Params.cardImage }}{{ $illustrated = true }}{{ end }}{{ end }}{{ end }}
     <div class="post-list{{ if $illustrated }} has-images{{ end }}">{{ range $posts }}{{ partial "ash/post-card.html" (dict "page" . "image" $images) }}{{ else }}<p>{{ i18n "empty" }}</p>{{ end }}</div>
     {{ if $journal }}{{ partial "ash/pagination.html" . }}{{ end }}
   </section>

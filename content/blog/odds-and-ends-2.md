@@ -7,10 +7,11 @@ categories = ["technology", "odds and ends"
 ]
 draft=false
 description="Information theory, an AI Playbook, and Traces."
+[diagram]
+  src = "diagrams/odds-and-ends-2.svg"
+  alt = "Lines of flow squeezed through a narrow gorge between two cliffs and released again, labelled information bottleneck. The centre line is copper."
 [[images]]
-  src = "img/2019/03/infotheory.jpg"
-  alt = "Information Theory"
-  stretch = "vertical"
+  src = "img/diagrams/odds-and-ends-2.png"
 +++
 
 * [Naftali Tishby on the Information Theory of Deep Learning](https://www.youtube.com/watch?v=bLqJHjXihK8) (embedded below). I'm very enthusiastic about this kind of work, and have resolved to find and read more of it.

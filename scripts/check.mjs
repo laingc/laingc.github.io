@@ -67,6 +67,12 @@ for (const page of content) {
       }
     }
     if (!page.isSection && page.route.startsWith('/blog/') && !rss.includes(`${origin}${page.route}`)) errors.push(`Post missing from RSS: ${page.route}`);
+    // Every post leads with an Ash diagram, drawn in scripts/diagrams/posts.mjs.
+    if (!page.isSection && page.route.startsWith('/blog/')) {
+      const diagram = page.front.diagram;
+      if (typeof diagram?.alt !== 'string' || !diagram.alt.trim()) errors.push(`${path.relative(root, page.filename)}: a published post needs a diagram with alt text`);
+      else if (!await exists(path.join(root, 'assets', String(diagram.src)))) errors.push(`${path.relative(root, page.filename)}: missing diagram ${diagram.src}`);
+    }
   } else {
     if (await exists(target) || sitemap.includes(`${origin}${page.route}`) || rss.includes(`${origin}${page.route}`)) errors.push(`Unpublished content exposed: ${page.route}`);
   }

@@ -1,13 +1,15 @@
-{{- /* Accepts a page, or a dict with `page` and `image`. With `image`, a page's optional
-   `cardImage` front matter adds an image behind the card. */ -}}
+{{- /* Accepts a page, or a dict with `page` and `image`. With `image`, the page's `diagram`,
+   or failing that its `cardImage`, sits behind the card. */ -}}
 {{- $page := . -}}
 {{- $image := false -}}
+{{- $diagram := false -}}
 {{- if reflect.IsMap . -}}
   {{- $page = .page -}}
-  {{- if .image }}{{ $image = $page.Params.cardImage }}{{ end -}}
+  {{- if .image }}{{ with $page.Params.diagram }}{{ $diagram = true }}{{ else }}{{ $image = $page.Params.cardImage }}{{ end }}{{ end -}}
 {{- end -}}
 {{- with $page -}}
-<article class="post-card{{ if $image }} has-image{{ end }}">
+<article class="post-card{{ if or $image $diagram }} has-image{{ end }}">
+  {{ if $diagram }}<div class="post-card-image ash-diagram" aria-hidden="true">{{ partial "ash/diagram.html" (dict "page" $page "decorative" true) }}</div>{{ end }}
   {{ with $image }}
     {{- /* `srcLight` is an optional Light-mode image. Without it, `tone` regrades `src` for the other mode. */ -}}
     {{- $sizes := "(max-width: 900px) 100vw, 720px" -}}
