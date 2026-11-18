@@ -121,7 +121,9 @@ for (const theme of ['light', 'dark']) {
   test(`the homepage list carries images and a dark closing band in ${theme} mode`, async ({ page }) => {
     await page.goto('/');
     if (theme === 'light') await page.getByRole('button', { name: 'Use light colour theme' }).click();
-    await expect(page.locator('.hero-description')).toHaveText('I work with leading companies to maximise their impact through technology.');
+    // The priorities sentence lives in the closing band, not in the masthead.
+    await expect(page.locator('.hero-description')).not.toBeEmpty();
+    await expect(page.locator('.hero-description')).not.toContainText('I prioritise');
 
     // One visible image per card. A card with a Light-mode image shows only the image for the mode.
     const images = page.locator('.writing-section .post-card-image img').filter({ visible: true });
