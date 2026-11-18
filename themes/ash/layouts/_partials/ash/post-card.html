@@ -1,4 +1,22 @@
-<article class="post-card">
+{{- /* Accepts a page, or a dict with `page` and `image`. With `image`, a page's optional
+   `cardImage` front matter adds an image behind the card. */ -}}
+{{- $page := . -}}
+{{- $image := false -}}
+{{- if reflect.IsMap . -}}
+  {{- $page = .page -}}
+  {{- if .image }}{{ $image = $page.Params.cardImage }}{{ end -}}
+{{- end -}}
+{{- with $page -}}
+<article class="post-card{{ if $image }} has-image{{ end }}">
+  {{ with $image }}
+    {{- /* `srcLight` is an optional Light-mode image. Without it, `tone` regrades `src` for the other mode. */ -}}
+    {{- $sizes := "(max-width: 900px) 100vw, 720px" -}}
+    {{- $darkClass := "" }}{{ with .srcLight }}{{ $darkClass = "is-dark" }}{{ end -}}
+    <div class="post-card-image"{{ if not .srcLight }} data-tone="{{ .tone | default `dark` }}"{{ end }}{{ with .position }} style="--card-image-position: {{ . | safeCSS }}"{{ end }} aria-hidden="true">
+      {{- partial "ash/image.html" (dict "page" $page "src" .src "alt" "" "class" $darkClass "sizes" $sizes) -}}
+      {{- with .srcLight }}{{ partial "ash/image.html" (dict "page" $page "src" . "alt" "" "class" "is-light" "sizes" $sizes) }}{{ end -}}
+    </div>
+  {{- end }}
   <div class="post-card-meta">
     {{ if not .Date.IsZero }}<time datetime="{{ .Date.Format `2006-01-02` }}">{{ .Date | time.Format (.Site.Params.dateFormat | default "2 January 2006") }}</time>{{ end }}
     {{ with .GetTerms "categories" }}<a href="{{ (index . 0).RelPermalink }}">{{ (index . 0).LinkTitle }}</a>{{ end }}
@@ -10,3 +28,4 @@
   </div>
   <a class="post-card-arrow" href="{{ .RelPermalink }}" aria-label="{{ i18n `readArticle` }}: {{ .LinkTitle }}">{{ partial "ash/icon.html" "arrow" }}</a>
 </article>
+{{- end -}}

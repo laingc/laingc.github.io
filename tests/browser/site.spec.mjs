@@ -116,3 +116,41 @@ test('Integrated cadence follows the colour mode and keeps its accessible name',
   await expect(page.locator('.post-card').nth(2)).toBeVisible();
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth)).toBe(true);
 });
+
+for (const theme of ['light', 'dark']) {
+  test(`the homepage list carries images and a dark closing band in ${theme} mode`, async ({ page }) => {
+    await page.goto('/');
+    if (theme === 'light') await page.getByRole('button', { name: 'Use light colour theme' }).click();
+    await expect(page.locator('.hero-description')).toHaveText('I work with leading companies to maximise their impact through technology.');
+
+    // One visible image per card. A card with a Light-mode image shows only the image for the mode.
+    const images = page.locator('.writing-section .post-card-image img').filter({ visible: true });
+    await expect(images).toHaveCount(3);
+    await expect(page.locator(`.writing-section .post-card-image img.is-${theme === 'light' ? 'dark' : 'light'}`).filter({ visible: true })).toHaveCount(0);
+    expect(await page.locator(`.writing-section .post-card-image img.is-${theme}`).count()).toBeGreaterThan(0);
+    for (const image of await images.all()) {
+      await expect(image).toHaveAttribute('alt', '');
+      await image.evaluate(element => { element.loading = 'eager'; });
+      await expect.poll(() => image.evaluate(element => element.complete && element.naturalWidth > 0)).toBe(true);
+    }
+
+    // Wide screens keep the excerpt over the faint edge of the image. Narrow screens put the
+    // image above the card text.
+    const cards = await page.locator('.writing-section .post-card').evaluateAll(elements => elements.map(card => ({
+      wide: innerWidth > 900,
+      image: card.querySelector('.post-card-image').getBoundingClientRect().toJSON(),
+      copy: card.querySelector('.post-card-copy').getBoundingClientRect().toJSON(),
+      meta: card.querySelector('.post-card-meta').getBoundingClientRect().toJSON(),
+    })));
+    for (const card of cards) {
+      if (card.wide) expect(card.copy.right - card.image.left).toBeLessThanOrEqual(150);
+      else expect(card.image.bottom).toBeLessThanOrEqual(card.meta.top);
+    }
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
+
+    const band = page.getByRole('region', { name: /^I prioritise work that strengthens the capabilities a nation depends on/ });
+    await expect(band).toHaveCSS('background-color', 'rgb(23, 22, 21)');
+    await expect(band.locator('h2')).toHaveCSS('color', 'rgb(243, 237, 228)');
+    await expect(band.getByRole('link', { name: 'Connect on LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/christopherlaing/');
+  });
+}

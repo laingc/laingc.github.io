@@ -166,6 +166,35 @@ Optional hero fields are `image`, `imageAlt`, and `caption`. Ordinary homepage M
 
 Without `featured`, the homepage selects recent entries from `mainSections`. Set `homeMode = 'journal'` for pagination or `showPosts = false` to hide entries.
 
+#### Illustrated entries and a closing band
+
+Set `postImages = true` on the homepage to show each entry's `cardImage` behind its row:
+
+```toml
+[cardImage]
+src = 'images/ridge.jpg'
+position = '50% 54%'
+tone = 'dark'
+```
+
+On wide screens the image sits behind the right of the row, fades into the list, and runs to the window edge. On screens up to 900 pixels wide it becomes a strip above the entry. The image is decorative and has empty alternative text. `position` sets the `object-position` of the crop. Add `srcLight` to give Light mode its own image; each mode loads only its own. Without it, `tone` (`dark` or `light`) names the grade of `src`, and the theme regrades the image in the other colour mode.
+
+Add a `[closing]` table to show a band after the entries:
+
+```toml
+[closing]
+label = 'Connect'
+title = 'A closing statement.'
+image = 'images/coast.jpg'
+imagePosition = '55% 45%'
+
+[[closing.links]]
+label = 'Get in touch'
+url = 'https://example.org/contact/'
+```
+
+The band keeps Ash Dark colours in both modes. Its image fades into the band from the right. Add `imageAlt` when the image carries meaning. Without it, the image is decorative. An optional `caption` adds a small line at the lower right, such as a photo credit.
+
 ### Articles
 
 Create an article bundle with the supplied archetype:

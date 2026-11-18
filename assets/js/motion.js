@@ -89,7 +89,7 @@
   /* Scroll reveals. Only content below the fold receives a hidden starting state, so
      nothing that the reader can already see disappears. */
   const REVEALS = [
-    ['.home-content, .home-section .editorial-grid > *, .section-heading, .term-list > li', 'fx-reveal'],
+    ['.home-content, .home-section .editorial-grid > *, .section-heading, .term-list > li, .closing-copy', 'fx-reveal'],
     ['.post-list > .post-card, .archive-year', 'fx-reveal fx-rule'],
     ['.home-section, .writing-section', 'fx-rule'],
     ['.home-section figure img', 'fx-wipe'],

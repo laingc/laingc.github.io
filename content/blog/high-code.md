@@ -7,6 +7,11 @@ categories = ["Technology"]
 comments = false
 removeBlur = false
 draft = false
+[cardImage]
+  src = "images/ash/highcode-dark.jpg"
+  srcLight = "images/ash/highcode-light.jpg"
+  position = "58% 48%"
+  tone = "dark"
 [[images]]
   src = "img/2024/08/high-code.jpg"
   alt = "High-Code: The Unexpected Path to AI Democratisation"

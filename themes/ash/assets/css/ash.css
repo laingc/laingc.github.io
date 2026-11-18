@@ -155,6 +155,102 @@ figcaption { margin-block-start: 12px; color: var(--muted); }
 .post-card-copy > p { margin-block-start: 16px; color: var(--muted); font-size: 16px; }
 .post-card-copy .reading-time { margin-block-start: 16px; font-size: 11px; }
 .post-card-arrow { display: flex; width: 44px; height: 44px; align-items: center; justify-content: center; }
+/* Illustrated homepage lists (`postImages` and each page's `cardImage`). On wide screens the
+   image sits behind the right of its row and runs to the window edge. Masks fade the image
+   itself, so it blends into either colour mode. The excerpt narrows to keep clear of it. */
+main:has(.post-list.has-images) { overflow-x: clip; }
+.post-list.has-images { border-bottom: 1px solid var(--line); }
+.post-card.has-image { --card-meta: 180px; --card-gap: 40px; position: relative; isolation: isolate; }
+.post-card.has-image .post-card-copy { max-width: min(640px, 100% - 200px); }
+/* The image starts 148px before the end of the excerpt, where the mask is faint. It is at
+   most 720px wide, so a very wide window does not stretch it further. */
+.post-card-image {
+  position: absolute; z-index: -1; inset-block: 0;
+  inset-inline-start: max(var(--card-meta) + var(--card-gap) + min(640px, 100% - var(--card-meta) - 2 * var(--card-gap) - 244px) - 148px, 100% + (100vw - 100%) / 2 - 720px);
+  inset-inline-end: calc((100% - 100vw) / 2);
+  -webkit-mask-image: linear-gradient(90deg, transparent, rgb(0 0 0 / .05) 50px, rgb(0 0 0 / .3) 140px, rgb(0 0 0 / .7) 250px, #000 352px);
+  mask-image: linear-gradient(90deg, transparent, rgb(0 0 0 / .05) 50px, rgb(0 0 0 / .3) 140px, rgb(0 0 0 / .7) 250px, #000 352px);
+}
+[dir='rtl'] .post-card-image {
+  -webkit-mask-image: linear-gradient(270deg, transparent, rgb(0 0 0 / .05) 50px, rgb(0 0 0 / .3) 140px, rgb(0 0 0 / .7) 250px, #000 352px);
+  mask-image: linear-gradient(270deg, transparent, rgb(0 0 0 / .05) 50px, rgb(0 0 0 / .3) 140px, rgb(0 0 0 / .7) 250px, #000 352px);
+}
+.post-card-image img {
+  width: 100%; height: 100%; object-fit: cover; object-position: var(--card-image-position, 50% 50%);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 26%, #000 74%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 26%, #000 74%, transparent);
+}
+/* A page can supply a Light-mode image (`srcLight`). Each mode shows, and so loads, only its own. */
+.post-card-image .is-light, :root:not([data-theme='dark']) .post-card-image .is-dark { display: none; }
+:root:not([data-theme='dark']) .post-card-image .is-light { display: block; }
+/* Without one, `tone` names the image's own grade, and the other mode regrades it. */
+[data-theme='dark'] .post-card-image[data-tone='light'] img { filter: grayscale(.7) sepia(.25) contrast(1.1) brightness(.55); }
+:root:not([data-theme='dark']) .post-card-image[data-tone='dark'] img { filter: grayscale(.4) sepia(.14) brightness(1.4) contrast(.72); opacity: .58; }
+/* The arrow keeps a soft patch of the canvas, so it stays clear on a bright image. */
+.post-card.has-image .post-card-arrow { background: radial-gradient(closest-side, var(--canvas) 45%, transparent); }
+@media (max-width: 1100px) {
+  .post-card.has-image { --card-meta: 140px; --card-gap: 32px; }
+}
+/* Narrow screens. The image becomes a strip at the top of the card, so no text sits on it. */
+@media (max-width: 900px) {
+  .post-card.has-image .post-card-copy { max-width: 740px; }
+  .post-card-image { position: relative; z-index: auto; grid-column: 1 / -1; height: 112px; inset: auto; margin-block-start: -36px; margin-inline-end: calc((100% - 100vw) / 2); }
+  .post-card-image img {
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 55%, transparent);
+    mask-image: linear-gradient(180deg, transparent, #000 30%, #000 55%, transparent);
+  }
+}
+@media (max-width: 600px) {
+  .post-card-image { height: 96px; margin-block-start: -28px; }
+}
+/* Closing band. Like a reverse section, it keeps Ash Dark roles in both colour modes. Its
+   image runs to the window edge and fades into the band. The fades ease in, so a mid-toned sky
+   shows no seam where the fade begins. */
+.closing-band {
+  position: relative; isolation: isolate; overflow: hidden; margin-block-end: 48px;
+  color-scheme: dark; --canvas: var(--ash-black); --surface: var(--ash-charcoal); --raised: var(--ash-charcoal-raised);
+  --ink: var(--ash-ivory); --muted: var(--ash-warm-grey); --line: var(--ash-dark-line); --line-strong: var(--ash-dark-line-strong);
+  --accent: var(--ash-copper); --accent-text: var(--ash-copper-ink); --focus: var(--ash-ivory); --button: var(--ash-ivory); --button-ink: var(--ash-black);
+  --image-grade: saturate(.45) sepia(.1) brightness(.78);
+  background: var(--canvas); color: var(--ink);
+}
+.closing-image {
+  position: absolute; z-index: -1; inset-block: 0; inset-inline-end: 0; width: min(66%, 980px);
+  -webkit-mask-image: linear-gradient(90deg, transparent, rgb(0 0 0 / .05) 8%, rgb(0 0 0 / .3) 20%, rgb(0 0 0 / .7) 32%, #000 44%);
+  mask-image: linear-gradient(90deg, transparent, rgb(0 0 0 / .05) 8%, rgb(0 0 0 / .3) 20%, rgb(0 0 0 / .7) 32%, #000 44%);
+}
+[dir='rtl'] .closing-image {
+  -webkit-mask-image: linear-gradient(270deg, transparent, rgb(0 0 0 / .05) 8%, rgb(0 0 0 / .3) 20%, rgb(0 0 0 / .7) 32%, #000 44%);
+  mask-image: linear-gradient(270deg, transparent, rgb(0 0 0 / .05) 8%, rgb(0 0 0 / .3) 20%, rgb(0 0 0 / .7) 32%, #000 44%);
+}
+.closing-image img {
+  width: 100%; height: 100%; object-fit: cover; object-position: var(--closing-image-position, 50% 50%);
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%, #000 72%, transparent);
+  mask-image: linear-gradient(180deg, transparent, #000 18%, #000 72%, transparent);
+}
+.closing-inner { position: relative; display: flex; align-items: center; min-height: 460px; padding-block: 96px; }
+.closing-copy { max-width: 480px; }
+.closing-copy h2 { font-size: 26px; line-height: 1.4; letter-spacing: -.02em; text-wrap: pretty; }
+/* The label and links reuse the section label and text links, as in the masthead and lists. */
+.closing-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 32px; margin-block-start: 24px; }
+.closing-caption { position: absolute; inset-inline-end: 0; inset-block-end: 20px; color: var(--muted); font: 10px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+/* Narrow screens. The image sits above the text and fades out before the text begins. */
+@media (max-width: 900px) {
+  .closing-image { inset-inline: 0; inset-block-end: auto; width: auto; height: 300px; -webkit-mask-image: none; mask-image: none; }
+  .closing-image img {
+    -webkit-mask-image: linear-gradient(180deg, transparent, #000 20%, #000 50%, transparent 92%);
+    mask-image: linear-gradient(180deg, transparent, #000 20%, #000 50%, transparent 92%);
+  }
+  .closing-band.has-image .closing-inner { padding-block-start: 264px; }
+  .closing-inner { min-height: 0; padding-block: 72px; }
+  .closing-caption { inset-block: 20px auto; }
+}
+@media (max-width: 600px) {
+  .closing-image { height: 240px; }
+  .closing-band.has-image .closing-inner { padding-block-start: 208px; }
+  .closing-inner { padding-block-end: 56px; }
+  .closing-copy h2 { font-size: 22px; }
+}
 .page-heading { padding-block: 72px 60px; }
 .page-heading h1 { max-width: 1000px; }
 .breadcrumb { display: inline-block; margin-block-end: 28px; min-height: 24px; text-decoration: none; }
@@ -373,10 +469,11 @@ figcaption { margin-block-start: 12px; color: var(--muted); }
   :root, [data-theme='dark'] { color-scheme: light; --canvas: #fff; --surface: #fff; --raised: #eee; --ink: #222; --muted: #444; --line: #aaa; --accent-text: var(--ash-colour-copper); --image-grade: none; }
   body { font-size: 11pt; }
   .container, .article-heading { width: 100%; max-width: none; }
-  .site-header, .site-footer, .skip-link, .toc, .copy-code, .post-card-arrow, .post-navigation, .related, .heading-anchor, .hero-actions, .pagination, .search { display: none !important; }
+  .site-header, .site-footer, .skip-link, .toc, .copy-code, .post-card-arrow, .post-navigation, .related, .heading-anchor, .hero-actions, .pagination, .search, .post-card-image, .closing-image, .closing-caption { display: none !important; }
   .article-grid, .article-grid.with-toc, .hero, .editorial-grid { display: block; }
   .article-heading, .section, .home-section, .hero { padding-block: 24px; }
-  .reverse-section { color: #222; background: #fff; --ink: #222; --muted: #444; }
+  .reverse-section, .closing-band { color: #222; background: #fff; --ink: #222; --muted: #444; }
+  .closing-inner { min-height: 0; padding-block: 24px; }
   h1 { font-size: 32pt; } h2 { font-size: 24pt; }
   h1, h2, h3 { break-after: avoid; }
   figure, blockquote, tr { break-inside: avoid; }

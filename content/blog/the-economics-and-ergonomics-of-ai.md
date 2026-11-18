@@ -7,6 +7,10 @@ categories = ["Business", "Technology"]
 comments = false
 removeBlur = false
 draft = false
+[cardImage]
+  src = "images/ash/economics.jpg"
+  position = "78% 45%"
+  tone = "light"
 [[images]]
   src = "img/2024/07/llm-economics.webp"
   alt = "Large Language Model Economics"

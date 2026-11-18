@@ -8,6 +8,11 @@ categories = ["Business", "Technology"]
 comments = false
 draft = false
 removeBlur = true
+[cardImage]
+  src = "images/ash/memo-dark.jpg"
+  srcLight = "images/ash/memo-light.jpg"
+  position = "62% 58%"
+  tone = "dark"
 [[images]]
   src = "img/2021/06/memo.jpg"
   alt = "A Memo"

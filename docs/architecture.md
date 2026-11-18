@@ -27,6 +27,8 @@ Link text briefly decodes when a mouse pointer arrives on it. Screen readers kee
 Article lists, such as `/blog/` and each category, continue as the reader scrolls. `extend-footer.html` puts every card for the list in an inert template, and `motion.js` adds them near the end of the list.
 The paginated pages remain for readers without JavaScript and for existing links. The back button returns to the same depth.
 A sticky cadence strip above each list marks every article on a time axis and follows the article that the reader is on.
+The homepage entries carry Ash images (`postImages` in `content/_index.md` and `cardImage` in each article). On wide screens each image fades into the list behind the right of its row. On narrow screens it becomes a strip above the entry.
+A closing band (`[closing]`) follows the entries. It carries the statement of priorities and a lighthouse image, and keeps Ash Dark colours in both modes, like the masthead.
 The point's readout moves to keep clear of the masthead text. On short landscape screens the name sits beside the introduction. On screens 1800 pixels wide or more, the column widens.
 Content below the fold rises into view, rules draw across, and the theme toggle reveals the new colour mode in a circle.
 The script hides only content that is below the fold when the page loads. When the reader prefers reduced motion, nothing moves.

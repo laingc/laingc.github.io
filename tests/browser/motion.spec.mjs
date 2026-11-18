@@ -77,8 +77,9 @@ test('motion effects resolve to the original content without errors', async ({ p
   await page.goto('/');
 
   // The decoder restores the exact label once it is on screen and removes its temporary spans.
+  // Scroll to the centre: a label in the bottom tenth of the window is still below the fold.
   const eyebrow = page.locator(firstLabel);
-  await eyebrow.scrollIntoViewIfNeeded();
+  await eyebrow.evaluate(element => element.scrollIntoView({ block: 'center' }));
   await expect(eyebrow).toHaveText(label);
   await expect(eyebrow.locator('span')).toHaveCount(0);
   await page.evaluate(() => scrollTo(0, 0));

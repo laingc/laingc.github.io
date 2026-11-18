@@ -37,8 +37,24 @@
     <div class="section-heading"><div><p class="eyebrow accent-label">{{ .Params.writingLabel | default (i18n "writing") }}</p><h2 id="writing-title">{{ .Params.writingTitle | default (i18n "allWriting") }}</h2></div>
       {{ range first 1 .Site.MainSections }}{{ with $.Site.GetPage . }}<a class="text-link" href="{{ .RelPermalink }}">{{ i18n "allWriting" }} {{ partial "ash/icon.html" "arrow" }}</a>{{ end }}{{ end }}
     </div>
-    <div class="post-list">{{ range $posts }}{{ partial "ash/post-card.html" . }}{{ else }}<p>{{ i18n "empty" }}</p>{{ end }}</div>
+    {{ $images := .Params.postImages }}
+    {{ $illustrated := false }}{{ if $images }}{{ range $posts }}{{ with .Params.cardImage }}{{ $illustrated = true }}{{ end }}{{ end }}{{ end }}
+    <div class="post-list{{ if $illustrated }} has-images{{ end }}">{{ range $posts }}{{ partial "ash/post-card.html" (dict "page" . "image" $images) }}{{ else }}<p>{{ i18n "empty" }}</p>{{ end }}</div>
     {{ if $journal }}{{ partial "ash/pagination.html" . }}{{ end }}
   </section>
+{{ end }}
+{{ with .Params.closing }}
+{{ $closing := . }}
+<section class="closing-band{{ with .image }} has-image{{ end }}" aria-labelledby="closing-title">
+  {{ with .image }}<div class="closing-image"{{ with $closing.imagePosition }} style="--closing-image-position: {{ . | safeCSS }}"{{ end }}{{ if not $closing.imageAlt }} aria-hidden="true"{{ end }}>{{ partial "ash/image.html" (dict "page" $ "src" . "alt" $closing.imageAlt "sizes" "(max-width: 900px) 100vw, 980px") }}</div>{{ end }}
+  <div class="container closing-inner">
+    <div class="closing-copy">
+      {{ with .label }}<p class="eyebrow accent-label">{{ . }}</p>{{ end }}
+      <h2 id="closing-title">{{ .title }}</h2>
+      {{ with .links }}<div class="closing-actions">{{ range . }}<a class="text-link" href="{{ partial `ash/url.html` (dict `url` .url) }}">{{ .label }} {{ partial "ash/icon.html" "arrow" }}</a>{{ end }}</div>{{ end }}
+    </div>
+    {{ with .caption }}<p class="closing-caption">{{ . }}</p>{{ end }}
+  </div>
+</section>
 {{ end }}
 {{ end }}
