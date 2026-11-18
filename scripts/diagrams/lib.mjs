@@ -67,6 +67,14 @@ export class Drawing {
     this.id = id;
     this.parts = [];
     this.defs = [];
+    this.focus = null;
+  }
+
+  /** The centred frame an article shows: the subject's bounds with room for the fades. It may
+      run past the drawing, so a shape cut at the drawing's edge falls inside the fade. */
+  frame(x0, y0, x1, y1) {
+    this.focus = [x0, y0, x1 - x0, y1 - y0];
+    return this;
   }
 
   add(markup) {
@@ -127,7 +135,9 @@ export class Drawing {
   toString() {
     const defs = this.defs.length ? `<defs>${this.defs.join('')}</defs>` : '';
     // A frame narrower than the diagram crops its quiet left side; a wider one crops top and bottom.
-    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WIDTH} ${HEIGHT}" preserveAspectRatio="xMaxYMid slice">${defs}${this.parts.join('')}</svg>\n`;
+    // `data-frame` holds the centred view that articles and link previews use instead.
+    const focus = this.focus ? ` data-frame="${this.focus.map(round).join(' ')}"` : '';
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${WIDTH} ${HEIGHT}" preserveAspectRatio="xMaxYMid slice"${focus}>${defs}${this.parts.join('')}</svg>\n`;
   }
 }
 

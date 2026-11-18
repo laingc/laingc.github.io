@@ -97,6 +97,8 @@ test('every post leads with its Ash diagram, which a PNG copy stands in for in l
     await expect(diagram).toBeVisible();
     await expect(diagram).toHaveAttribute('role', 'img');
     await expect(diagram).toHaveAttribute('aria-label', /^.{40,}$/);
+    // The article shows the drawing's centred frame; lists show the whole drawing.
+    expect(await diagram.getAttribute('viewBox')).toBe(await diagram.getAttribute('data-frame'));
     const preview = await page.locator('meta[property="og:image"]').getAttribute('content');
     expect(preview).toMatch(/\/img\/diagrams\/[a-z0-9-]+\.png$/);
     expect((await request.get(new URL(preview).pathname)).status()).toBe(200);

@@ -176,7 +176,9 @@ src = 'diagrams/the-memo.svg'
 alt = 'A contour map of islands joined only by routes between ports on their shores.'
 ```
 
-The diagram replaces the cover image at the top of the page. It runs from the text column to the window edge and fades in at the left, so put the detail of a drawing to the right and keep its left side quiet. A wide window shows the middle third of its height, and a phone crops its left side. `alt` names the diagram for assistive technology.
+The diagram replaces the cover image at the top of the page. There it shows its centred frame, named by `data-frame="x y width height"` on the `svg` element, across the heading's column, and fades into the page on every side. Frame the drawing's subject with room for the fades; the frame may run past the drawing, so a shape cut at the drawing's edge falls inside the fade. Without `data-frame`, the whole drawing shows. A phone crops both sides of the frame. `alt` names the diagram for assistive technology.
+
+Lists show the whole drawing, which fades in at the left and runs to the window edge, so put the detail of a drawing to the right and keep its left side quiet. A wide row shows the middle third of its height.
 
 Shapes name a role with a class rather than a colour: `dg-faint`, `dg-line`, `dg-strong`, `dg-muted`, `dg-ink`, and `dg-accent` for lines; `dg-canvas` and the `dg-shape-*` classes for shapes filled with the page canvas; `dg-node`, `dg-node-accent`, `dg-dot`, and `dg-dot-ink` for markers; and `dg-label`, `dg-label-accent`, and `dg-code` for text. A diagram's own ids must be unique on the page. Link previews cannot use SVG, so give the page an `[[images]]` entry with a raster copy.
 

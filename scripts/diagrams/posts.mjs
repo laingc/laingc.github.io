@@ -71,6 +71,7 @@ function tour(stops, start) {
 export const diagrams = {
   // Teams as sealed islands. Routes run only between ports on their shores.
   'the-memo'(d) {
+    d.frame(560, 200, 1660, 730);
     const rand = random(11);
     striations(d, rand, { top: 236, bottom: 610, step: 15, from: 540, spread: 360, length: [180, 600] });
     const islands = [
@@ -92,6 +93,7 @@ export const diagrams = {
 
   // Software's cost flattens once it is built. An LLM's keeps rising with every call.
   'the-economics-and-ergonomics-of-ai'(d) {
+    d.frame(420, 170, 1640, 690);
     const rand = random(23);
     const left = 480, right = W, base = 590;
     for (let i = 0; i < 7; i++) {
@@ -116,6 +118,7 @@ export const diagrams = {
 
   // A range drawn in lines of diagram-as-code, with a cursor at the summit.
   'high-code'(d) {
+    d.frame(380, 190, 1640, 680);
     const rand = random(5);
     const n = noise(rand, 6);
     const left = 420, right = W, floor = 640;
@@ -146,6 +149,7 @@ export const diagrams = {
 
   // Chatbots are the tip. The capabilities below the waterline are far larger.
   'the-large-language-model-iceberg'(d) {
+    d.frame(610, 190, 1710, 750);
     const rand = random(31);
     const water = 330;
     for (let y = water + 24; y < H; y += 24) {
@@ -171,9 +175,10 @@ export const diagrams = {
 
   // An LLM as separate capabilities, composed into one experience.
   'decomposition-of-llms'(d) {
+    d.frame(600, 140, 1700, 680);
     const rand = random(41);
     const n = noise(rand, 5);
-    const centre = 1170, spread = 230;
+    const centre = 1150, spread = 205;
     const height = x => 670 - 410 * Math.exp(-((x - centre) ** 2) / (2 * spread ** 2)) + 6 * n(x / 60);
     const layers = [
       { top: 0, bottom: 360, lift: 72, name: 'GENERATION' },
@@ -181,7 +186,7 @@ export const diagrams = {
       { top: 450, bottom: 540, lift: 24, name: 'EMBEDDING SEARCH' },
       { top: 540, bottom: 630, lift: 0, name: 'INPUT INTERPRETATION' },
     ];
-    const skewer = 1290;
+    const skewer = 1262;
     const joints = [];
     for (const layer of layers) {
       const inside = [];
@@ -200,6 +205,7 @@ export const diagrams = {
 
   // Three things people mean by AI: measured, practical, and imagined.
   'three-categories-of-ai'(d) {
+    d.frame(520, 170, 1680, 680);
     const rand = random(53);
     const n = noise(rand, 5);
     const ground = 600;
@@ -234,6 +240,7 @@ export const diagrams = {
 
   // Concrete applications are mapped ground. AI is whatever lies past the edge of the map.
   'its-not-ai'(d) {
+    d.frame(460, 180, 1620, 690);
     const rand = random(61);
     const n = noise(rand, 4);
     const edge = y => 1270 + 26 * n(y / 90);
@@ -258,6 +265,7 @@ export const diagrams = {
 
   // General methods that scale with compute overtake methods built on human knowledge.
   'the-bitter-lesson-conditions'(d) {
+    d.frame(480, 190, 1640, 700);
     const rand = random(71);
     const n = noise(rand, 4);
     const left = 560, right = 1560, base = 610;
@@ -282,6 +290,7 @@ export const diagrams = {
   // Each craft is a hand-built terrace. Frontier models rise like a tide: prompts and harnesses
   // are under, and the water is climbing the factory, whose upper floors are an org chart.
   'the-bitter-lesson-comes-for-the-factory'(d) {
+    d.frame(560, 210, 1640, 690);
     const rand = random(163);
     const ground = 600, water = 400, left = 460;
     const terrace = ({ centre, half, steps, rise, inset }) => {
@@ -321,6 +330,7 @@ export const diagrams = {
 
   // A short route through every stop: the problem deep learning may start to solve.
   'business-implications-of-combinatorial-optimisation'(d) {
+    d.frame(560, 160, 1620, 660);
     const rand = random(83);
     contourHill(d, rand, { x: 860, y: 430, r: 300, squash: 0.55 }, { rings: [1, 0.8, 0.6, 0.4, 0.2], outer: 'dg-faint', inner: 'dg-faint' });
     contourHill(d, rand, { x: 1380, y: 380, r: 240, squash: 0.55 }, { rings: [1, 0.78, 0.56, 0.34, 0.14], outer: 'dg-faint', inner: 'dg-faint' });
@@ -343,6 +353,7 @@ export const diagrams = {
 
   // Identity as a survey: a key fixed by sight lines to independent profiles.
   'keybase-keys-for-everyone-part-i'(d) {
+    d.frame(580, 180, 1620, 680);
     const rand = random(97);
     const key = [1100, 420];
     const stations = [
@@ -363,6 +374,7 @@ export const diagrams = {
 
   // A Merkle tree as streams running together into one root, written into the chain.
   'keybase-keys-for-everyone-part-ii'(d) {
+    d.frame(600, 180, 1650, 680);
     const rand = random(101);
     const n = noise(rand, 4);
     for (let k = 0; k < 6; k++) d.path(pathData(trace(x => 190 + k * 86 + 18 * n(x / 120 + k * 2), 460, W, 10)), 'dg-faint');
@@ -394,6 +406,7 @@ export const diagrams = {
 
   // The blog opens again: a sunrise over the ranges.
   'a-new-hope'(d) {
+    d.frame(600, 150, 1660, 650);
     const rand = random(113);
     const sun = [1180, 500];
     const arc = r => `M${sun[0] - r} ${sun[1]}A${r} ${r} 0 0 1 ${sun[0] + r} ${sun[1]}`;
@@ -410,6 +423,7 @@ export const diagrams = {
 
   // Relational learning: a graph of points, and one point gathering from its neighbours.
   'odds-and-ends-1'(d) {
+    d.frame(540, 140, 1640, 640);
     const rand = random(127);
     const nodes = scatter(rand, 26, [600, 200, 1560, 470], 64);
     const seen = new Set();
@@ -433,6 +447,7 @@ export const diagrams = {
 
   // The information bottleneck: flow squeezed through a narrow pass, then released.
   'odds-and-ends-2'(d) {
+    d.frame(440, 110, 1680, 720);
     const centre = 415;
     const squeeze = x => 1 - 0.8 * Math.exp(-(((x - 1060) / 210) ** 2));
     const flow = y0 => trace(x => centre + (y0 - centre) * squeeze(x), 460, W, 6);
@@ -460,6 +475,7 @@ export const diagrams = {
 
   // Columnar storage as basalt columns.
   'odds-and-ends-3'(d) {
+    d.frame(620, 120, 1680, 620);
     const rand = random(139);
     const n = noise(rand, 3);
     const r = 40, squash = 0.5, rise = r * Math.sin(Math.PI / 3) * squash;
@@ -489,6 +505,7 @@ export const diagrams = {
 
   // Vector search: a query and its nearest neighbours among clusters of embeddings.
   'odds-and-ends-4'(d) {
+    d.frame(560, 170, 1640, 680);
     const rand = random(151);
     const clusters = [{ x: 820, y: 430, s: 66, count: 30 }, { x: 1190, y: 380, s: 80, count: 42 }, { x: 1450, y: 490, s: 58, count: 26 }];
     for (const cluster of clusters) {

@@ -48,6 +48,14 @@ if (mode === '--check') {
   if (mode === '--png') await renderPngs();
 }
 
+/** A diagram showing all of its centred frame, the view an article shows (see ash/diagram.html).
+    The preview is narrower than most frames, so the frame fits its width rather than losing its sides. */
+function centred(svg) {
+  const frame = svg.match(/data-frame="([^"]+)"/)?.[1];
+  if (!frame) return svg;
+  return svg.replace(/viewBox="[^"]*"/, `viewBox="${frame}"`).replace(/preserveAspectRatio="[^"]*"/, 'preserveAspectRatio="xMidYMid meet"');
+}
+
 async function renderPngs() {
   const { chromium } = await import('@playwright/test');
   await mkdir(pngDirectory, { recursive: true });
@@ -63,7 +71,7 @@ async function renderPngs() {
 <style>@font-face { font-family: 'IBM Plex Mono'; src: url('${font}') format('woff2'); }</style>
 ${stylesheets.map(href => `<link rel="stylesheet" href="${href}">`).join('\n')}
 <style>html, body { margin: 0; background: var(--canvas); } .ash-diagram svg { width: 1200px; height: 630px; }</style>
-</head><body><div class="ash-diagram">${svg}</div></body></html>`);      await page.goto(pathToFileURL(file).href);
+</head><body><div class="ash-diagram">${centred(svg)}</div></body></html>`);      await page.goto(pathToFileURL(file).href);
       await page.evaluate(() => document.fonts.ready);
       await page.screenshot({ path: path.join(pngDirectory, `${slug}.png`) });
     }
