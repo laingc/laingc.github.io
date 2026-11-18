@@ -156,9 +156,9 @@ for (const theme of ['light', 'dark']) {
   test(`the homepage list carries images and a dark closing band in ${theme} mode`, async ({ page }) => {
     await page.goto('/');
     if (theme === 'light') await page.getByRole('button', { name: 'Use light colour theme' }).click();
-    // The priorities sentence lives in the closing band, not in the masthead.
+    // The closing band's sentence does not repeat in the masthead.
     await expect(page.locator('.hero-description')).not.toBeEmpty();
-    await expect(page.locator('.hero-description')).not.toContainText('I prioritise');
+    await expect(page.locator('.hero-description')).not.toContainText(await page.locator('section.closing-band h2').innerText());
 
     // One diagram per card, hidden from assistive technology because the card's title names the post.
     const diagrams = page.locator('.writing-section .post-card-image svg').filter({ visible: true });
@@ -181,7 +181,10 @@ for (const theme of ['light', 'dark']) {
     }
     expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
 
-    const band = page.getByRole('region', { name: /^I prioritise work that strengthens the capabilities a nation depends on/ });
+    // Find the band by its markup, not its wording, so the closing title can change freely.
+    const band = page.locator('section.closing-band');
+    await expect(band).toHaveCount(1);
+    await expect(band.locator('h2')).not.toBeEmpty();
     await expect(band).toHaveCSS('background-color', 'rgb(23, 22, 21)');
     await expect(band.locator('h2')).toHaveCSS('color', 'rgb(243, 237, 228)');
     await expect(band.getByRole('link', { name: 'Connect on LinkedIn' })).toHaveAttribute('href', 'https://www.linkedin.com/in/christopherlaing/');
