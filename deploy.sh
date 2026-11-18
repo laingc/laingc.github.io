@@ -42,6 +42,8 @@ if ! command -v gh >/dev/null 2>&1; then
 fi
 
 repo="$(gh repo view --json nameWithOwner --jq .nameWithOwner)"
+# A push normally starts a Pages build; requesting one as well makes sure it does.
+gh api -X POST "repos/$repo/pages/builds" >/dev/null 2>&1 || true
 echo "Waiting for GitHub Pages to publish it..."
 for _ in $(seq 1 60); do
   latest="$(gh api "repos/$repo/pages/builds/latest" --jq '"\(.status) \(.commit)"' 2>/dev/null || echo "unknown none")"
