@@ -4,7 +4,7 @@
 {{- if in (slice "section" "term") .Kind -}}
   {{- $pages := where .Pages "Params.hidden" "ne" true -}}
   {{- if gt (len $pages) 1 -}}
-<template id="fx-writing">{{ range $pages }}{{ partial "ash/post-card.html" . }}{{ end }}</template>
+<template id="fx-writing">{{ range $pages }}{{ partial "ash/post-card.html" (dict "page" . "image" $.Params.postImages) }}{{ end }}</template>
   {{- end -}}
 {{- end }}
 {{ $motion := resources.Get "js/motion.js" | minify | fingerprint "sha384" }}

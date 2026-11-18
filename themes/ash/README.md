@@ -182,7 +182,7 @@ Shapes name a role with a class rather than a colour: `dg-faint`, `dg-line`, `dg
 
 #### Illustrated entries and a closing band
 
-Set `postImages = true` on the homepage to show each entry's `diagram`, or failing that its `cardImage`, behind its row. A diagram on a card is decorative and hidden from assistive technology. A `cardImage` is a raster image:
+Set `postImages = true` on the homepage, or in a section's `_index.md`, to show each entry's `diagram`, or failing that its `cardImage`, behind its row. A diagram on a card is decorative and hidden from assistive technology. A `cardImage` is a raster image:
 
 ```toml
 [cardImage]

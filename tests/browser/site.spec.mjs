@@ -108,6 +108,19 @@ test('every post leads with its Ash diagram, which a PNG copy stands in for in l
   await expect(page.locator('.article-diagram .dg-label-accent').first()).toHaveCSS('fill', 'rgb(196, 82, 30)');
 });
 
+test('the writing page shows a diagram for each post, including posts that join as the reader scrolls', async ({ page }) => {
+  await page.goto('/blog/');
+  await expect(page.locator('.list-content > .post-list.has-images')).toHaveCount(1);
+  await expect(page.locator('.list-content > .post-list > .post-card').first().locator('.post-card-image svg')).toBeVisible();
+  const [cards, diagrams] = await page.locator('#fx-writing').evaluate(template => [
+    template.content.querySelectorAll('.post-card').length,
+    template.content.querySelectorAll('.post-card-image svg').length,
+  ]);
+  expect(cards).toBeGreaterThan(3);
+  expect(diagrams).toBe(cards);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
+});
+
 test('the site remains readable without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();

@@ -3,7 +3,10 @@
   <div class="container list-content">
     {{ with .Content }}<div class="prose list-introduction">{{ partial "ash/content.html" . }}</div>{{ end }}
     {{ $pages := where .Pages "Params.hidden" "ne" true }}
-    <div class="post-list">{{ range (.Paginate $pages).Pages }}{{ partial "ash/post-card.html" . }}{{ else }}<p>{{ i18n "empty" }}</p>{{ end }}</div>
+    {{- /* `postImages` shows each entry's diagram or card image behind its row, as on the homepage. */ -}}
+    {{ $images := .Params.postImages }}
+    {{ $illustrated := false }}{{ if $images }}{{ range $pages }}{{ if or .Params.diagram .Params.cardImage }}{{ $illustrated = true }}{{ end }}{{ end }}{{ end }}
+    <div class="post-list{{ if $illustrated }} has-images{{ end }}">{{ range (.Paginate $pages).Pages }}{{ partial "ash/post-card.html" (dict "page" . "image" $images) }}{{ else }}<p>{{ i18n "empty" }}</p>{{ end }}</div>
     {{ partial "ash/pagination.html" . }}
   </div>
 {{ end }}

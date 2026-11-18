@@ -147,6 +147,8 @@ h1, h2, h3, h4, h5, h6 { font-family: var(--font-mono); font-weight: 400; letter
    axis. The square marks the article the reader is on, and the line above names it. */
 .fx-cadence-probe { height: 1px; margin-block-end: -1px; }
 .fx-cadence { position: sticky; top: 0; z-index: 5; margin-block-end: 12px; padding-block: 14px 4px; background: var(--canvas); }
+/* Post images run to the window edge, so the strip's canvas does too, hiding them as they scroll under it. */
+.fx-cadence:has(~ .post-list.has-images)::before { content: ''; position: absolute; z-index: -1; inset-block: 0; inset-inline: calc((100% - 100vw) / 2); background: var(--canvas); }
 /* A rule under the strip once it sticks. A box-shadow left a faint edge at fractional widths. */
 .fx-cadence::after { content: ''; position: absolute; inset-inline: 0; bottom: 0; height: 1px; background: var(--line); opacity: 0; transition: opacity .3s ease; }
 .fx-cadence.is-stuck::after { opacity: 1; }
