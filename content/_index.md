@@ -22,7 +22,7 @@ url = 'https://www.linkedin.com/in/christopherlaing/'
 
 [closing]
 label = 'Connect'
-title = 'I prioritise work that strengthens the capabilities a nation depends on for its prosperity and security.'
+title = 'Building sovereign capability for a prosperous and secure nation.'
 image = 'images/ash/lighthouse.jpg'
 imagePosition = '64% 40%'
 
