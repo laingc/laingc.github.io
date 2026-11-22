@@ -20,7 +20,7 @@ The site opens in Dark mode (`defaultTheme` in `hugo.toml`). A reader's own choi
 On the homepage, the header and masthead are always a dark band. Below the masthead, the page follows the reader's mode.
 Headings, the name, and the introduction line use IBM Plex Mono, the face of the labels and dates.
 The masthead has an entrance sequence, decoder text on the mono labels, and a faint Copper ROC plot on a 2D canvas.
-The plot draws the logo's curve, with complexity against accuracy. Its operating point starts at the logo's position and follows a fine pointer along the curve.
+The plot draws the logo's curve, with accuracy against complexity. Its operating point starts at the logo's position and follows a fine pointer along the curve.
 The plot ends just past the name, and the name sits in the shaded area under the curve. The introduction sits on the open grid beyond the plot.
 The grid and the operating point's dashed guide fade to half strength where they pass behind the name (`NAME_GRID_FADE` in `motion.js`).
 Link text briefly decodes when a mouse pointer arrives on it. Screen readers keep the real text throughout.
