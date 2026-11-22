@@ -179,18 +179,19 @@ figcaption { margin-block-start: 12px; color: var(--muted); }
 .ash-diagram .dg-label-accent { fill: var(--accent-text); }
 .ash-diagram .dg-code { fill: var(--muted); font: 15px var(--font-mono); }
 /* Illustrated homepage lists (`postImages`, with each page's `diagram` or `cardImage`). On wide
-   screens the image sits behind the right of its row and runs to the window edge. Masks fade
-   the image itself, so it blends into either colour mode. The excerpt narrows to keep clear of it. */
+   screens the image sits behind the right of its row and runs past it, to the window edge or
+   160px beyond the content, whichever is nearer. Masks fade the image itself, so it blends into
+   either colour mode. The excerpt narrows to keep clear of it. */
 main:has(.post-list.has-images) { overflow-x: clip; }
 .post-list.has-images { border-bottom: 1px solid var(--line); }
-.post-card.has-image { --card-meta: 180px; --card-gap: 40px; position: relative; isolation: isolate; }
+.post-card.has-image { --card-meta: 180px; --card-gap: 40px; --card-bleed: min((100vw - 100%) / 2, 160px); position: relative; isolation: isolate; }
 .post-card.has-image .post-card-copy { max-width: min(640px, 100% - 200px); }
 /* The image starts 148px before the end of the excerpt, where the mask is faint. It is at
    most 720px wide, so a very wide window does not stretch it further. */
 .post-card-image {
   position: absolute; z-index: -1; inset-block: 0;
-  inset-inline-start: max(var(--card-meta) + var(--card-gap) + min(640px, 100% - var(--card-meta) - 2 * var(--card-gap) - 244px) - 148px, 100% + (100vw - 100%) / 2 - 720px);
-  inset-inline-end: calc((100% - 100vw) / 2);
+  inset-inline-start: max(var(--card-meta) + var(--card-gap) + min(640px, 100% - var(--card-meta) - 2 * var(--card-gap) - 244px) - 148px, 100% + var(--card-bleed) - 720px);
+  inset-inline-end: calc(var(--card-bleed) * -1);
   -webkit-mask-image: linear-gradient(90deg, transparent, rgb(0 0 0 / .05) 50px, rgb(0 0 0 / .3) 140px, rgb(0 0 0 / .7) 250px, #000 352px);
   mask-image: linear-gradient(90deg, transparent, rgb(0 0 0 / .05) 50px, rgb(0 0 0 / .3) 140px, rgb(0 0 0 / .7) 250px, #000 352px);
 }
@@ -214,6 +215,20 @@ main:has(.post-list.has-images) { overflow-x: clip; }
 @media (max-width: 1100px) {
   .post-card.has-image { --card-meta: 140px; --card-gap: 32px; }
 }
+/* A window wider than the content and its 160px reach. The image ends inside the page, so it
+   also fades out at its far end. The picture stops 72px short of that end, so its own edge and
+   right-aligned labels sit where the fade has barely begun. */
+@media (min-width: 1560px) {
+  .post-card-image {
+    -webkit-mask-image: linear-gradient(90deg, transparent, rgb(0 0 0 / .05) 50px, rgb(0 0 0 / .3) 140px, rgb(0 0 0 / .7) 250px, #000 352px, #000 calc(100% - 112px), rgb(0 0 0 / .7) calc(100% - 84px), rgb(0 0 0 / .3) calc(100% - 48px), transparent);
+    mask-image: linear-gradient(90deg, transparent, rgb(0 0 0 / .05) 50px, rgb(0 0 0 / .3) 140px, rgb(0 0 0 / .7) 250px, #000 352px, #000 calc(100% - 112px), rgb(0 0 0 / .7) calc(100% - 84px), rgb(0 0 0 / .3) calc(100% - 48px), transparent);
+  }
+  [dir='rtl'] .post-card-image {
+    -webkit-mask-image: linear-gradient(270deg, transparent, rgb(0 0 0 / .05) 50px, rgb(0 0 0 / .3) 140px, rgb(0 0 0 / .7) 250px, #000 352px, #000 calc(100% - 112px), rgb(0 0 0 / .7) calc(100% - 84px), rgb(0 0 0 / .3) calc(100% - 48px), transparent);
+    mask-image: linear-gradient(270deg, transparent, rgb(0 0 0 / .05) 50px, rgb(0 0 0 / .3) 140px, rgb(0 0 0 / .7) 250px, #000 352px, #000 calc(100% - 112px), rgb(0 0 0 / .7) calc(100% - 84px), rgb(0 0 0 / .3) calc(100% - 48px), transparent);
+  }
+  .post-card-image img, .post-card-image svg { width: calc(100% - 72px); }
+}
 /* Narrow screens. The image becomes a strip at the top of the card, so no text sits on it. */
 @media (max-width: 900px) {
   .post-card.has-image .post-card-copy { max-width: 740px; }
@@ -227,8 +242,8 @@ main:has(.post-list.has-images) { overflow-x: clip; }
   .post-card-image { height: 96px; margin-block-start: -28px; }
 }
 /* Closing band. Like a reverse section, it keeps Ash Dark roles in both colour modes. Its
-   image runs to the window edge and fades into the band. The fades ease in, so a mid-toned sky
-   shows no seam where the fade begins. */
+   image runs to the window edge, or 160px beyond the content on a wider window, and fades into
+   the band. The fades ease in, so a mid-toned sky shows no seam where the fade begins. */
 .closing-band {
   position: relative; isolation: isolate; overflow: hidden; margin-block-end: 48px;
   color-scheme: dark; --canvas: var(--ash-black); --surface: var(--ash-charcoal); --raised: var(--ash-charcoal-raised);
@@ -238,7 +253,7 @@ main:has(.post-list.has-images) { overflow-x: clip; }
   background: var(--canvas); color: var(--ink);
 }
 .closing-image {
-  position: absolute; z-index: -1; inset-block: 0; inset-inline-end: 0; width: min(66%, 980px);
+  position: absolute; z-index: -1; inset-block: 0; inset-inline-end: max(0px, (100% - var(--container)) / 2 - 160px); width: min(66%, 980px);
   -webkit-mask-image: linear-gradient(90deg, transparent, rgb(0 0 0 / .05) 8%, rgb(0 0 0 / .3) 20%, rgb(0 0 0 / .7) 32%, #000 44%);
   mask-image: linear-gradient(90deg, transparent, rgb(0 0 0 / .05) 8%, rgb(0 0 0 / .3) 20%, rgb(0 0 0 / .7) 32%, #000 44%);
 }
@@ -250,6 +265,17 @@ main:has(.post-list.has-images) { overflow-x: clip; }
   width: 100%; height: 100%; object-fit: cover; object-position: var(--closing-image-position, 50% 50%);
   -webkit-mask-image: linear-gradient(180deg, transparent, #000 18%, #000 72%, transparent);
   mask-image: linear-gradient(180deg, transparent, #000 18%, #000 72%, transparent);
+}
+/* Where the image ends inside the band, it also fades out at its far end. */
+@media (min-width: 1560px) {
+  .closing-image {
+    -webkit-mask-image: linear-gradient(90deg, transparent, rgb(0 0 0 / .05) 8%, rgb(0 0 0 / .3) 20%, rgb(0 0 0 / .7) 32%, #000 44%, #000 86%, rgb(0 0 0 / .7) 91%, rgb(0 0 0 / .3) 96%, transparent);
+    mask-image: linear-gradient(90deg, transparent, rgb(0 0 0 / .05) 8%, rgb(0 0 0 / .3) 20%, rgb(0 0 0 / .7) 32%, #000 44%, #000 86%, rgb(0 0 0 / .7) 91%, rgb(0 0 0 / .3) 96%, transparent);
+  }
+  [dir='rtl'] .closing-image {
+    -webkit-mask-image: linear-gradient(270deg, transparent, rgb(0 0 0 / .05) 8%, rgb(0 0 0 / .3) 20%, rgb(0 0 0 / .7) 32%, #000 44%, #000 86%, rgb(0 0 0 / .7) 91%, rgb(0 0 0 / .3) 96%, transparent);
+    mask-image: linear-gradient(270deg, transparent, rgb(0 0 0 / .05) 8%, rgb(0 0 0 / .3) 20%, rgb(0 0 0 / .7) 32%, #000 44%, #000 86%, rgb(0 0 0 / .7) 91%, rgb(0 0 0 / .3) 96%, transparent);
+  }
 }
 .closing-inner { position: relative; display: flex; align-items: center; min-height: 460px; padding-block: 96px; }
 .closing-copy { max-width: 480px; }

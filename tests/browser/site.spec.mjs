@@ -123,6 +123,20 @@ test('the writing page shows a diagram for each post, including posts that join 
   expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
 });
 
+test('on an ultrawide window, the post and closing images stay beside the content', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop', 'The test sets its own screen size.');
+  await page.setViewportSize({ width: 3440, height: 1440 });
+  await page.goto('/');
+  const reach = await page.evaluate(() => {
+    const content = document.querySelector('.writing-section .post-card').getBoundingClientRect().right;
+    const closing = document.querySelector('.closing-image')?.getBoundingClientRect().right ?? content;
+    return [...document.querySelectorAll('.writing-section .post-card-image')].map(image => image.getBoundingClientRect().right - content).concat(closing - content);
+  });
+  // Each image runs at most 160px past the content, not to the far window edge.
+  for (const distance of reach) expect(distance).toBeLessThanOrEqual(161);
+  expect(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)).toBe(0);
+});
+
 test('the site remains readable without JavaScript', async ({ browser }) => {
   const context = await browser.newContext({ javaScriptEnabled: false });
   const page = await context.newPage();

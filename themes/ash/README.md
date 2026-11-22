@@ -178,7 +178,7 @@ alt = 'A contour map of islands joined only by routes between ports on their sho
 
 The diagram replaces the cover image at the top of the page. There it shows its centred frame, named by `data-frame="x y width height"` on the `svg` element, across the heading's column, and fades into the page on every side. Frame the drawing's subject with room for the fades; the frame may run past the drawing, so a shape cut at the drawing's edge falls inside the fade. Without `data-frame`, the whole drawing shows. A phone crops both sides of the frame. `alt` names the diagram for assistive technology.
 
-Lists show the whole drawing, which fades in at the left and runs to the window edge, so put the detail of a drawing to the right and keep its left side quiet. A wide row shows the middle third of its height.
+Lists show the whole drawing, which fades in at the left and runs past the content, so put the detail of a drawing to the right and keep its left side quiet. Keep right-aligned labels at least 64 units from the drawing's right edge, clear of the fade that a very wide window adds there. A wide row shows the middle third of its height.
 
 Shapes name a role with a class rather than a colour: `dg-faint`, `dg-line`, `dg-strong`, `dg-muted`, `dg-ink`, and `dg-accent` for lines; `dg-canvas` and the `dg-shape-*` classes for shapes filled with the page canvas; `dg-node`, `dg-node-accent`, `dg-dot`, and `dg-dot-ink` for markers; and `dg-label`, `dg-label-accent`, and `dg-code` for text. A diagram's own ids must be unique on the page. Link previews cannot use SVG, so give the page an `[[images]]` entry with a raster copy.
 
@@ -193,7 +193,7 @@ position = '50% 54%'
 tone = 'dark'
 ```
 
-On wide screens the image sits behind the right of the row, fades into the list, and runs to the window edge. On screens up to 900 pixels wide it becomes a strip above the entry. The image is decorative and has empty alternative text. `position` sets the `object-position` of the crop. Add `srcLight` to give Light mode its own image; each mode loads only its own. Without it, `tone` (`dark` or `light`) names the grade of `src`, and the theme regrades the image in the other colour mode.
+On wide screens the image sits behind the right of the row, fades into the list, and runs past the content to the window edge. On a window more than 1560 pixels wide it stops 160 pixels past the content instead, and fades out at its far end too. The closing band's image does the same. On screens up to 900 pixels wide it becomes a strip above the entry. The image is decorative and has empty alternative text. `position` sets the `object-position` of the crop. Add `srcLight` to give Light mode its own image; each mode loads only its own. Without it, `tone` (`dark` or `light`) names the grade of `src`, and the theme regrades the image in the other colour mode.
 
 Add a `[closing]` table to show a band after the entries:
 
