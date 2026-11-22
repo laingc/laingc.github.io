@@ -342,8 +342,8 @@
   }
 
   /* ROC plot. The Integrated cadence logo is an ROC curve with a Copper operating point.
-     Behind the homepage masthead, the same curve is drawn as a faint plot of accuracy
-     against complexity. The operating point starts where it is in the logo, drifts slowly,
+     Behind the homepage masthead, the same curve is drawn as a faint plot of complexity
+     against accuracy. The operating point starts where it is in the logo, drifts slowly,
      and follows a fine pointer along the curve. The plot pauses off screen and in
      background tabs. */
 
@@ -351,8 +351,8 @@
   const P1 = [21 / 112, 81 / 94];
   const P2 = [59 / 112, 91 / 94];
   const LOGO_FPR = 0.334;
-  // Axis labels: what you take on runs across, what you gain runs up.
-  const AXES = { across: 'COMPLEXITY', up: 'ACCURACY' };
+  // Axis labels: accuracy runs across, complexity runs up.
+  const AXES = { across: 'ACCURACY', up: 'COMPLEXITY' };
   // Variant under review: end the plot just past the name, with the introduction on the grid.
   const PLOT_ENDS_AT_NAME = true;
   // Variant under review: how much of the grid's strength fades where it passes behind the
@@ -544,7 +544,7 @@
       ctx.setLineDash([3, 6]);
       line(plot.x0, plot.y0, plot.x1, plot.y1);
       ctx.setLineDash([]);
-      // Axes with open arrowheads: accuracy rises up the page, complexity runs to the right.
+      // Axes with open arrowheads: complexity rises up the page, accuracy runs to the right.
       ctx.strokeStyle = rgba(colours.copper, a.axis);
       ctx.lineWidth = 1.5;
       ctx.beginPath();
