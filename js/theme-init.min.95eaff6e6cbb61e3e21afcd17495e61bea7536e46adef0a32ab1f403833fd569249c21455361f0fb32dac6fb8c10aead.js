@@ -1,0 +1,1 @@
+(()=>{const t=document.documentElement;let e;try{e=localStorage.getItem("ash-theme")}catch{}if(e!=="light"&&e!=="dark"){const n=t.dataset.defaultTheme;e=n==="dark"||n==="system"&&matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}t.dataset.theme=e,document.querySelector('meta[name="theme-color"]')?.setAttribute("content",e==="dark"?"#171615":"#f1ede6")})()

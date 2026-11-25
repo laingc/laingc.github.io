@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-16 -16 132 132" width="132" height="132" role="img" aria-label="Christopher Laing - CL mark (light)">
+<title>Christopher Laing - CL mark (light)</title>
+<desc>A faint Copper graph-paper grid in tenths, with stronger lines at 0.5 and the closing edges, behind square axes, the Integrated cadence ROC curve from corner to corner, the Copper operating point, and the initials CL in IBM Plex Mono Light, converted to outlines, in the ink colour. The initials sit on the grid between 0.6 and 0.9 in the bottom-right quadrant, with the L's foot inset from the right edge.</desc>
+<g data-part="grid" fill="none" stroke="#C4521E" stroke-linecap="butt">
+  <path data-part="grid-minor" d="M10,0V100M20,0V100M30,0V100M40,0V100M60,0V100M70,0V100M80,0V100M90,0V100M0,10H100M0,20H100M0,30H100M0,40H100M0,60H100M0,70H100M0,80H100M0,90H100" stroke-width="0.6" stroke-opacity="0.2"/>
+  <path data-part="grid-major" d="M50,0V100M0,50H100M100,0V100M0,0H100" stroke-width="0.9" stroke-opacity="0.34"/>
+</g>
+<g data-part="symbol">
+  <path data-part="axes" d="M0,0 V100 H100" fill="none" stroke="#282522" stroke-width="3.2" stroke-linecap="butt" stroke-linejoin="miter"/>
+  <path data-part="curve" d="M0,100 C18.75,13.83 52.68,3.19 100,0" fill="none" stroke="#282522" stroke-width="3.2" stroke-linecap="butt" stroke-linejoin="miter"/>
+  <rect data-part="operating-point" x="26.90" y="17.84" width="13" height="13" fill="#C4521E"/>
+</g>
+<g data-part="initials">
+  <path data-part="initial-c" d="M63.77 90.52Q53.03 90.52 53.03 75Q53.03 59.48 63.77 59.48Q65.62 59.48 67.03 60Q68.46 60.52 69.53 61.38Q70.6 62.24 71.36 63.39Q72.11 64.56 72.63 65.85L70.44 66.83Q70.01 65.76 69.42 64.81Q68.84 63.87 68.05 63.18Q67.25 62.49 66.2 62.1Q65.15 61.72 63.77 61.72Q59.73 61.72 57.76 64.66Q55.77 67.61 55.77 72.98V77.02Q55.77 82.39 57.76 85.33Q59.73 88.28 63.77 88.28Q65.15 88.28 66.2 87.9Q67.25 87.51 68.05 86.82Q68.84 86.13 69.42 85.21Q70.01 84.28 70.44 83.17L72.63 84.15Q72.11 85.44 71.36 86.61Q70.6 87.76 69.53 88.62Q68.46 89.48 67.03 90Q65.62 90.52 63.77 90.52Z" fill="#282522"/>
+  <path data-part="initial-l" d="M78.72 90V60H81.3V87.76H96V90Z" fill="#282522"/>
+</g>
+</svg>
