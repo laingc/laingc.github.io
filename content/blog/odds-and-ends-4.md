@@ -3,8 +3,7 @@
 date = "2020-01-22"
 title = "Odds and Ends #4"
 author = "Christopher Laing"
-categories = ["technology", "odds and ends", "podcasts"
-]
+categories = ["Machine learning"]
 draft=false
 description="Kops, podcasts, and Milvus."
 [diagram]

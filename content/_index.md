@@ -1,15 +1,15 @@
 +++
 title = 'Christopher Laing'
 aliases = ['/about/', '/about-me/']
-description = 'Christopher Laing on software, businesses, automation, and national security.'
+description = 'Christopher Laing on AI, automation, software, and national security.'
 writingLabel = 'Read'
 writingTitle = 'Read'
-featured = ['blog/the-bitter-lesson-comes-for-the-factory', 'blog/the-memo', 'blog/high-code']
+featured = ['blog/the-bitter-lesson-comes-for-the-factory', 'blog/the-economics-and-ergonomics-of-ai', 'blog/high-code']
 postImages = true
 
 [hero]
 title = 'Christopher Laing'
-intro = '''Technology executive building companies in intelligence and national security. '''
+intro = '''Technology executive building AI and automation for intelligence and national security.'''
 description = 'I work with leading private and public sector organisations in critical sectors to elevate their technical capability and help them succeed in their missions.'
 
 [[hero.links]]

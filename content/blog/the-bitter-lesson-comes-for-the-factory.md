@@ -5,7 +5,7 @@ author = "Christopher Laing"
 date = '2026-11-18T23:31:12+13:00'
 draft = false
 tags = ["Machine Learning", "AI", "Software Engineering"]
-categories = ["Technology"]
+categories = ["AI", "Automation"]
 [diagram]
   src = "diagrams/the-bitter-lesson-comes-for-the-factory.svg"
   alt = "Three stepped terraces, labelled prompts, harnesses, and factories, stand on level ground. A copper waterline labelled frontier models, with an arrow pointing up, has covered the first two and is climbing the factory, whose upper floors hold a small org chart."

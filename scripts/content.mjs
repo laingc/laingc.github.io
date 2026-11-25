@@ -33,7 +33,9 @@ export function parseContent(text, filename) {
       throw new Error(`${filename}: ${field} must be an array of strings`);
     }
   }
-  const route = isSection ? (section === 'content' ? '/' : `/${section}/`) : (isPost ? `/blog/${stem}/` : `/${stem}/`);
+  const dirs = path.dirname(filename).split(path.sep);
+  const sectionPath = dirs.slice(dirs.lastIndexOf('content') + 1).join('/');
+  const route = isSection ? (sectionPath ? `/${sectionPath}/` : '/') : (isPost ? `/blog/${stem}/` : `/${stem}/`);
   return { filename, front, body: text.slice(match[0].length), route, isSection, published: front.draft !== true && (!date || Date.parse(date) <= Date.now()) };
 }
 

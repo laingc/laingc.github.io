@@ -3,8 +3,7 @@
 date = "2019-02-23"
 title = "Odds and Ends #1"
 author = "Christopher Laing"
-categories = ["technology", "odds and ends"
-]
+categories = ["Machine learning"]
 draft=false
 description = "Spektral, RPC Frameworks, and Python packaging"
 [diagram]

@@ -2,8 +2,7 @@
 date = "2016-11-13"
 title = "Keybase: Keys for everyone! Part I"
 author = "Christopher Laing"
-categories = ["cryptography", "technology"
-]
+categories = ["Security"]
 draft=false
 [diagram]
   src = "diagrams/keybase-keys-for-everyone-part-i.svg"

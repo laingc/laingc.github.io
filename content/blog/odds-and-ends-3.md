@@ -3,8 +3,7 @@
 date = "2019-06-02"
 title = "Odds and Ends #3"
 author = "Christopher Laing"
-categories = ["technology", "odds and ends"
-]
+categories = ["Machine learning", "Security"]
 draft=false
 description="Karothek, Jupyter on K8s, and more."
 [diagram]

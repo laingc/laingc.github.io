@@ -3,8 +3,7 @@ featured = ""
 featuredalt = ""
 description = ""
 date = "2016-11-08T21:27:54+01:00"
-categories = ["technology", "containers"
-]
+categories = ["Machine learning"]
 title = "Docker for Data Science: not all it's cracked up to be"
 linktitle = ""
 featuredpath = ""
